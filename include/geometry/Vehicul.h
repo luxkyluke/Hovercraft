@@ -18,6 +18,8 @@ void Accelerer(Vehicul *v, float acceleration);
 
 void Decelerer(Vehicul *v, float deceleration);
 
+void Glisser(Vector2D* direction);
+
 void DessinVehicul(Vehicul * v);
 
 #endif

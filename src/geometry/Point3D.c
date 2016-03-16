@@ -1,9 +1,8 @@
-#include "geometry/Point3D.h"
+#include "geometry/Point2D*.h"
 
-Point3D PointXYZ(float x, float y, float z) {
-    Point3D p;
+Point2D* PointXY(float x, float y) {
+    Point2D* p;
     p.x = x;
     p.y = y;
-    p.z = z;
     return p;
 }

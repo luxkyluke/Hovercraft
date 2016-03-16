@@ -3,7 +3,7 @@
 #include "geometry/geometry.h"
 #include "light/PointLight.h"
 
-PointLight MakePointLight(Point3D position, Color3f color) {
+PointLight MakePointLight(Point2D* position, Color3f color) {
 	PointLight light;
 	light.type = POINT_LIGHT;
 	light.position = position;
@@ -11,11 +11,11 @@ PointLight MakePointLight(Point3D position, Color3f color) {
 	return light;
 }
 
-Color3f ComputeIncidentLightFromPointLight(PointLight light, Point3D point,
-		Vector3D normal) {
+Color3f ComputeIncidentLightFromPointLight(PointLight light, Point2D* point,
+		Vector2D* normal) {
 	Color3f incident;
 
-	Vector3D direction = Vector(point, light.position);
+	Vector2D* direction = Vector(point, light.position);
 	float directionNorm = Norm(direction);
 
 	if(IsZero(directionNorm)) {
