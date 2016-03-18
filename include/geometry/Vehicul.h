@@ -8,7 +8,7 @@ typedef struct {
 	float hauteur;
 	float largeur;
 	float angle;
-	Position* position;
+	Point2D* position;
 	float vitesse;
 }Vehicul;
 
@@ -21,5 +21,8 @@ void Decelerer(Vehicul *v, float deceleration);
 void Glisser(Vector2D* direction);
 
 void DessinVehicul(Vehicul * v);
+
+
+
 
 #endif

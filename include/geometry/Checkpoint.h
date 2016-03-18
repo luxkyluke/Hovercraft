@@ -6,4 +6,7 @@ typedef	struct {
 	float radius;
 }Checkpoint;
 
+void MakeCheckpoint(Point2D pos, float r);
+int EstSurCheckpoint(Point2D pos);
+
 #endif
