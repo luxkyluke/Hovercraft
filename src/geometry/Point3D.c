@@ -1,4 +1,4 @@
-#include "geometry/Point2D*.h"
+#include "geometry/Point2D.h"
 
 Point2D* PointXY(float x, float y) {
     Point2D* p;
