@@ -8,6 +8,6 @@ typedef struct {
 	float vitesse;
 }Ballon;
 
-
+void deplacerBallon(flaot angle, flaot acceleration);
 
 #endif

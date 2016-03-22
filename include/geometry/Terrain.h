@@ -5,8 +5,10 @@ typedef struct {
 	int largeur;
 	int hauteur;
 	GLuint texture;
+	char * terrainTxt;
 }Terrain;
 
-void MakeTerrain(int l, int h, GLuint text);
+void MakeTerrain(int l, int h, GLuint text, char[] terrainTxt);
+
 
 #endif
