@@ -2,7 +2,7 @@
 #define LIGHT_H_
 
 #include "geometry/Color3f.h"
-#include "geometry/Point2D*.h"
+#include "../geometry/Point2D.h"
 
 typedef struct {
     Point2D* position;

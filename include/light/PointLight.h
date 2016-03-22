@@ -1,9 +1,9 @@
 #ifndef POINTLIGHT_H_
 #define POINTLIGHT_H_
 
-#include "geometry/Point2D*.h"
-#include "geometry/Color3f.h"
-#include "geometry/Vector2D*.h"
+#include "../geometry/Point2D.h"
+#include "../geometry/Color3f.h"
+#include "../geometry/Vector2D.h"
 #include "LightType.h"
 
 typedef struct {

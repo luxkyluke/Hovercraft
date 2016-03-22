@@ -1,6 +1,6 @@
-#include "geometry/Intersection.h"
+// #include "geometry/Intersection.h"
 
 
-int TestRaySphereIntersection(Ray3D ray, Sphere sph, Intersection inter){
-	
-}
+// int TestRaySphereIntersection(Ray2D ray, Sphere sph, Intersection inter){
+
+// }
