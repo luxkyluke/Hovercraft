@@ -1,9 +1,9 @@
 ifeq ($(OS),Windows_NT)
 CC = gcc
 CFLAGS = -Wall
-LDFLAGS  = -lmingw32 -lSDLmain -lSDL -lm  -lSDL_image
+LDFLAGS  = -lmingw32 -lSDLmain -lSDL -lopengl32 -lglu32 -lm
 
-APP_BIN = raytracer
+APP_BIN = Hovercraft
 
 SRC_PATH = src
 OBJ_PATH = obj
@@ -23,13 +23,9 @@ $(APP_BIN): $(OBJ_FILES)
 	if not exist "$(BIN_PATH)" $(MKDIR_P) $(BIN_PATH)
 	$(CC) -o $(BIN_PATH)/$(APP_BIN) $(OBJ_FILES) $(LDFLAGS)
 
-obj/main.o : $(SRC_FILES) obj/sdl_tools.o src/main.c
+obj/main.o : $(SRC_FILES) src/main.c
 	if not exist "$(@D)" $(MKDIR_P) "$(@D)"
 	$(CC) -c src/main.c -o obj/main.o $(CFLAGS) $(INC_PATH)
-
-obj/sdl_tools.o : $(SRC_FILES) src/sdl_tools.c
-	if not exist "$(@D)" $(MKDIR_P) "$(@D)"
-	$(CC) -c src/sdl_tools.c -o obj/sdl_tools.o $(CFLAGS) $(INC_PATH)
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	if not exist "$(@D)" $(MKDIR_P) "$(@D)"
