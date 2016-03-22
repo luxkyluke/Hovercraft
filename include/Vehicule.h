@@ -23,8 +23,8 @@ void UpdateAcceleration(Vehicule* h, int avance);
 void UpdateVitesse(Vehicule* h);
 void UpdatePosition(Vehicule* h);
 void UpdateRotation(Vehicule* h, int tourne);
-void UpdateHovercraft(Vehicule* h, int avance, int tourne);
-void DeplaceHovercraft(Vehicule* h, int avance, int tourne);
+void UpdateVehicule(Vehicule* h, int avance, int tourne);
+void DeplaceVehicule(Vehicule* h, int avance, int tourne);
 
 
 #endif

@@ -5,9 +5,8 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "sdl_tools.h"
-#include "geometry/geometry.h"
-#include "hovercraft/hovercraft.h"
+#include "Geometry.h"
+#include "Vehicul.h"
 
 /* Nombre de bits par pixel de la fenêtre */
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -56,7 +55,7 @@ int main(int argc, char** argv) {
   /* Titre de la fenêtre */
   SDL_WM_SetCaption("HOVERCRAFT power!", NULL);
 
-  Hovercraft* h = initHovercraft(0.,0.);
+  Vehicule* h = initVehicule(0.,0.);
 
   /* Boucle d'affichage */
   int loop = 1;
@@ -73,13 +72,13 @@ int main(int argc, char** argv) {
     glLoadIdentity();
 
 
-    //Mouvement de l'Hovercraft  
-    UpdateHovercraft(h, avance, tourne);
+    //Mouvement de l'Vehicule  
+    UpdateVehicule(h, avance, tourne);
     glPushMatrix();
-      glTranslatef(h-> px, h-> py, 0);
+      glTranslatef(h->position->x, h->position->y, 0);
       glRotatef(h-> angle,0.,0.,1.);
       glScalef(40.,40., 0.);
-      dessinHovercraft();
+      dessinVehicule(h);
     glPopMatrix();
         
 
