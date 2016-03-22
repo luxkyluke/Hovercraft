@@ -10,15 +10,21 @@ typedef struct {
 	float largeur;
 	float angle;
 	Point2D* position;
-	float vitesse;
+	Vector2D* direction;
+	Vector2D* vitesse;
+	Vector2D* acceleration;
+	
 	Player player;
 }Vehicule;
 
-Vehicule* CreerVehicule(Position* pos, float hauteur, float largeur, GLuint text);
-void Accelerer(Vehicule *v, float acceleration);
-void Decelerer(Vehicule *v, float deceleration);
-void Glisser(Vector2D* direction);
+Vehicule* CreerVehicule(float px, float py, float hauteur, float largeur, GLuint text);
 void DessinVehicule(Vehicule * v);
+void UpdateAcceleration(Vehicule* h, int avance);
+void UpdateVitesse(Vehicule* h);
+void UpdatePosition(Vehicule* h);
+void UpdateRotation(Vehicule* h, int tourne);
+void UpdateHovercraft(Vehicule* h, int avance, int tourne);
+void DeplaceHovercraft(Vehicule* h, int avance, int tourne);
 
 
 #endif
