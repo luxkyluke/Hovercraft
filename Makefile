@@ -1,7 +1,52 @@
+ifeq ($(OS),Windows_NT)
 CC = gcc
-CFLAGS = -Wall -O2 -g
-LDFLAGS = -lSDL -lm -lGLU -lGL 
+CFLAGS = -Wall
+LDFLAGS  = -lmingw32 -lSDLmain -lSDL -lm  -lSDL_image
 
+APP_BIN = raytracer
+
+SRC_PATH = src
+OBJ_PATH = obj
+INC_PATH = -I include
+BIN_PATH = bin
+LIB_PATH = lib
+MKDIR_P = mkdir
+
+
+SRC_FILES = $(wildcard src/*.c) $(wildcard src/*/*.c)
+OBJ_FILES = $(patsubst $(SRC_PATH)/%.c,$(OBJ_PATH)/%.o, $(SRC_FILES))
+
+all: $(APP_BIN)
+		@echo $(SRC_FILES)
+
+$(APP_BIN): $(OBJ_FILES)
+	if not exist "$(BIN_PATH)" $(MKDIR_P) $(BIN_PATH)
+	$(CC) -o $(BIN_PATH)/$(APP_BIN) $(OBJ_FILES) $(LDFLAGS)
+
+obj/main.o : $(SRC_FILES) obj/sdl_tools.o src/main.c
+	if not exist "$(@D)" $(MKDIR_P) "$(@D)"
+	$(CC) -c src/main.c -o obj/main.o $(CFLAGS) $(INC_PATH)
+
+obj/sdl_tools.o : $(SRC_FILES) src/sdl_tools.c
+	if not exist "$(@D)" $(MKDIR_P) "$(@D)"
+	$(CC) -c src/sdl_tools.c -o obj/sdl_tools.o $(CFLAGS) $(INC_PATH)
+
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+	if not exist "$(@D)" $(MKDIR_P) "$(@D)"
+	$(CC) -c $< -o $@ $(CFLAGS) $(INC_PATH)
+
+clean:
+	rm $(OBJ_FILES) $(BIN_PATH)/$(APP_BIN)
+else
+CC = gcc
+CFLAGS = -Wall
+
+OS := $(shell uname)
+ifeq ($(OS),Darwin)
+	LDFLAGS =-I/Library/Frameworks/SDL.frameworks/Headers SDLmain.m -framework SDL -framework Cocoa -framework OpenGL
+else
+	LDFLAGS = -lSDL -lm -lGLU -lGL
+endif
 
 APP_BIN = Hovercraft
 
@@ -26,3 +71,4 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 
 clean:
 	rm $(OBJ_FILES) $(BIN_PATH)/$(APP_BIN)
+endif

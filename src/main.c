@@ -1,6 +1,12 @@
+#ifdef __APPLE__
+    #include <OpenGL/gl.h>
+    #include <OpenGL/glu.h>
+#else
+    #include <GL/gl.h>
+    #include <GL/glu.h>
+#endif
+
 #include <SDL/SDL.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -34,7 +40,7 @@ int main(int argc, char** argv) {
     fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
     return EXIT_FAILURE;
   }
-  
+
 
 
   /* Ouverture d'une fenêtre et création d'un contexte OpenGL */
@@ -42,23 +48,23 @@ int main(int argc, char** argv) {
     fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
     return EXIT_FAILURE;
   }
-  
+
   /* Titre de la fenêtre */
   SDL_WM_SetCaption("OpenGL powa :D", NULL);
-  
+
   /* Boucle d'affichage */
   int loop = 1;
   glClear(GL_COLOR_BUFFER_BIT);
   while(loop) {
     /* Récupération du temps au début de la boucle */
     Uint32 startTime = SDL_GetTicks();
-    
+
     /* Placer ici le code de dessin */
-    
+
     /* Echange du front et du back buffer : mise à jour de la fenêtre */
-    
+
     //SDL_GL_SwapBuffers();
-    
+
     /* Boucle traitant les evenements */
     SDL_Event e;
     float r, v=0, b=0;
@@ -68,7 +74,7 @@ int main(int argc, char** argv) {
         loop = 0;
         break;
       }
-      
+
       /* Quelques exemples de traitement d'evenements : */
       switch(e.type) {
         /* Clic souris */
@@ -101,7 +107,7 @@ int main(int argc, char** argv) {
           if(e.key.keysym.sym == SDLK_q)
             loop=0;
           break;
-          
+
         default:
           break;
       }
@@ -113,9 +119,9 @@ int main(int argc, char** argv) {
       SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
     }
   }
-  
-  /* Liberation des ressources associées à la SDL */ 
+
+  /* Liberation des ressources associées à la SDL */
   SDL_Quit();
-  
+
   return EXIT_SUCCESS;
 }
