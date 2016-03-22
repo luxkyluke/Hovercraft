@@ -7,6 +7,7 @@
 typedef struct {
 	int hauteur;
 	int largeur;
+	
 	Point2D position;
 }But;
 

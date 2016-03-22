@@ -7,6 +7,6 @@ typedef	struct {
 }Checkpoint;
 
 void MakeCheckpoint(Point2D pos, float r);
-int EstSurCheckpoint(Point2D pos);
+bool EstSurCheckpoint(Point2D pos);
 
 #endif

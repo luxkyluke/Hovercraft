@@ -1,4 +1,4 @@
-#include "geometry/geometry.h"
+#include "Geometry.h"
 
 Vector2D* Vector(Point2D* A, Point2D* B) {
     return VectorXY(B->x - A->x, B->y - A->y);

@@ -1,4 +1,4 @@
-#include "geometry/Color3f.h"
+#include "Color3f.h"
 
 Color3f ColorRGB(float r, float g, float b) {
     Color3f c;
