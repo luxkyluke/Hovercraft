@@ -3,6 +3,8 @@
 
 #include "Point2D.h"
 #include "Player.h"
+#include "Vector2D.h"
+#include <GL/glu.h>
 
 typedef struct {
 	GLuint texture;
@@ -17,7 +19,7 @@ typedef struct {
 	Player player;
 }Vehicule;
 
-Vehicule* CreerVehicule(float px, float py, float hauteur, float largeur, GLuint text);
+Vehicule* CreerVehicule(float px, float py, float hauteur, float largeur, GLuint text, Player p);
 void DessinVehicule(Vehicule * v);
 void UpdateAcceleration(Vehicule* h, int avance);
 void UpdateVitesse(Vehicule* h);

@@ -6,7 +6,7 @@
 #include <GL/glu.h>
 
 //Dessin de l'hovercraft
-void dessinVehicule(Vehicule* v){
+void DessinVehicule(Vehicule* v){
   dessinCarre(1,1,1,0.2);
   glPushMatrix();
     glTranslatef(0., 0.5,0.);
@@ -14,16 +14,17 @@ void dessinVehicule(Vehicule* v){
   glPopMatrix();
 }
 
-Vehicule* CreerVehicule(float px, float py, Player p){
+Vehicule* CreerVehicule(float px, float py, float hauteur, float largeur, GLuint text, Player p){
 	Vehicule * h = malloc(sizeof(Vehicule));
 	h-> position = PointXY(px, py);
 	h-> angle = 0;
 	h-> direction=VectorXY(0,1);
 	h-> acceleration = VectorXY(0,0);
 	h-> vitesse = VectorXY(0,0);
-	h-> largeur = 0;
-	h-> hauteur = 0;
+	h-> largeur = largeur;
+	h-> hauteur = hauteur;
 	h->player = p;
+	h->texture = text;
 	return h;
 }
 

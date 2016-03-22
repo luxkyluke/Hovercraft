@@ -5,8 +5,9 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "Geometry.h"
-#include "Vehicul.h"
+#include "../include/Geometry.h"
+#include "../include/Vehicule.h"
+#include "../include/Player.h"
 
 /* Nombre de bits par pixel de la fenêtre */
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -55,7 +56,7 @@ int main(int argc, char** argv) {
   /* Titre de la fenêtre */
   SDL_WM_SetCaption("HOVERCRAFT power!", NULL);
 
-  Vehicule* h = initVehicule(0.,0.);
+  Vehicule* h = CreerVehicule(0.,0., 40., 40., 0, player1);
 
   /* Boucle d'affichage */
   int loop = 1;
@@ -77,8 +78,8 @@ int main(int argc, char** argv) {
     glPushMatrix();
       glTranslatef(h->position->x, h->position->y, 0);
       glRotatef(h-> angle,0.,0.,1.);
-      glScalef(40.,40., 0.);
-      dessinVehicule(h);
+      glScalef(h->largeur,h->hauteur, 0.);
+      DessinVehicule(h);
     glPopMatrix();
         
 
