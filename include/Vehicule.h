@@ -15,18 +15,18 @@ typedef struct {
 	Vector2D* direction;
 	Vector2D* vitesse;
 	Vector2D* acceleration;
-	
+	int avance, tourne;
 	Player player;
 }Vehicule;
 
-Vehicule* CreerVehicule(float px, float py, float hauteur, float largeur, GLuint text, Player p);
+void MakeVehicule(Point2D* pos, float hauteur, float largeur, GLuint text, Player p, Vehicule* v);
 void DessinVehicule(Vehicule * v);
-void UpdateAcceleration(Vehicule* h, int avance);
+void UpdateAcceleration(Vehicule* h);
 void UpdateVitesse(Vehicule* h);
 void UpdatePosition(Vehicule* h);
-void UpdateRotation(Vehicule* h, int tourne);
-void UpdateVehicule(Vehicule* h, int avance, int tourne);
-void DeplaceVehicule(Vehicule* h, int avance, int tourne);
-
+void UpdateRotation(Vehicule* h);
+void UpdateVehicule(Vehicule* h);
+void DeplaceVehicule(Vehicule* h);
+void FreeVehicule(Vehicule *h);
 
 #endif

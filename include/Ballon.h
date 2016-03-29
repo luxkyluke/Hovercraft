@@ -8,6 +8,7 @@ typedef struct {
 	float vitesse;
 }Ballon;
 
-void deplacerBallon(flaot angle, flaot acceleration);
+void MakeBallon(GLuint texture, Point2D* pos, Ballon* ballon);
+void DeplacerBallon(flaot angle, flaot acceleration);
 
 #endif

@@ -14,9 +14,8 @@ void DessinVehicule(Vehicule* v){
   glPopMatrix();
 }
 
-Vehicule* CreerVehicule(float px, float py, float hauteur, float largeur, GLuint text, Player p){
-	Vehicule * h = malloc(sizeof(Vehicule));
-	h-> position = PointXY(px, py);
+void MakeVehicule(Point2D* pos, float hauteur, float largeur, GLuint text, Player p, Vehicule *h){
+	h-> position = pos;
 	h-> angle = 0;
 	h-> direction=VectorXY(0,1);
 	h-> acceleration = VectorXY(0,0);
@@ -25,13 +24,12 @@ Vehicule* CreerVehicule(float px, float py, float hauteur, float largeur, GLuint
 	h-> hauteur = hauteur;
 	h->player = p;
 	h->texture = text;
-	return h;
 }
 
 
 // PARTIE PHYSIQUE
-void UpdateAcceleration(Vehicule* h, int avance){
-	if(avance == 1){
+void UpdateAcceleration(Vehicule* h){
+	if(h->avance == 1){
 		h-> acceleration = MultVector(h-> direction, 0.04);
 	}
 	else
@@ -51,18 +49,18 @@ void UpdatePosition(Vehicule* h){
 	return;
 }
 	
-void UpdateRotation(Vehicule* h, int tourne){
-	if(tourne != 0){
-		h-> angle += h-> angle;
-		h-> angle = h-> angle*tourne;//(car tourne prend 1 ou -1 ce qui permet d'échanger le sens!)
+void UpdateRotation(Vehicule* h){
+	if(h->tourne != 0){
+		h->angle += h->angle;
+		h->angle = h->angle * h->tourne;//(car tourne prend 1 ou -1 ce qui permet d'échanger le sens!)
 	}
 
 	return;
 }
 
-void UpdateVehicule(Vehicule* h, int avance, int tourne){
-	UpdateRotation(h, tourne);
-	UpdateAcceleration(h, avance);
+void UpdateVehicule(Vehicule* h){
+	UpdateRotation(h);
+	UpdateAcceleration(h);
 	UpdateVitesse(h);
 	UpdatePosition(h);
 	return;
@@ -71,3 +69,10 @@ void UpdateVehicule(Vehicule* h, int avance, int tourne){
     //rotate * h-> tourne (car tourne prend 1 ou -1 ce qui permet d'échanger le sens!)
   //else 
     //rotate nulle
+
+void FreeVehicule(Vehicule* v){
+	free(v->position);
+	free(v->direction);
+	free(v->vitesse);
+	free(v->acceleration);
+}

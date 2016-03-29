@@ -6,5 +6,4 @@ typedef struct {
 } Point2D;
 
 Point2D* PointXY(float x, float y);
-
 #endif

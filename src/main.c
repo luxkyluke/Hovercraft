@@ -40,8 +40,8 @@ int main(int argc, char** argv) {
   
 
   /* Dimensions de la fenêtre */
-  unsigned int windowWidth  = 600;
-  unsigned int windowHeight = 600;
+  unsigned int windowWidth  = 1920;
+  unsigned int windowHeight = 1080;
 
   /* Initialisation de la SDL */
   if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
@@ -54,13 +54,13 @@ int main(int argc, char** argv) {
   reshape(windowWidth, windowHeight);
   
   /* Titre de la fenêtre */
-  SDL_WM_SetCaption("HOVERCRAFT power!", NULL);
+  SDL_WM_SetCaption("HoverLigue !", NULL);
 
-  Vehicule* h = CreerVehicule(0.,0., 40., 40., 0, player1);
+  Vehicule *VP1 = (Vehicule*) malloc(sizeof(Vehicule));
+  MakeVehicule(PointXY(0.,0.), 40., 40., 0, player1, VP1);
 
   /* Boucle d'affichage */
   int loop = 1;
-  int tourne =0 , avance=0;
 
   while(loop) {
     /* Récupération du temps au début de la boucle */
@@ -74,12 +74,12 @@ int main(int argc, char** argv) {
 
 
     //Mouvement de l'Vehicule  
-    UpdateVehicule(h, avance, tourne);
+    UpdateVehicule(VP1);
     glPushMatrix();
-      glTranslatef(h->position->x, h->position->y, 0);
-      glRotatef(h-> angle,0.,0.,1.);
-      glScalef(h->largeur,h->hauteur, 0.);
-      DessinVehicule(h);
+      glTranslatef(VP1->position->x, VP1->position->y, 0);
+      glRotatef(VP1->angle,0.,0.,1.);
+      glScalef(VP1->largeur,VP1->hauteur, 0.);
+      DessinVehicule(VP1);
     glPopMatrix();
         
 
@@ -113,12 +113,12 @@ int main(int argc, char** argv) {
           if(e.key.keysym.sym == SDLK_q)
             loop = 0;
           if(e.key.keysym.sym == 273)
-            avance = 1;
+            VP1->avance = 1;
 
           if(e.key.keysym.sym == 275)
-            tourne = 1;
+            VP1->tourne = 1;
           if(e.key.keysym.sym == 276)
-            tourne = -1;
+            VP1->tourne = -1;
           break;
 
         case SDL_KEYUP:
@@ -126,12 +126,12 @@ int main(int argc, char** argv) {
           if(e.key.keysym.sym == SDLK_q)
             loop = 0;
           if(e.key.keysym.sym == 273)
-            avance = 0;
+            VP1->avance = 0;
           
           if(e.key.keysym.sym == 275)
-            tourne = 0;
+            VP1->tourne = 0;
           if(e.key.keysym.sym == 276)
-            tourne = 0;
+            VP1->tourne = 0;
           break; 
           
         /* resize window */
@@ -159,5 +159,7 @@ int main(int argc, char** argv) {
   /* Liberation des ressources associées à la SDL */ 
   SDL_Quit();
   
+  FreeVehicule(VP1);
+
   return EXIT_SUCCESS;
 }
