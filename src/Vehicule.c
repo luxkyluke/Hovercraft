@@ -74,10 +74,6 @@ void UpdateVehicule(Vehicule* h){
 	return;
 }
 
-    //rotate * h-> tourne (car tourne prend 1 ou -1 ce qui permet d'échanger le sens!)
-  //else
-    //rotate nulle
-
 void FreeVehicule(Vehicule* v){
 	free(v->position);
 	free(v->direction);
