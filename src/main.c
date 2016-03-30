@@ -40,8 +40,8 @@ int main(int argc, char** argv) {
   
 
   /* Dimensions de la fenêtre */
-  unsigned int windowWidth  = 1920;
-  unsigned int windowHeight = 1080;
+  unsigned int windowWidth  = 1800;
+  unsigned int windowHeight = 900;
 
   /* Initialisation de la SDL */
   if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
