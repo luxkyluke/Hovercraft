@@ -1,9 +1,17 @@
+/* A GARDER QUAND ON UTILISE OPENGL */
+#ifdef __APPLE__
+    #include <OpenGL/gl.h>
+    #include <OpenGL/glu.h>
+#else
+    #include <GL/gl.h>
+    #include <GL/glu.h>
+#endif
+/* FIN DU A GARDER */
+
 #include "Vehicule.h"
 #include "Geometry.h"
 #include <stdlib.h>
 #include <SDL/SDL.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
 
 //Dessin de l'hovercraft
 void DessinVehicule(Vehicule* v){
@@ -11,13 +19,14 @@ void DessinVehicule(Vehicule* v){
   glPushMatrix();
     glTranslatef(0., 0.5,0.);
     dessinCercle(100, 1,1,0.2, 1);
+    
   glPopMatrix();
 }
 
 void MakeVehicule(Point2D* pos, float hauteur, float largeur, GLuint text, Player p, Vehicule *h){
 	h-> position = pos;
-	h-> angle = 0;
-	h-> direction=VectorXY(0,1);
+	h-> angle = 90;
+	h-> direction = VectorXY(0,1);
 	h-> acceleration = VectorXY(0,0);
 	h-> vitesse = VectorXY(0,0);
 	h-> largeur = largeur;
@@ -39,7 +48,7 @@ void UpdateAcceleration(Vehicule* h){
 
 void UpdateVitesse(Vehicule* h){
 		h-> vitesse = AddVectors(h-> vitesse, h-> acceleration);
-		h-> vitesse = SubVectors(h-> vitesse, DivVector(h-> vitesse, 100.));
+		h-> vitesse = SubVectors(h-> vitesse, DivVector(h-> vitesse, 50.));
 	return;
 }
 
@@ -48,7 +57,7 @@ void UpdatePosition(Vehicule* h){
 	h->position->y += h-> vitesse->y;
 	return;
 }
-	
+
 void UpdateRotation(Vehicule* h){
 	if(h->tourne != 0){
 		h->angle += h->angle;
@@ -67,7 +76,7 @@ void UpdateVehicule(Vehicule* h){
 }
 
     //rotate * h-> tourne (car tourne prend 1 ou -1 ce qui permet d'échanger le sens!)
-  //else 
+  //else
     //rotate nulle
 
 void FreeVehicule(Vehicule* v){
