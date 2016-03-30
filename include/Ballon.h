@@ -1,5 +1,17 @@
 #ifndef BALLON_H_
-#define BALLON_H_ 
+#define BALLON_H_
+
+/* A GARDER QUAND ON UTILISE OPENGL */
+#ifdef __APPLE__
+    #include <OpenGL/gl.h>
+    #include <OpenGL/glu.h>
+#else
+    #include <GL/gl.h>
+    #include <GL/glu.h>
+#endif
+
+#include "Ballon.h"
+#include "Point2D.h"
 
 typedef struct {
 	GLuint texture;
@@ -9,6 +21,6 @@ typedef struct {
 }Ballon;
 
 void MakeBallon(GLuint texture, Point2D* pos, Ballon* ballon);
-void DeplacerBallon(flaot angle, flaot acceleration);
+void DeplacerBallon(float angle, float acceleration);
 
 #endif

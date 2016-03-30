@@ -7,6 +7,10 @@ void MakeBut(int hauteur, int largeur, Point2D* pos, But* b) {
 }
 
 bool BallIsInGoal(But* but, Ballon* ball) {
-    // Check if it's left goal or right.
-
+    if( ball->position->x > (but->position->x - but->largeur/2.)
+        && ball->position->x < (but->position->x + but->largeur/2.)
+        && ball->position->y < (but->position->y + but->hauteur/2.)
+        && ball->position->y > (but->position->y - but->hauteur/2.))
+        return true;
+    return false;
 }
