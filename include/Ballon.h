@@ -1,6 +1,16 @@
 #ifndef BALLON_H_
 #define BALLON_H_ 
 
+#ifdef __APPLE__
+    #include <OpenGL/gl.h>
+    #include <OpenGL/glu.h>
+#else
+    #include <GL/gl.h>
+    #include <GL/glu.h>
+#endif
+
+#include "Point2D.h"
+
 typedef struct {
 	GLuint texture;
 	float angle;
@@ -9,6 +19,6 @@ typedef struct {
 }Ballon;
 
 void MakeBallon(GLuint texture, Point2D* pos, Ballon* ballon);
-void DeplacerBallon(flaot angle, flaot acceleration);
+void DeplacerBallon(float angle, float acceleration);
 
 #endif
