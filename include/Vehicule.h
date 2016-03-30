@@ -4,7 +4,15 @@
 #include "Point2D.h"
 #include "Player.h"
 #include "Vector2D.h"
-#include <GL/glu.h>
+
+/* A GARDER QUAND ON UTILISE OPENGL */
+#ifdef __APPLE__
+    #include <OpenGL/glu.h>
+#else
+    #include <GL/glu.h>
+#endif
+
+/* FIN DU A GARDER */
 
 typedef struct {
 	GLuint texture;

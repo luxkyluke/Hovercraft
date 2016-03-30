@@ -1,9 +1,17 @@
+/* A GARDER QUAND ON UTILISE OPENGL */
+#ifdef __APPLE__
+    #include <OpenGL/gl.h>
+    #include <OpenGL/glu.h>
+#else
+    #include <GL/gl.h>
+    #include <GL/glu.h>
+#endif
+/* FIN DU A GARDER */
+
 #include "Vehicule.h"
 #include "Geometry.h"
 #include <stdlib.h>
 #include <SDL/SDL.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
 
 //Dessin de l'hovercraft
 void DessinVehicule(Vehicule* v){
@@ -48,7 +56,7 @@ void UpdatePosition(Vehicule* h){
 	h->position->y += h-> vitesse->y;
 	return;
 }
-	
+
 void UpdateRotation(Vehicule* h){
 	if(h->tourne != 0){
 		h->angle += h->angle;
@@ -67,7 +75,7 @@ void UpdateVehicule(Vehicule* h){
 }
 
     //rotate * h-> tourne (car tourne prend 1 ou -1 ce qui permet d'échanger le sens!)
-  //else 
+  //else
     //rotate nulle
 
 void FreeVehicule(Vehicule* v){
