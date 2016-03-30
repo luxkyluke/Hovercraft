@@ -1,7 +1,16 @@
+/* A GARDER QUAND ON UTILISE OPENGL */
+#ifdef __APPLE__
+    #include <OpenGL/gl.h>
+    #include <OpenGL/glu.h>
+#else
+    #include <GL/gl.h>
+    #include <GL/glu.h>
+#endif
+
+/* FIN DU A GARDER */
+
 #include "Geometry.h"
 #include <SDL/SDL.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
 #include <math.h>
 #include <stdlib.h>
 
@@ -17,7 +26,7 @@ int IsZero(float x) {
     return x > -EPSILON && x < EPSILON;
 }
 
-void dessinCarre(int fill, float r, float v, float b){ 
+void dessinCarre(int fill, float r, float v, float b){
   if (fill == 1){
     glBegin(GL_QUADS);
       glColor3f(r,v,b);
@@ -46,7 +55,7 @@ void dessinCercle(int n, float r, float v, float b, int fill){
     glBegin(GL_LINE_LOOP);
     glColor3f(r, v, b);
     for (i=0; i<n; i++){
-      mycos = cos(i*2*Pi/n)/2; 
+      mycos = cos(i*2*Pi/n)/2;
       mysin = sin(i*2*Pi/n)/2;
       glVertex2f(mycos, mysin);
     }
@@ -56,10 +65,10 @@ void dessinCercle(int n, float r, float v, float b, int fill){
     glBegin(GL_POLYGON);
     glColor3f(r, v, b);
     for (i=0; i<n; i++){
-      mycos = cos(i*2*Pi/n)/2; 
+      mycos = cos(i*2*Pi/n)/2;
       mysin = sin(i*2*Pi/n)/2;
       glVertex2f(mycos, mysin);
     }
   glEnd();
-  } 
+  }
 }
