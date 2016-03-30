@@ -32,7 +32,7 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	$(CC) -c $< -o $@ $(CFLAGS) $(INC_PATH)
 
 clean:
-	rm $(OBJ_FILES) $(BIN_PATH)/$(APP_BIN)
+	del $(OBJ_FILES) $(BIN_PATH)\$(APP_BIN)
 else
 CC = gcc
 CFLAGS = -Wall
@@ -67,4 +67,5 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 
 clean:
 	rm $(OBJ_FILES) $(BIN_PATH)/$(APP_BIN)
+
 endif

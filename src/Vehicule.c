@@ -19,13 +19,14 @@ void DessinVehicule(Vehicule* v){
   glPushMatrix();
     glTranslatef(0., 0.5,0.);
     dessinCercle(100, 1,1,0.2, 1);
+    
   glPopMatrix();
 }
 
 void MakeVehicule(Point2D* pos, float hauteur, float largeur, GLuint text, Player p, Vehicule *h){
 	h-> position = pos;
-	h-> angle = 0;
-	h-> direction=VectorXY(0,1);
+	h-> angle = 90;
+	h-> direction = VectorXY(0,1);
 	h-> acceleration = VectorXY(0,0);
 	h-> vitesse = VectorXY(0,0);
 	h-> largeur = largeur;
@@ -47,7 +48,7 @@ void UpdateAcceleration(Vehicule* h){
 
 void UpdateVitesse(Vehicule* h){
 		h-> vitesse = AddVectors(h-> vitesse, h-> acceleration);
-		h-> vitesse = SubVectors(h-> vitesse, DivVector(h-> vitesse, 100.));
+		h-> vitesse = SubVectors(h-> vitesse, DivVector(h-> vitesse, 50.));
 	return;
 }
 

@@ -29,7 +29,7 @@ void reshape(unsigned int windowWidth, unsigned int windowHeight) {
   glViewport(0, 0, windowWidth, windowHeight);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluOrtho2D(-400., 400., -400, 400);
+  gluOrtho2D(-100., 100., -50., 50.); 
 }
 
 void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
   SDL_WM_SetCaption("HoverLigue !", NULL);
 
   Vehicule *VP1 = (Vehicule*) malloc(sizeof(Vehicule));
-  MakeVehicule(PointXY(0.,0.), 40., 40., 0, player1, VP1);
+  MakeVehicule(PointXY(9S5.,0.), 5., 5., 0, player1, VP1);
 
   /* Boucle d'affichage */
   int loop = 1;
@@ -79,10 +79,15 @@ int main(int argc, char** argv) {
     //Mouvement de l'Vehicule
     UpdateVehicule(VP1);
     glPushMatrix();
+      //glRotatef(90, 0, 0, 1);
       glTranslatef(VP1->position->x, VP1->position->y, 0);
+<<<<<<< HEAD
       printf("angle : %f\n",VP1->angle);
       glRotatef(VP1->angle,0.,0.,1.);
       glScalef(VP1->largeur,VP1->hauteur, 0.);
+=======
+      glScalef(VP1->largeur, VP1->hauteur, 0.);
+>>>>>>> 8163b4aa92fb9c3b146d014d74682efdea233b1c
       DessinVehicule(VP1);
     glPopMatrix();
 
