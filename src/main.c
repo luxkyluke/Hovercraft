@@ -62,6 +62,9 @@ int main(int argc, char** argv) {
   Vehicule *VP1 = (Vehicule*) malloc(sizeof(Vehicule));
   MakeVehicule(PointXY(95.,0.), 5., 5., 0, player1, VP1);
 
+  Vehicule *VP2 = (Vehicule*) malloc(sizeof(Vehicule));
+  MakeVehicule(PointXY(-95.,0.), 5., 5., 0, player2, VP2);  
+
   /* Boucle d'affichage */
   int loop = 1;
 
@@ -79,15 +82,19 @@ int main(int argc, char** argv) {
     //Mouvement de l'Vehicule
     UpdateVehicule(VP1);
     glPushMatrix();
-      //glRotatef(90, 0, 0, 1);
       glTranslatef(VP1->position->x, VP1->position->y, 0);
       glRotatef(VP1->angle,0.,0.,1.);
       glScalef(VP1->largeur,VP1->hauteur, 0.);
       DessinVehicule(VP1);
     glPopMatrix();
 
-
-
+    UpdateVehicule(VP2);
+    glPushMatrix();
+      glTranslatef(VP2->position->x, VP2->position->y, 0);
+      glRotatef(VP2->angle,0.,0.,1.);
+      glScalef(VP2->largeur,VP1->hauteur, 0.);
+      DessinVehicule(VP2);
+    glPopMatrix();
 
 
     /* Echange du front et du back buffer : mise à jour de la fenêtre */
@@ -118,11 +125,17 @@ int main(int argc, char** argv) {
             loop = 0;
           if(e.key.keysym.sym == 273)
             VP1->avance = 1;
+          if(e.key.keysym.sym == 119)
+            VP2->avance = 1;
 
           if(e.key.keysym.sym == 275)
             VP1->tourne = 1;
           if(e.key.keysym.sym == 276)
             VP1->tourne = -1;
+          if(e.key.keysym.sym == 97)
+            VP2->tourne = 1;
+          if(e.key.keysym.sym == 100)
+            VP2->tourne = -1;
           break;
 
         case SDL_KEYUP:
@@ -131,11 +144,17 @@ int main(int argc, char** argv) {
             loop = 0;
           if(e.key.keysym.sym == 273)
             VP1->avance = 0;
+          if(e.key.keysym.sym == 119)
+            VP2->avance = 0;
 
           if(e.key.keysym.sym == 275)
             VP1->tourne = 0;
           if(e.key.keysym.sym == 276)
             VP1->tourne = 0;
+          if(e.key.keysym.sym == 97)
+            VP2->tourne = 0;
+          if(e.key.keysym.sym == 100)
+            VP2->tourne = 0;
           break;
 
         /* resize window */

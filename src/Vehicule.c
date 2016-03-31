@@ -25,7 +25,7 @@ void DessinVehicule(Vehicule* v){
 
 void MakeVehicule(Point2D* pos, float hauteur, float largeur, GLuint text, Player p, Vehicule *h){
 	h-> position = pos;
-	h-> angle = 90;
+	h-> angle = 0;
 	h-> direction = VectorXY(0,1);
 	h-> acceleration = VectorXY(0,0);
 	h-> vitesse = VectorXY(0,0);
@@ -39,7 +39,7 @@ void MakeVehicule(Point2D* pos, float hauteur, float largeur, GLuint text, Playe
 // PARTIE PHYSIQUE
 void UpdateAcceleration(Vehicule* h){
 	if(h->avance == 1){
-		h-> acceleration = MultVector(h-> direction, 0.04);
+		h-> acceleration = MultVector(h-> direction, 0.01);
 	}
 	else
 		h-> acceleration = VectorXY(0,0.);
@@ -60,10 +60,13 @@ void UpdatePosition(Vehicule* h){
 
 void UpdateRotation(Vehicule* h){
 	if(h->tourne != 0){
-		h->angle += h->angle;
-		h->angle = h->angle * h->tourne;//(car tourne prend 1 ou -1 ce qui permet d'échanger le sens!)
-	}
+		h->angle = h-> angle - (h->tourne * 2);
+		
+		h->direction->x = -sin((PI*h-> angle)/180);
+		h->direction->y = cos((PI*h-> angle)/180);
 
+	}
+	
 	return;
 }
 

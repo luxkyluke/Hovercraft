@@ -4,6 +4,9 @@
 #include "Point2D.h"
 #include "Player.h"
 #include "Vector2D.h"
+#include "geometry.h"
+#include <math.h>
+#define PI 3.14
 
 /* A GARDER QUAND ON UTILISE OPENGL */
 #ifdef __APPLE__
@@ -34,7 +37,6 @@ void UpdateVitesse(Vehicule* h);
 void UpdatePosition(Vehicule* h);
 void UpdateRotation(Vehicule* h);
 void UpdateVehicule(Vehicule* h);
-void DeplaceVehicule(Vehicule* h);
 void FreeVehicule(Vehicule *h);
 
 #endif
