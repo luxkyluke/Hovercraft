@@ -1,6 +1,9 @@
 #ifndef CHECKPOINT_H_
 #define CHECKPOINT_H_
 
+#include "Point2D.h"
+#include "bool.h"
+
 typedef	struct {
 	Point2D* position;
 	float radius;

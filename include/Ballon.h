@@ -1,6 +1,6 @@
 #ifndef BALLON_H_
 #define BALLON_H_ 
-
+	
 #ifdef __APPLE__
     #include <OpenGL/gl.h>
     #include <OpenGL/glu.h>
@@ -8,6 +8,9 @@
     #include <GL/gl.h>
     #include <GL/glu.h>
 #endif
+
+#include "Ballon.h"
+#include "Point2D.h"
 
 #include "Point2D.h"
 

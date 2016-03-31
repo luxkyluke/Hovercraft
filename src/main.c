@@ -129,7 +129,7 @@ int main(int argc, char** argv) {
             VP2->avance = 1;
 
           if(e.key.keysym.sym == 275)
-            VP1->tourne = 1;
+            //VP1->tourne = 1;
           if(e.key.keysym.sym == 276)
             VP1->tourne = -1;
           if(e.key.keysym.sym == 97)
@@ -148,7 +148,7 @@ int main(int argc, char** argv) {
             VP2->avance = 0;
 
           if(e.key.keysym.sym == 275)
-            VP1->tourne = 0;
+            //VP1->tourne = 0;
           if(e.key.keysym.sym == 276)
             VP1->tourne = 0;
           if(e.key.keysym.sym == 97)
