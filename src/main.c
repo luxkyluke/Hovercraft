@@ -120,9 +120,9 @@ int main(int argc, char** argv) {
             VP1->avance = 1;
 
           if(e.key.keysym.sym == 275)
-            VP1->tourne = 1;
+            //VP1->tourne = 1;
           if(e.key.keysym.sym == 276)
-            VP1->tourne = -1;
+            //VP1->tourne = -1;
           break;
 
         case SDL_KEYUP:
@@ -133,9 +133,9 @@ int main(int argc, char** argv) {
             VP1->avance = 0;
 
           if(e.key.keysym.sym == 275)
-            VP1->tourne = 0;
+            //VP1->tourne = 0;
           if(e.key.keysym.sym == 276)
-            VP1->tourne = 0;
+            //VP1->tourne = 0;
           break;
 
         /* resize window */

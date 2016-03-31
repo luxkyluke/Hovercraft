@@ -26,7 +26,7 @@ void DessinVehicule(Vehicule* v){
 void MakeVehicule(Point2D* pos, float hauteur, float largeur, GLuint text, Player p, Vehicule *h){
 	h-> position = pos;
 	h-> angle = 90;
-	h-> direction = VectorXY(0,1);
+	h-> direction = VectorXY(-1,0);
 	h-> acceleration = VectorXY(0,0);
 	h-> vitesse = VectorXY(0,0);
 	h-> largeur = largeur;
