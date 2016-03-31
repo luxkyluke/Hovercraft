@@ -29,7 +29,7 @@ void reshape(unsigned int windowWidth, unsigned int windowHeight) {
   glViewport(0, 0, windowWidth, windowHeight);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluOrtho2D(-100., 100., -50., 50.); 
+  gluOrtho2D(-100., 100., -50., 50.);
 }
 
 void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
   MakeVehicule(PointXY(95.,0.), 5., 5., 0, player1, VP1);
 
   Vehicule *VP2 = (Vehicule*) malloc(sizeof(Vehicule));
-  MakeVehicule(PointXY(-95.,0.), 5., 5., 0, player2, VP2);  
+  MakeVehicule(PointXY(-95.,0.), 5., 5., 0, player2, VP2);
 
   /* Boucle d'affichage */
   int loop = 1;
@@ -121,39 +121,39 @@ int main(int argc, char** argv) {
         /* Touche clavier */
         case SDL_KEYDOWN:
           printf("touche pressée (code = %d)\n", e.key.keysym.sym);
-          if(e.key.keysym.sym == SDLK_q)
-            loop = 0;
-          if(e.key.keysym.sym == 273)
-            VP1->avance = 1;
-          if(e.key.keysym.sym == 119)
+          // if(e.key.keysym.sym == SDLK_q)
+          //   loop = 0;
+          if(e.key.keysym.sym ==  SDLK_z)
             VP2->avance = 1;
+          if(e.key.keysym.sym == SDLK_UP)
+            VP1->avance = 1;
 
-          if(e.key.keysym.sym == 275)
-            //VP1->tourne = 1;
-          if(e.key.keysym.sym == 276)
+          if(e.key.keysym.sym == SDLK_RIGHT)
+            VP1->tourne = 1;
+          if(e.key.keysym.sym == SDLK_LEFT)
             VP1->tourne = -1;
-          if(e.key.keysym.sym == 97)
+          if(e.key.keysym.sym == SDLK_d)
             VP2->tourne = 1;
-          if(e.key.keysym.sym == 100)
+          if(e.key.keysym.sym == SDLK_q)
             VP2->tourne = -1;
           break;
 
         case SDL_KEYUP:
           printf("touche lachée (code = %d)\n", e.key.keysym.sym);
-          if(e.key.keysym.sym == SDLK_q)
-            loop = 0;
-          if(e.key.keysym.sym == 273)
-            VP1->avance = 0;
-          if(e.key.keysym.sym == 119)
+          // if(e.key.keysym.sym == SDLK_q)
+          //   loop = 0;
+          if(e.key.keysym.sym == SDLK_z)
             VP2->avance = 0;
+          if(e.key.keysym.sym == SDLK_UP)
+            VP1->avance = 0;
 
-          if(e.key.keysym.sym == 275)
-            //VP1->tourne = 0;
-          if(e.key.keysym.sym == 276)
+          if(e.key.keysym.sym == SDLK_RIGHT)
             VP1->tourne = 0;
-          if(e.key.keysym.sym == 97)
+          if(e.key.keysym.sym == SDLK_LEFT)
+            VP1->tourne = 0;
+          if(e.key.keysym.sym == SDLK_q)
             VP2->tourne = 0;
-          if(e.key.keysym.sym == 100)
+          if(e.key.keysym.sym == SDLK_d)
             VP2->tourne = 0;
           break;
 

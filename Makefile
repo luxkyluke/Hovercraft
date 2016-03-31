@@ -70,4 +70,4 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 endif
 
 clean:
-		$(RM_CMD)
+	$(RM_CMD)

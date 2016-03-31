@@ -32,6 +32,7 @@ void MakeVehicule(Point2D* pos, float hauteur, float largeur, GLuint text, Playe
 	h-> hauteur = hauteur;
 	h->player = p;
 	h->texture = text;
+    h->tourne = 0;
 }
 
 
@@ -59,13 +60,14 @@ void UpdatePosition(Vehicule* h){
 
 void UpdateRotation(Vehicule* h){
 	if(h->tourne != 0){
+        printf("tourne %d\n", h->tourne);
 		h->angle = h-> angle - (h->tourne * 2);
-		
+
 		h->direction->x = -sin((PI*h-> angle)/180);
 		h->direction->y = cos((PI*h-> angle)/180);
 
 	}
-	
+
 	return;
 }
 
