@@ -8,6 +8,7 @@
 #endif
 
 /* FIN DU A GARDER */
+#include <SDL/SDL_image.h>
 #include <SDL/SDL.h>
 
 #include <stdlib.h>
