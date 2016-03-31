@@ -41,7 +41,7 @@ void MakeLevel(char* nameFichTerrain, char* pathTextureTerrain, char* pathTextur
     MakeTerrain(0, fileTerrain, &t);
     MakeVehicule(PointXY(95.,0.), 5., 5., 0, player1, &vp1);
     MakeVehicule(PointXY(-95.,0.), 5., 5., 0, player1, &vp2);
-    MakeBallon(, PointXY(0.,0.), &ballon);
+    //MakeBallon(0, PointXY(0.,0.), &ballon);
 
     l->ballon = &ballon;
     l->vp1 = &vp1;
