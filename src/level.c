@@ -21,7 +21,7 @@ void MakeLevel(char* nameFichTerrain, char* pathTextureTerrain, char* pathTextur
 	char* terrainTxt = "./" ;
 	strcat(terrainTxt, nameFichTerrain);
 	strcat(terrainTxt, ".txt");
-    fileTerrain = fopen(terrainTxt,"r"); 
+    fileTerrain = fopen(terrainTxt,"r");
     if(!fileTerrain) {
         perror("Error while opening the input file.\n");
         return;
@@ -32,21 +32,21 @@ void MakeLevel(char* nameFichTerrain, char* pathTextureTerrain, char* pathTextur
 	  	printf("Erreur : impossible de charger imgTerrain '%s' \n", argv[1]);
 	    return EXIT_FAILURE;
 	}
-	GLuint textureIdTerrain, textureIdVp1, textureIdVp2;
 	glGenTextures(1,&textureIdTerrain);
 	glGenTextures(3,&textureIdVp2);
 	glGenTextures(2,&textureIdVp1);
 	glBindTexture(GL_TEXTURE_2D, textureId);*/
 
-    MakeTerrain(0, fileTerrain, &t);
+    GLuint textureIdTerrain;
+    MakeTerrain(textureIdTerrain, fileTerrain, &t);
     MakeVehicule(PointXY(95.,0.), 5., 5., 0, player1, &vp1);
     MakeVehicule(PointXY(-95.,0.), 5., 5., 0, player1, &vp2);
-    //MakeBallon(0, PointXY(0.,0.), &ballon);
+    MakeBallon(textureIdTerrain, PointXY(0.,0.), &ballon);
 
     l->ballon = &ballon;
     l->vp1 = &vp1;
     l->vp2 = &vp2;
     l->terrain= &t;
-    l->scoreP1 = 0;	
+    l->scoreP1 = 0;
     l->scoreP2 = 0;
 }

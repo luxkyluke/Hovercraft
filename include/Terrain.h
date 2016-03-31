@@ -14,6 +14,7 @@
 #include "But.h"
 #include "Point2D.h"
 #include <stdio.h>
+#include <SDL/SDL_image.h>
 
 
 typedef struct {
@@ -30,5 +31,6 @@ typedef struct {
 void MakeTerrain(GLuint text, FILE* fichTerrain, Terrain* t);
 bool IsWall(Terrain* t, Point2D* pos);
 void FreeTerrain(Terrain* t);
+GLuint loadImage(char* image);
 
 #endif

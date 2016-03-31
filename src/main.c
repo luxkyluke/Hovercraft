@@ -9,6 +9,7 @@
 
 /* FIN DU A GARDER */
 #include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -17,13 +18,13 @@
 #include "../include/Geometry.h"
 #include "../include/Vehicule.h"
 #include "../include/Player.h"
+#include "../include/Ballon.h"
 
 /* Nombre de bits par pixel de la fenêtre */
 static const unsigned int BIT_PER_PIXEL = 32;
 
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
-
 
 void reshape(unsigned int windowWidth, unsigned int windowHeight) {
   glViewport(0, 0, windowWidth, windowHeight);
@@ -65,6 +66,10 @@ int main(int argc, char** argv) {
   Vehicule *VP2 = (Vehicule*) malloc(sizeof(Vehicule));
   MakeVehicule(PointXY(-95.,0.), 5., 5., 0, player2, VP2);
 
+  Ballon *ball = (Ballon*) malloc(sizeof(Ballon));
+  GLuint imageBallon = loadImage("images/ballon.png");
+  MakeBallon(imageBallon,PointXY(0.,0.), ball);
+
   /* Boucle d'affichage */
   int loop = 1;
 
@@ -96,6 +101,11 @@ int main(int argc, char** argv) {
       DessinVehicule(VP2);
     glPopMatrix();
 
+    glPushMatrix();
+      glColor3f(1.,1.,1.);
+      glTranslatef(0.,0.,0.);
+      DessinBallon(ball, imageBallon);
+    glPopMatrix();
 
     /* Echange du front et du back buffer : mise à jour de la fenêtre */
     SDL_GL_SwapBuffers();
@@ -121,8 +131,6 @@ int main(int argc, char** argv) {
         /* Touche clavier */
         case SDL_KEYDOWN:
           printf("touche pressée (code = %d)\n", e.key.keysym.sym);
-          // if(e.key.keysym.sym == SDLK_q)
-          //   loop = 0;
           if(e.key.keysym.sym ==  SDLK_z)
             VP2->avance = 1;
           if(e.key.keysym.sym == SDLK_UP)
@@ -140,8 +148,6 @@ int main(int argc, char** argv) {
 
         case SDL_KEYUP:
           printf("touche lachée (code = %d)\n", e.key.keysym.sym);
-          // if(e.key.keysym.sym == SDLK_q)
-          //   loop = 0;
           if(e.key.keysym.sym == SDLK_z)
             VP2->avance = 0;
           if(e.key.keysym.sym == SDLK_UP)

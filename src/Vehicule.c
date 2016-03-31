@@ -60,12 +60,9 @@ void UpdatePosition(Vehicule* h){
 
 void UpdateRotation(Vehicule* h){
 	if(h->tourne != 0){
-        printf("tourne %d\n", h->tourne);
-		h->angle = h-> angle - (h->tourne * 2);
-
+		h->angle = h->angle - (h->tourne * 2);
 		h->direction->x = -sin((PI*h-> angle)/180);
 		h->direction->y = cos((PI*h-> angle)/180);
-
 	}
 
 	return;
