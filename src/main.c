@@ -8,7 +8,6 @@
 #endif
 
 /* FIN DU A GARDER */
-#include <SDL/SDL_image.h>
 #include <SDL/SDL.h>
 
 #include <stdlib.h>
@@ -30,7 +29,7 @@ void reshape(unsigned int windowWidth, unsigned int windowHeight) {
   glViewport(0, 0, windowWidth, windowHeight);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluOrtho2D(-100., 100., -50., 50.);
+  gluOrtho2D(-100., 100., -50., 50.); 
 }
 
 void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
@@ -82,6 +81,7 @@ int main(int argc, char** argv) {
     glPushMatrix();
       //glRotatef(90, 0, 0, 1);
       glTranslatef(VP1->position->x, VP1->position->y, 0);
+      glRotatef(VP1->angle,0.,0.,1.);
       glScalef(VP1->largeur,VP1->hauteur, 0.);
       DessinVehicule(VP1);
     glPopMatrix();
