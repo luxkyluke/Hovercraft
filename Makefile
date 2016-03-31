@@ -1,71 +1,73 @@
-ifeq ($(OS),Windows_NT)
 CC = gcc
-CFLAGS = -Wall
-LDFLAGS  = -lmingw32 -lSDLmain -lSDL -lopengl32 -lglu32 -lm
-
+CCFLAGS = -Wall -std=c11 -g -O2
+LDFLAGS  = -lm
 APP_BIN = Hovercraft
-
 SRC_PATH = src
 OBJ_PATH = obj
-INC_PATH = -I include
+INC_PATH = include
 BIN_PATH = bin
 LIB_PATH = lib
-MKDIR_P = mkdir
-
+MKDIR_CMD = mkdir
+TEST_DIR = if
 
 SRC_FILES = $(wildcard src/*.c) $(wildcard src/*/*.c)
 OBJ_FILES = $(patsubst $(SRC_PATH)/%.c,$(OBJ_PATH)/%.o, $(SRC_FILES))
 
-all: $(APP_BIN)
-		@echo $(SRC_FILES)
-
-$(APP_BIN): $(OBJ_FILES)
-	if not exist "$(BIN_PATH)" $(MKDIR_P) $(BIN_PATH)
-	$(CC) -o $(BIN_PATH)/$(APP_BIN) $(OBJ_FILES) $(LDFLAGS)
-
-obj/main.o : $(SRC_FILES) src/main.c
-	if not exist "$(@D)" $(MKDIR_P) "$(@D)"
-	$(CC) -c src/main.c -o obj/main.o $(CFLAGS) $(INC_PATH)
-
-$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
-	if not exist "$(@D)" $(MKDIR_P) "$(@D)"
-	$(CC) -c $< -o $@ $(CFLAGS) $(INC_PATH)
-
-clean:
-	del $(OBJ_FILES) $(BIN_PATH)\$(APP_BIN)
+ifeq ($(OS),Windows_NT)
+    CCFLAGS += -D WIN32
+		LDFLAGS += -lSDL -lSDL_image
+		W_OBJ_FILES = $(subst /,\,$(OBJ_FILES))
+		RM_CMD = for %%x in ($(W_OBJ_FILES)) do (if exist %%x (del /q %%x))
+		LDFLAGS += -lmingw32 -lSDLmain  -lSDL_image -lopengl32 -lglu32
+    ifeq ($(PROCESSOR_ARCHITECTURE),AMD64)
+        CCFLAGS += -D AMD64
+    endif
+    ifeq ($(PROCESSOR_ARCHITECTURE),x86)
+        CCFLAGS += -D IA32
+    endif
 else
-CC = gcc
-CFLAGS = -Wall
+		MKDIR_CMD+= -p
+		RM_CMD = rm $(OBJ_FILES) $(BIN_PATH)/$(APP_BIN)
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+				LDFLAGS += -lGL -lGLU
+				LDFLAGS += -lSDL -lSDL_image
+        CCFLAGS += -D LINUX
+    endif
+    ifeq ($(UNAME_S),Darwin)
+				LDFLAGS += -I/Library/Frameworks/SDL.framework/Headers -I/Library/Frameworks/SDL_image.framework/Headers -I/opt/local/include `sdl-config --libs` -framework Cocoa -framework OpenGL -lSDL_image
+				CCFLAGS += `sdl-config --cflags`
+        CCFLAGS += -D OSX
+    endif
+    UNAME_P := $(shell uname -p)
 
-OS := $(shell uname)
-ifeq ($(OS),Darwin)
-	LDFLAGS =-I/Library/Frameworks/SDL.frameworks/Headers SDLmain.m -framework SDL -framework Cocoa -framework OpenGL
-else
-	LDFLAGS = -lSDL -lm -lGLU -lGL
 endif
 
-APP_BIN = Hovercraft
-
-SRC_PATH = src
-OBJ_PATH = obj
-INC_PATH = -I include
-BIN_PATH = bin
-LIB_PATH = lib
-
-SRC_FILES = $(shell find $(SRC_PATH) -type f -name '*.c')
-OBJ_FILES = $(patsubst $(SRC_PATH)/%.c,$(OBJ_PATH)/%.o, $(SRC_FILES))
-
 all: $(APP_BIN)
-
+	@echo "$(APP_BIN) has been created"
+ifeq ($(OS),Windows_NT)
 $(APP_BIN): $(OBJ_FILES)
-	@mkdir -p $(BIN_PATH)
-	$(CC) -o $(BIN_PATH)/$(APP_BIN) $(OBJ_FILES) $(LDFLAGS)
+	@echo "------------COMPILATION FINALE---------------"
+	if not exist "$(BIN_PATH)" $(MKDIR_CMD) $(BIN_PATH)
+	$(CC) -o $(BIN_PATH)/$(APP_BIN) $(OBJ_FILES) $(CCFLAGS) $(LDFLAGS) -I $(INC_PATH)
+else
+$(APP_BIN): $(OBJ_FILES)
+	@echo "------------COMPILATION FINALE---------------"
+	$(MKDIR_CMD) $(BIN_PATH)
+	$(CC) -o $(BIN_PATH)/$(APP_BIN) $(OBJ_FILES) $(CCFLAGS) $(LDFLAGS) -I $(INC_PATH)
+endif
 
+ifeq ($(OS),Windows_NT)
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
-	@mkdir -p "$(@D)"
-	$(CC) -c $< -o $@ $(CFLAGS) $(INC_PATH)
+	@echo "------------COMPILATION $< -> $@q---------------------"
+	if not exist "$(OBJ_PATH)" $(MKDIR_CMD) $(OBJ_PATH)
+	$(CC) -c $< -o $@ $(CCFLAGS) $(LDFLAGS) -I $(INC_PATH)
+else
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+	@echo "------------COMPILATION $< -> $@q---------------------"
+	$(MKDIR_CMD) $(OBJ_PATH)
+	$(CC) -c $< -o $@ $(CCFLAGS) $(LDFLAGS) -I $(INC_PATH)
+endif
 
 clean:
-	rm $(OBJ_FILES) $(BIN_PATH)/$(APP_BIN)
-
-endif
+		$(RM_CMD)

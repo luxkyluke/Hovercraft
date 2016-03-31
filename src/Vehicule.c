@@ -19,7 +19,6 @@ void DessinVehicule(Vehicule* v){
   glPushMatrix();
     glTranslatef(0., 0.5,0.);
     dessinCercle(100, 1,1,0.2, 1);
-    
   glPopMatrix();
 }
 

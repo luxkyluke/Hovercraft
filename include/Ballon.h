@@ -9,6 +9,9 @@
     #include <GL/glu.h>
 #endif
 
+#include "Ballon.h"
+#include "Point2D.h"
+
 #include "Point2D.h"
 
 typedef struct {
