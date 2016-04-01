@@ -11,12 +11,16 @@
 #endif
 
 
-void MakeLevel(char* nameFichTerrain, char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2, Level *l){
+void MakeLevel(char* nameFichTerrain, char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2, Level *l, int nbLevel){
 	FILE *fileTerrain;
 	Terrain t;
 	Ballon ballon;
 	Vehicule vp1;
 	Vehicule vp2;
+    GLuint imageBallon = loadImage("images/ballon.png");
+    char picsToLoad[21];
+    sprintf(picsToLoad, "./images/terrain%d.png", nbLevel);
+    GLuint textureIdTerrain = loadImage(picsToLoad);
 
 	char* terrainTxt = "./" ;
 	strcat(terrainTxt, nameFichTerrain);
@@ -27,21 +31,10 @@ void MakeLevel(char* nameFichTerrain, char* pathTextureTerrain, char* pathTextur
         return;
     }
 
-    /*SDL_Surface* imgTerrain = IMG_Load(pathTextureTerrain);
-	if(imgTerrain == NULL){
-	  	printf("Erreur : impossible de charger imgTerrain '%s' \n", argv[1]);
-	    return EXIT_FAILURE;
-	}
-	glGenTextures(1,&textureIdTerrain);
-	glGenTextures(3,&textureIdVp2);
-	glGenTextures(2,&textureIdVp1);
-	glBindTexture(GL_TEXTURE_2D, textureId);*/
-
-    GLuint textureIdTerrain;
     MakeTerrain(textureIdTerrain, fileTerrain, &t);
     MakeVehicule(PointXY(95.,0.), 5., 5., 0, player1, &vp1);
     MakeVehicule(PointXY(-95.,0.), 5., 5., 0, player1, &vp2);
-    MakeBallon(textureIdTerrain, PointXY(0.,0.), &ballon);
+    MakeBallon(imageBallon, PointXY(0.,0.), &ballon);
 
     l->ballon = &ballon;
     l->vp1 = &vp1;
@@ -49,4 +42,5 @@ void MakeLevel(char* nameFichTerrain, char* pathTextureTerrain, char* pathTextur
     l->terrain= &t;
     l->scoreP1 = 0;
     l->scoreP2 = 0;
+    l->nbLevel=nbLevel;
 }

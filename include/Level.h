@@ -14,9 +14,10 @@ typedef struct {
 	Ballon* ballon;
 	int scoreP1;
 	int scoreP2;
+    int nbLevel;
 }Level;
 
-void MakeLevel(char* nameFichTerrain,  char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2, Level *l);
+void MakeLevel(char* nameFichTerrain,  char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2, Level *l, int nbLevel);
 
 
 //verifie si il y a eu une colision entre les éléments

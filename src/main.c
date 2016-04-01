@@ -19,6 +19,7 @@
 #include "../include/Vehicule.h"
 #include "../include/Player.h"
 #include "../include/Ballon.h"
+#include "../include/Terrain.h"
 
 /* Nombre de bits par pixel de la fenêtre */
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -66,6 +67,7 @@ int main(int argc, char** argv) {
   Vehicule *VP2 = (Vehicule*) malloc(sizeof(Vehicule));
   MakeVehicule(PointXY(-95.,0.), 5., 5., 0, player2, VP2);
 
+  /* Level.c*/
   Ballon *ball = (Ballon*) malloc(sizeof(Ballon));
   GLuint imageBallon = loadImage("images/ballon.png");
   MakeBallon(imageBallon,PointXY(0.,0.), ball);
