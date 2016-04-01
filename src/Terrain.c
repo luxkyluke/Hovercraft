@@ -1,9 +1,24 @@
 #include "Terrain.h"
 
-void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
+#define NB_MAX_LIGNE 100
+#define NB_MAX_COLONNE 200
+void MakeTerrain(GLuint text, FILE* terrainTxt, Terrain* t){
+	if(terrainTxt == NULL)
+		return;
+	char* tablignes[NB_MAX_LIGNE];
+	char ligne[NB_MAX_COLONNE];
+	int i;
+
     t->largeur = 200;
     t->hauteur = 100;
     t->texture = texture;
+
+	for(i=0; i<NB_MAX_LIGNE; i++){
+		fgets(ligne, NB_MAX_COLONNE, terrainTxt);
+		printf("%s\n", ligne);
+		tablignes[i]= &ligne;
+	}
+	t->terrain = &tablignes;
 }
 
 bool IsWall(Terrain* t, Point2D* pos){

@@ -21,10 +21,10 @@ typedef struct {
 	int largeur;
 	int hauteur;
 	GLuint texture;
-	// char ** terrain;
-	// Checkpoint **checkpts;
-	// But* butP1;
-	// But* butP2;
+	char ** terrain;
+	Checkpoint **checkpts;
+	But* butP1;
+	But* butP2;
 }Terrain;
 
 void MakeTerrain(GLuint text, FILE* fichTerrain, Terrain* t);
