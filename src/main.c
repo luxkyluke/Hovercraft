@@ -20,6 +20,7 @@
 #include "../include/Player.h"
 #include "../include/Ballon.h"
 #include "../include/Terrain.h"
+#include "../include/Level.h"
 
 /* Nombre de bits par pixel de la fenêtre */
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -31,7 +32,7 @@ void reshape(unsigned int windowWidth, unsigned int windowHeight) {
   glViewport(0, 0, windowWidth, windowHeight);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  gluOrtho2D(-100., 100., -50., 50.);
+  gluOrtho2D(-100., 100., -100.*(float)windowHeight/(float)windowWidth, 100.*(float)windowHeight/(float)windowWidth);
 }
 
 void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
@@ -72,6 +73,19 @@ int main(int argc, char** argv) {
   GLuint imageBallon = loadImage("images/ballon.png");
   MakeBallon(imageBallon,PointXY(0.,0.), ball);
 
+  char picsToLoad[22];
+  int nbLevel = 1;
+  sprintf(picsToLoad, "./images/terrain%d.jpg", nbLevel);
+
+  GLuint textureIdTerrain = loadImage("./images/terrain1.jpg");
+  Terrain t;
+  FILE *fileTerrain = fopen("./fond.txt","r");
+  if(!fileTerrain) {
+      perror("Error while opening the input file.\n");
+      return 1;
+  }
+  MakeTerrain(textureIdTerrain, fileTerrain, &t);
+
   /* Boucle d'affichage */
   int loop = 1;
 
@@ -84,6 +98,10 @@ int main(int argc, char** argv) {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+    glPushMatrix();
+      DessinTerrain(&t,textureIdTerrain, windowWidth, windowHeight);
+    glPopMatrix();
 
 
     //Mouvement de l'Vehicule
@@ -169,7 +187,6 @@ int main(int argc, char** argv) {
         case SDL_VIDEORESIZE:
           windowWidth  = e.resize.w;
           windowHeight = e.resize.h;
-          setVideoMode(windowWidth, windowHeight);
           reshape(windowWidth, windowHeight);
           break;
 

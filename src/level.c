@@ -11,20 +11,19 @@
 #endif
 
 
-void MakeLevel(char* nameFichTerrain, char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2, Level *l, int nbLevel){
+void MakeLevel(char* nameFichTerrain, char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2, Level *l){
 	FILE *fileTerrain;
 	Terrain t;
 	Ballon ballon;
 	Vehicule vp1;
 	Vehicule vp2;
     GLuint imageBallon = loadImage("images/ballon.png");
-    char picsToLoad[21];
-    sprintf(picsToLoad, "./images/terrain%d.png", nbLevel);
-    GLuint textureIdTerrain = loadImage(picsToLoad);
+    GLuint textureIdTerrain = loadImage(pathTextureTerrain);
 
-	char* terrainTxt = "./" ;
+	char terrainTxt[11] = "./";
 	strcat(terrainTxt, nameFichTerrain);
 	strcat(terrainTxt, ".txt");
+
     fileTerrain = fopen(terrainTxt,"r");
     if(!fileTerrain) {
         perror("Error while opening the input file.\n");
@@ -42,5 +41,4 @@ void MakeLevel(char* nameFichTerrain, char* pathTextureTerrain, char* pathTextur
     l->terrain= &t;
     l->scoreP1 = 0;
     l->scoreP2 = 0;
-    l->nbLevel=nbLevel;
 }
