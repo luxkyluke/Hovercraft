@@ -22,7 +22,6 @@ typedef struct {
 	int hauteur;
 	GLuint texture;
 	char ** terrain;
-	char * terrainTxt;
 	Checkpoint **checkpts;
 	But* butP1;
 	But* butP2;
