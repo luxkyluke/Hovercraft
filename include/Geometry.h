@@ -5,6 +5,8 @@
 #include "Vector2D.h"
 #include "Point2D.h"
 #include "Color3f.h"
+#include "bool.h"
+#include "Cercle.h"
 
 
 #define CLAMP(x, min, max) MAX(min, MIN(max, x))
@@ -20,6 +22,6 @@ int IsZero(float x);
 void dessinCarre(int fill, float r, float v, float b);
 
 void dessinCercle(int n, float r, float v, float b, int fill);
-
+void MakeCercle(Cercle* c, Point2D* position, float radius);
 
 #endif

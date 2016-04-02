@@ -6,6 +6,7 @@
 #include "Vehicule.h"
 #include "CheckPoint.h"
 #include "Terrain.h"
+#include "Cercle.h"
 
 //fonction qui calcule les consequences des colisions
 void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2);
@@ -21,6 +22,8 @@ bool TouchedVehiculeCheckPoint(Vehicule* vehicule, CheckPoint* chkP);
 bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule);
 bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain);
 bool TouchedBallonTerrain(Ballon *ballon, Terrain * terrain);
+
+bool CollisionCercleCercle(Cercle*c1,Cercle*c2);
 
 
 #endif

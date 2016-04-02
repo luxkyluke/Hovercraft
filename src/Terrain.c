@@ -15,7 +15,6 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
 	for(i=0; i<NB_MAX_LIGNE; i++){
         char ligne[NB_MAX_COLONNE];
 		fgets(ligne, NB_MAX_COLONNE, terrainTxt);
-		printf("%s\n", ligne);
 		tablignes[i]= &ligne;
 	}
 	t->terrain = &tablignes;
@@ -32,7 +31,6 @@ void FreeTerrain(Terrain* t){
 void DessinTerrain(Terrain* t, GLuint texture, unsigned int windowWidth, unsigned int windowHeight) {
     glEnable(GL_TEXTURE_2D);
     float test = (float)windowWidth - (float)windowWidth/2;
-    printf("hrllo %f \n", 100.*(float)windowHeight/(float)windowWidth);
     glBindTexture(GL_TEXTURE_2D, texture);
     glScalef(2, 2, 1.f);
     glBegin(GL_QUADS);

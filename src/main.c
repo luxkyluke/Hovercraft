@@ -46,8 +46,8 @@ int main(int argc, char** argv) {
 
 
   /* Dimensions de la fenêtre */
-  unsigned int windowWidth  = 1800;
-  unsigned int windowHeight = 900;
+  unsigned int windowWidth  = 1000;
+  unsigned int windowHeight = 500;
 
   /* Initialisation de la SDL */
   if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
@@ -109,7 +109,6 @@ int main(int argc, char** argv) {
     glPushMatrix();
       glTranslatef(VP1->position->x, VP1->position->y, 0);
       glRotatef(VP1->angle,0.,0.,1.);
-      glScalef(VP1->largeur,VP1->hauteur, 0.);
       DessinVehicule(VP1);
     glPopMatrix();
 
@@ -117,7 +116,6 @@ int main(int argc, char** argv) {
     glPushMatrix();
       glTranslatef(VP2->position->x, VP2->position->y, 0);
       glRotatef(VP2->angle,0.,0.,1.);
-      glScalef(VP2->largeur,VP1->hauteur, 0.);
       DessinVehicule(VP2);
     glPopMatrix();
 

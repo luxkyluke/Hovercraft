@@ -15,6 +15,7 @@
 
 //Dessin de l'hovercraft
 void DessinVehicule(Vehicule* v){
+  glScalef(v->largeur,v->hauteur, 0.);
   dessinCarre(1,1,1,0.2);
   glPushMatrix();
     glTranslatef(0., 0.5,0.);
@@ -61,6 +62,7 @@ void UpdatePosition(Vehicule* h){
 void UpdateRotation(Vehicule* h){
 	if(h->tourne != 0){
 		h->angle = h->angle - (h->tourne * 2);
+        h->angle = h->angle;
 		h->direction->x = -sin((PI*h-> angle)/180);
 		h->direction->y = cos((PI*h-> angle)/180);
 	}
