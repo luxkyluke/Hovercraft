@@ -11,6 +11,12 @@
 #define EPSILON 0.0005
 #define PI 3.14
 
+typedef struct cercle{
+	float radius;
+	float radiusCarre;
+	Point2D* centre;
+}Cercle;
+
 Vector2D* Vector(Point2D* A, Point2D* B);
 Point2D* PointPlusVector(Point2D* O, Vector2D* v);
 

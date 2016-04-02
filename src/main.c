@@ -20,6 +20,7 @@
 #include "../include/Player.h"
 #include "../include/Ballon.h"
 #include "../include/Terrain.h"
+#include "Collision.h"
 
 /* Nombre de bits par pixel de la fenêtre */
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -108,6 +109,8 @@ int main(int argc, char** argv) {
       glTranslatef(0.,0.,0.);
       DessinBallon(ball, imageBallon);
     glPopMatrix();
+
+  
 
     /* Echange du front et du back buffer : mise à jour de la fenêtre */
     SDL_GL_SwapBuffers();

@@ -72,3 +72,4 @@ void dessinCercle(int n, float r, float v, float b, int fill){
   glEnd();
   }
 }
+

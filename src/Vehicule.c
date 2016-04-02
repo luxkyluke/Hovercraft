@@ -30,10 +30,14 @@ void MakeVehicule(Point2D* pos, float hauteur, float largeur, GLuint text, Playe
 	h-> vitesse = VectorXY(0,0);
 	h-> largeur = largeur;
 	h-> hauteur = hauteur;
+	h-> cercle->radius = 0.5 * largeur;
+	h-> cercle->radiusCarre = h-> cercle->radius * h-> cercle->radius;
+	h-> cercle-> centre = PointXY(pos->x, pos->y);
 	h->player = p;
 	h->texture = text;
     h->tourne = 0;
 }
+
 
 
 // PARTIE PHYSIQUE
@@ -82,3 +86,25 @@ void FreeVehicule(Vehicule* v){
 	free(v->vitesse);
 	free(v->acceleration);
 }
+
+bool IsTouchingVehicule(Vehicule *v, Point2D* pos){
+  Point2D* posV = v->position;
+  float largeur = v->largeur;
+  float hauteur = v->hauteur;
+  float xMax = posV->x+largeur/2.;
+  float xMin = posV->x-largeur/2.;
+  float yMax = posV->y+hauteur/2.;
+  float yMin = posV->y-hauteur/2.;
+
+  //printf("xMin %f < %f <xMax : %f, \n", xMin, pos->x, xMax);
+ printf("yMin %f < %f <yMax : %f, \n", yMin, pos->y, yMax);
+
+  if(pos->x <= xMax && pos->x >= xMin && pos->y <= yMax && pos->y >= yMin){
+    printf("TRUE\n");
+    return true;
+  }
+    
+  return false;
+
+}
+
