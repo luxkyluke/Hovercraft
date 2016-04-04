@@ -83,8 +83,14 @@ void UpdatePosition(Vehicule* h){
 void UpdateRotation(Vehicule* h){
 	if(h->tourne != 0){
 		h->angle = h->angle - (h->tourne * 2);
+<<<<<<< HEAD
 		h->direction.x = -sin((PI*h-> angle)/180);
 		h->direction.y = cos((PI*h-> angle)/180);
+=======
+        h->angle = h->angle;
+		h->direction->x = -sin((PI*h-> angle)/180);
+		h->direction->y = cos((PI*h-> angle)/180);
+>>>>>>> 5e75ec0799037d210b2de730de49a213eb9d379d
 	}
 
 	return;

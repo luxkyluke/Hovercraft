@@ -66,6 +66,7 @@ void FreeTerrain(Terrain* t){
 	}*/
 }
 
+<<<<<<< HEAD
 void DessinTerrain(Terrain* t, unsigned int windowWidth, unsigned int windowHeight) {
     glPushMatrix();
 	    glEnable(GL_TEXTURE_2D);
@@ -84,6 +85,21 @@ void DessinTerrain(Terrain* t, unsigned int windowWidth, unsigned int windowHeig
 	    glBindTexture(GL_TEXTURE_2D, 0);
 	    glDisable(GL_TEXTURE_2D);
     glPopMatrix();
+=======
+void DessinTerrain(Terrain* t, GLuint texture, unsigned int windowWidth, unsigned int windowHeight) {
+    glEnable(GL_TEXTURE_2D);
+    float test = (float)windowWidth - (float)windowWidth/2;
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glScalef(2, 2, 1.f);
+    glBegin(GL_QUADS);
+        glTexCoord2f(1,0); glVertex2f(100*0.5 , 50.*.5);
+        glTexCoord2f(1,1); glVertex2f(100*0.5 , -50.*.5);
+        glTexCoord2f(0,1); glVertex2f(-100*0.5, -50.*.5);
+        glTexCoord2f(0,0); glVertex2f(-100*0.5, 50.*.5);
+    glEnd();
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_TEXTURE_2D);
+>>>>>>> 5e75ec0799037d210b2de730de49a213eb9d379d
 }
 
  
