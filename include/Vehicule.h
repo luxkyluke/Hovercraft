@@ -22,21 +22,20 @@ typedef struct {
 	float hauteur;
 	float largeur;
 	float angle;
-	Point2D* position;
-	Vector2D* direction;
-	Vector2D* vitesse;
-	Vector2D* acceleration;
+	Point2D position;
+	Vector2D direction;
+	Vector2D vitesse;
+	Vector2D acceleration;
 	int avance, tourne;
 	Player player;
 }Vehicule;
 
-void MakeVehicule(Point2D* pos, float hauteur, float largeur, GLuint text, Player p, Vehicule* v);
+void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint text, Player p, Vehicule* v);
 void DessinVehicule(Vehicule * v);
 void UpdateAcceleration(Vehicule* h);
 void UpdateVitesse(Vehicule* h);
 void UpdatePosition(Vehicule* h);
 void UpdateRotation(Vehicule* h);
 void UpdateVehicule(Vehicule* h);
-void FreeVehicule(Vehicule *h);
 
 #endif

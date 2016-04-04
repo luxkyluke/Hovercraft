@@ -1,28 +1,14 @@
-/* A GARDER QUAND ON UTILISE OPENGL */
-#ifdef __APPLE__
-    #include <OpenGL/gl.h>
-    #include <OpenGL/glu.h>
-#else
-    #include <GL/gl.h>
-    #include <GL/glu.h>
-#endif
-
-/* FIN DU A GARDER */
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-
 #include "Game.h"
-#include "Level.h"
+#include "sdl_tools.h"
+
+#define NB_MAX_LEVEL 30
+
 
 /* Nombre de bits par pixel de la fenêtre */
-//static const unsigned int BIT_PER_PIXEL = 32;
+static const unsigned int BIT_PER_PIXEL = 32;
 
 /* Nombre minimal de millisecondes separant le rendu de deux images */
-/*static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
+static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
 void reshape(unsigned int windowWidth, unsigned int windowHeight) {
   glViewport(0, 0, windowWidth, windowHeight);
@@ -36,107 +22,109 @@ void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
     fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
     exit(EXIT_FAILURE);
   }
-}*/
+}
 
-int main(int argc, char** argv) {
+unsigned int windowHeight= 900;
+unsigned int windowWidth = 1800;
 
-/*
-  // Dimensions de la fenêtre 
-  unsigned int windowWidth  = 1800;
-  unsigned int windowHeight = 900;
+void MakeGame(Game* game, float duration){
+	if(game == NULL) {	
+		printf("Impossible de créer le game, pointeur non alloué\n"); 
+		return;
+	}
 
-  // Initialisation de la SDL 
-  if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
-    fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
-    return EXIT_FAILURE;
-  }
+	 // Initialisation de la SDL 
+	if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
+	  fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
+	  return;
+	}
 
-  // Ouverture d'une fenêtre et création d'un contexte OpenGL
-  setVideoMode(windowWidth, windowHeight);
-  reshape(windowWidth, windowHeight);
+	// Ouverture d'une fenêtre et création d'un contexte OpenGL 
+	setVideoMode(windowWidth, windowHeight);
+	reshape(windowWidth, windowHeight);
+
+	game->levels = (Level **) malloc(NB_MAX_LEVEL*sizeof(Level*));
+	game->nbLevels = 0;
+	game->duration = duration;
+}
+
+int AddLevel(Game* game, char* nameFichTerrain,  char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2){
+	if(!game || !nameFichTerrain || !pathTextureTerrain || !pathTextureVp2 || !pathTextureVp1)
+		return -1;
+	if(game->nbLevels == NB_MAX_LEVEL){
+		printf("Echec de l'ajout - Nombre de level max depasse \n");
+		return -1;
+	}
+	int id = game->nbLevels;
+	game->levels[id] = (Level *) malloc(sizeof(Level));
+	MakeLevel(game->levels[id], nameFichTerrain, pathTextureTerrain, pathTextureVp1, pathTextureVp2);
+	if(game->levels[id]  == NULL){
+		printf("Probleme makeLevel dans AddLevel\n");
+		return -1;
+	}
+
+	game->nbLevels += 1;
+	return id;
+	return 0;
+}
+
+void PlayLevel(Game* game, int idLevel){
+	
+	if(!game || idLevel >= game->nbLevels)
+		return;
+
+	
+
+  Level* level = game->levels[idLevel];
+  Vehicule* VP1 = level->vp1;
+  Vehicule* VP2 = level->vp2;
+ 
+
+  
 
   // Titre de la fenêtre 
-  SDL_WM_SetCaption("HoverLigue !", NULL);*/
-
-
-  Game* game = (Game *) malloc(sizeof(Game));
-  
-  MakeGame(game, 300);
-  //MakeLevel(level1, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
-  int id = AddLevel(game, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
- 
-  PlayLevel(game, id);
-
-  FreeGame(game);
-  /*
-  Vehicule *VP1 = (Vehicule*) malloc(sizeof(Vehicule));
-  MakeVehicule(PointXY(95.,0.), 5., 5., 0, player1, VP1);
-
-  Vehicule *VP2 = (Vehicule*) malloc(sizeof(Vehicule));
-  MakeVehicule(PointXY(-95.,0.), 5., 5., 0, player2, VP2);
-
-  // Level.c
-  Ballon *ball = (Ballon*) malloc(sizeof(Ballon));
-  GLuint imageBallon = loadImage("images/ballon.png");
-  MakeBallon(imageBallon,PointXY(0.,0.), ball);
-
-  char picsToLoad[22];
-  int nbLevel = 1;
-  sprintf(picsToLoad, "./images/terrain%d.jpg", nbLevel);
-
-  GLuint textureIdTerrain = loadImage("./images/terrain1.jpg");
-  Terrain t;
-  FILE *fileTerrain = fopen("./fond.txt","r");
-  if(!fileTerrain) {
-      perror("Error while opening the input file.\n");
-      return 1;
-  }
-
-  MakeTerrain(textureIdTerrain, fileTerrain, &t);
+  char windowname[30];
+  sprintf(windowname, "HoverLigue Niveau %d !", idLevel+1);
+  SDL_WM_SetCaption(windowname, NULL);
 
   // Boucle d'affichage 
   int loop = 1;
+
 
   while(loop) {
     // Récupération du temps au début de la boucle 
     Uint32 startTime = SDL_GetTicks();
 
     // Placer ici le code de dessin 
+   	glClearColor(0, 0 , 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    glPushMatrix();
-      DessinTerrain(&t,textureIdTerrain, windowWidth, windowHeight);
-    glPopMatrix();
+    
+
+   glPushMatrix();
+      DessinTerrain(level->terrain, windowWidth, windowHeight);
+   glPopMatrix();
 
 
+    //printf("level->terrain-> : %3.f\n", VP1->position.x);
     //Mouvement de l'Vehicule
     UpdateVehicule(VP1);
-    glPushMatrix();
-      glTranslatef(VP1->position.x, VP1->position.y, 0);
-      glRotatef(VP1->angle,0.,0.,1.);
-      glScalef(VP1->largeur,VP1->hauteur, 0.);
-      DessinVehicule(VP1);
-    glPopMatrix();
+   
+    DessinVehicule(VP1);
 
     UpdateVehicule(VP2);
-    glPushMatrix();
-      glTranslatef(VP2->position.x, VP2->position.y, 0);
-      glRotatef(VP2->angle,0.,0.,1.);
-      glScalef(VP2->largeur,VP1->hauteur, 0.);
-      DessinVehicule(VP2);
-    glPopMatrix();
-
-    glPushMatrix();
-      glColor3f(1.,1.,1.);
-      glTranslatef(0.,0.,0.);
-      DessinBallon(ball, imageBallon);
-    glPopMatrix();
+    
+    DessinVehicule(VP2);
+    
+    DessinBallon(level->ballon);
 
     // Echange du front et du back buffer : mise à jour de la fenêtre 
     SDL_GL_SwapBuffers();
+
+
 
     // Boucle traitant les evenements 
     SDL_Event e;
@@ -215,7 +203,16 @@ int main(int argc, char** argv) {
   // Liberation des ressources associées à la SDL 
   SDL_Quit();
 
-  FreeVehicule(VP1);*/
+}
 
-  return EXIT_SUCCESS;
+void FreeGame(Game* g){
+	int i;
+	for(i=0; i< g->nbLevels ; i++){
+		FreeLevel(g->levels[i]);
+		free(g->levels[i]);
+		g->levels[i] = NULL;
+	}
+	free(g->levels);
+	g->levels = NULL;
+	printf("FreeGame OK\n");
 }

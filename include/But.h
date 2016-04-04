@@ -7,10 +7,10 @@
 typedef struct {
 	int hauteur;
 	int largeur;
-	Point2D* position;
+	Point2D position;
 }But;
 
-void MakeBut(int hauteur, int largeur, Point2D* pos, But* b);
+void MakeBut(int hauteur, int largeur, Point2D pos, But* b);
 bool BallIsInGoal(But* but, Ballon* ball);
 
 #endif

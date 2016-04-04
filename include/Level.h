@@ -17,7 +17,7 @@ typedef struct {
     int nbLevel;
 }Level;
 
-void MakeLevel(char* nameFichTerrain,  char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2, Level *l);
+void MakeLevel(Level *l, char* nameFichTerrain,  char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2);
 
 
 //verifie si il y a eu une colision entre les éléments
