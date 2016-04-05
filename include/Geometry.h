@@ -18,8 +18,9 @@ typedef struct cercle{
 	Point2D* centre;
 }Cercle;
 
-Vector2D* Vector(Point2D* A, Point2D* B);
-Point2D* PointPlusVector(Point2D* O, Vector2D* v);
+Vector2D Vector(Point2D A, Point2D B);
+Point2D PointPlusVector(Point2D O, Vector2D v);
+
 
 int IsZero(float x);
 

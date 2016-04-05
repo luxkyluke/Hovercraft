@@ -14,20 +14,41 @@
 
 //Dessin de l'hovercraft
 void DessinVehicule(Vehicule* v){
-  glScalef(v->largeur,v->hauteur, 0.);
-  dessinCarre(1,1,1,0.2);
   glPushMatrix();
-    glTranslatef(0., 0.5,0.);
-    dessinCercle(100, 1,1,0.2, 1);
+  		glEnable(GL_TEXTURE_2D);
+	    //float test = (float)windowWidth - (float)windowWidth/2;
+	    //printf("hrllo %f \n", 100.*(float)windowHeight/(float)windowWidth);
+	    //glColor3f(255, 255, 255);
+	    glBindTexture(GL_TEXTURE_2D, v->texture);
+	    //printf("texture vp %d\n", v->texture);
+	   	glTranslatef(v->position.x, v->position.y, 0);
+  	  	glRotatef(v->angle,0.,0.,1.);
+  	  	glScalef(v->largeur, v->hauteur, 0.);
+  	  	//printf("v->largeur : %d, v->hauteur %d\n", v->largeur);
+	  	dessinCarre(1,1,1,0.2);
+		glPushMatrix();
+		  glTranslatef(0., 0.5,0.);
+		  dessinCercle(100, 1,1,0.2, 1);
+		glPopMatrix();
+		glBindTexture(GL_TEXTURE_2D, 0);
+	    glDisable(GL_TEXTURE_2D);
   glPopMatrix();
+
 }
 
-void MakeVehicule(Point2D* pos, float hauteur, float largeur, GLuint text, Player p, Vehicule *h){
+void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint text, Player p, Vehicule *h){
+	if(!h) {
+		printf("Impossible de créer le véhicule, pointeur non alloué\n"); 
+		return;
+	}
 	h-> position = pos;
 	h-> angle = 0;
-	h-> direction = VectorXY(0,1);
-	h-> acceleration = VectorXY(0,0);
-	h-> vitesse = VectorXY(0,0);
+	Vector2D defaultDir = VectorXY(0,1);
+	Vector2D defaultAcc = VectorXY(0,0);
+	Vector2D defaultVit = VectorXY(0,0);
+	h-> direction = defaultDir;
+	h-> acceleration = defaultAcc;
+	h-> vitesse = defaultVit;
 	h-> largeur = largeur;
 	h-> hauteur = hauteur;
 	h-> cercle->radius = 0.5 * largeur;
@@ -57,17 +78,16 @@ void UpdateVitesse(Vehicule* h){
 }
 
 void UpdatePosition(Vehicule* h){
-	h->position->x += h-> vitesse->x;
-	h->position->y += h-> vitesse->y;
+	h->position.x += h-> vitesse.x;
+	h->position.y += h-> vitesse.y;
 	return;
 }
 
 void UpdateRotation(Vehicule* h){
 	if(h->tourne != 0){
 		h->angle = h->angle - (h->tourne * 2);
-        h->angle = h->angle;
-		h->direction->x = -sin((PI*h-> angle)/180);
-		h->direction->y = cos((PI*h-> angle)/180);
+		h->direction.x = -sin((PI*h-> angle)/180);
+		h->direction.y = cos((PI*h-> angle)/180);
 	}
 
 	return;

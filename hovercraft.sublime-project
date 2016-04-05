@@ -1,0 +1,22 @@
+{
+	"folders":
+	[
+		{
+			"path": "bin"
+		}, 
+		{
+			"path": "include"
+		}, 
+		{
+			"path": "src"
+		}
+	],
+
+	"settings":
+	{
+	"sublimegdb_commandline": "gdb -nx -readnow -fullname --interpreter=mi ./hovercraft",
+	"sublimegdb_workingdir": "${folder:/bin{project_path:hovercraft}}"
+	}
+
+}
+
