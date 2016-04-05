@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "Vector2D.h"
 #include "Geometry.h"
+#include "bool.h"
+
 #include <math.h>
 #define PI 3.14
 
@@ -21,6 +23,7 @@ typedef struct {
 	GLuint texture;
 	float hauteur;
 	float largeur;
+	Cercle* cercle;
 	float angle;
 	Point2D position;
 	Vector2D direction;
@@ -37,5 +40,7 @@ void UpdateVitesse(Vehicule* h);
 void UpdatePosition(Vehicule* h);
 void UpdateRotation(Vehicule* h);
 void UpdateVehicule(Vehicule* h);
+void FreeVehicule(Vehicule *h);
+bool IsTouchingVehicule(Vehicule *v, Point2D* pos);
 
 #endif

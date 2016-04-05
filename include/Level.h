@@ -4,8 +4,8 @@
 #include "Terrain.h"
 #include "Vehicule.h"
 #include "Ballon.h"
-#include "Level.h"
 #include "Point2D.h"
+#include "bool.h"
 
 typedef struct {
 	Terrain* terrain;

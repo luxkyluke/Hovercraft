@@ -15,8 +15,17 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "Game.h"
-#include "Level.h"
+
+#include "../include/Geometry.h"
+#include "../include/Vehicule.h"
+#include "../include/Player.h"
+#include "../include/Ballon.h"
+#include "../include/Terrain.h"
+#include "../include/Collision.h"
+#include "../include/Level.h"
+#include "../include/Game.h"
+
+
 
 /* Nombre de bits par pixel de la fenêtre */
 //static const unsigned int BIT_PER_PIXEL = 32;
@@ -40,12 +49,13 @@ void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
 
 int main(int argc, char** argv) {
 
-/*
-  // Dimensions de la fenêtre 
+
+  /* Dimensions de la fenêtre */
   unsigned int windowWidth  = 1800;
   unsigned int windowHeight = 900;
 
-  // Initialisation de la SDL 
+  /* Initialisation de la SDL */
+
   if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
     fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
     return EXIT_FAILURE;
@@ -56,7 +66,7 @@ int main(int argc, char** argv) {
   reshape(windowWidth, windowHeight);
 
   // Titre de la fenêtre 
-  SDL_WM_SetCaption("HoverLigue !", NULL);*/
+  SDL_WM_SetCaption("HoverLigue !", NULL);
 
 
   Game* game = (Game *) malloc(sizeof(Game));
@@ -133,7 +143,9 @@ int main(int argc, char** argv) {
       DessinBallon(ball, imageBallon);
     glPopMatrix();
 
-    // Echange du front et du back buffer : mise à jour de la fenêtre 
+  
+
+    /* Echange du front et du back buffer : mise à jour de la fenêtre */
     SDL_GL_SwapBuffers();
 
     // Boucle traitant les evenements 
@@ -213,7 +225,7 @@ int main(int argc, char** argv) {
   // Liberation des ressources associées à la SDL 
   SDL_Quit();
 
-  FreeVehicule(VP1);*/
+  FreeVehicule(VP1);
 
   return EXIT_SUCCESS;
 }
