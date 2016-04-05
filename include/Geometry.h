@@ -6,7 +6,6 @@
 #include "Point2D.h"
 #include "Color3f.h"
 #include "bool.h"
-#include "Cercle.h"
 
 
 #define CLAMP(x, min, max) MAX(min, MIN(max, x))
