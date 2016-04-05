@@ -15,7 +15,7 @@
 typedef struct cercle{
 	float radius;
 	float radiusCarre;
-	Point2D* centre;
+	Point2D centre;
 }Cercle;
 
 Vector2D Vector(Point2D A, Point2D B);
@@ -28,6 +28,6 @@ int IsZero(float x);
 void dessinCarre(int fill, float r, float v, float b);
 
 void dessinCercle(int n, float r, float v, float b, int fill);
-void MakeCercle(Cercle* c, Point2D* position, float radius);
+void MakeCercle(Cercle* c, Point2D position, float radius);
 
 #endif

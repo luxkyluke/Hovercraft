@@ -74,7 +74,7 @@ void dessinCercle(int n, float r, float v, float b, int fill){
 }
 
 
-void MakeCercle(Cercle* c, Point2D* position, float radius) {
+void MakeCercle(Cercle* c, Point2D position, float radius) {
   if (c==NULL) {
     printf("Le cercle est NULL\n");
     return;

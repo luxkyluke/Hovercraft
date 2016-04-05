@@ -41,6 +41,6 @@ void UpdatePosition(Vehicule* h);
 void UpdateRotation(Vehicule* h);
 void UpdateVehicule(Vehicule* h);
 void FreeVehicule(Vehicule *h);
-bool IsTouchingVehicule(Vehicule *v, Point2D* pos);
+bool IsTouchingVehicule(Vehicule *v, Point2D pos);
 
 #endif

@@ -16,7 +16,7 @@
 
 //fonction qui calcule les consequences des colisions
 bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
-  float distanceCentreCarre = (c1->centre->x-c2->centre->x)*(c1->centre->x-c2->centre->x) + (c1->centre->y-c2->centre->y)*(c1->centre->y-c2->centre->y),
+  float distanceCentreCarre = (c1->centre.x-c2->centre.x)*(c1->centre.x-c2->centre.x) + (c1->centre.y-c2->centre.y)*(c1->centre.y-c2->centre.y),
         distanceRadiusCarre = (c1->radiusCarre)+(c2->radiusCarre);
   if(IsZero(distanceCentreCarre - distanceRadiusCarre)) return true;
   return false;
@@ -34,18 +34,18 @@ void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 
 //fonctions qui indiques si 2 élément sont entrer en contact ou non
 bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
-	Point2D* posV = vehicule1->position;
+	Point2D posV = vehicule1->position;
 	float largeur = vehicule1->largeur;
 	float hauteur = vehicule1->hauteur;
-	float xMax = posV->x+largeur/2;
-	float xMin = posV->x-largeur/2;
-	float yMax = posV->y+hauteur/2;
-	float yMin = posV->y-hauteur/2;
+	float xMax = posV.x+largeur/2;
+	float xMin = posV.x-largeur/2;
+	float yMax = posV.y+hauteur/2;
+	float yMin = posV.y-hauteur/2;
 
-	Point2D* pos11 = PointXY(xMin, yMax);
-	Point2D* pos12 = PointXY(xMax, yMax);
-	Point2D* pos13 = PointXY(xMax, yMin);
-	Point2D* pos14 = PointXY(xMin, yMin);
+	Point2D pos11 = PointXY(xMin, yMax);
+	Point2D pos12 = PointXY(xMax, yMax);
+	Point2D pos13 = PointXY(xMax, yMin);
+	Point2D pos14 = PointXY(xMin, yMin);
 
 	if (IsTouchingVehicule(vehicule2, pos11) ||
 				IsTouchingVehicule(vehicule2, pos12) ||
