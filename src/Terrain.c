@@ -1,7 +1,24 @@
 #include "Terrain.h"
 
-void MakeTerrain(GLuint text, FILE* terrainTxt, Terrain* t){
+#define NB_MAX_LIGNE 100
+#define NB_MAX_COLONNE 200
 
+void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
+	if(terrainTxt == NULL)
+		return;
+	//char* tablignes[NB_MAX_LIGNE];
+	int i;
+
+    t->largeur = 200;
+    t->hauteur = 100;
+    t->texture = texture;
+
+	for(i=0; i<NB_MAX_LIGNE; i++){
+        char ligne[NB_MAX_COLONNE];
+		fgets(ligne, NB_MAX_COLONNE, terrainTxt);
+		//tablignes[i]= &ligne;
+	}
+	//t->terrain = &tablignes;
 }
 
 bool IsWall(Terrain* t, Point2D* pos){
@@ -11,6 +28,22 @@ bool IsWall(Terrain* t, Point2D* pos){
 void FreeTerrain(Terrain* t){
 
 }
+
+void DessinTerrain(Terrain* t, GLuint texture, unsigned int windowWidth, unsigned int windowHeight) {
+    glEnable(GL_TEXTURE_2D);
+    //float test = (float)windowWidth - (float)windowWidth/2;
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glScalef(2, 2, 1.f);
+    glBegin(GL_QUADS);
+        glTexCoord2f(1,0); glVertex2f(100*0.5 , 50.*.5);
+        glTexCoord2f(1,1); glVertex2f(100*0.5 , -50.*.5);
+        glTexCoord2f(0,1); glVertex2f(-100*0.5, -50.*.5);
+        glTexCoord2f(0,0); glVertex2f(-100*0.5, 50.*.5);
+    glEnd();
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glDisable(GL_TEXTURE_2D);
+}
+
 
 GLuint loadImage(char* image){
     SDL_Surface* myTexture = IMG_Load(image);

@@ -9,10 +9,30 @@
 /* FIN DU A GARDER */
 
 #include "Collision.h"
-#include "Geometry.h"
 #include <stdlib.h>
 #include <SDL/SDL.h>
 
+
+
+//fonction qui calcule les consequences des colisions
+bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
+  float distanceCentreCarre = (c1->centre->x-c2->centre->x)*(c1->centre->x-c2->centre->x) + (c1->centre->y-c2->centre->y)*(c1->centre->y-c2->centre->y),
+        distanceRadiusCarre = (c1->radiusCarre)+(c2->radiusCarre);
+  if(IsZero(distanceCentreCarre - distanceRadiusCarre)) return true;
+  return false;
+}
+
+void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
+	if(TouchedVehiculeVehicule(vehicule1, vehicule2)){
+		vehicule1-> acceleration = MultVector(vehicule1-> direction, -0.1);
+		vehicule2-> acceleration = MultVector(vehicule2-> direction, -0.1);
+	}
+}
+
+
+
+
+//fonctions qui indiques si 2 élément sont entrer en contact ou non
 bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 	Point2D* posV = vehicule1->position;
 	float largeur = vehicule1->largeur;
@@ -38,4 +58,19 @@ bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 
 	return false;
 }
+
+
+bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
+	if(IsTouchingVehicule(vehicule, ballon->position) || CollisionCercleCercle(vehicule->cercle, ballon->cercle))
+		return true;
+	return false;
+}
+
+bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP){
+	if(CollisionCercleCercle(vehicule->cercle, chkP->cercle))
+		return true;
+	return false;
+}
+
+
 

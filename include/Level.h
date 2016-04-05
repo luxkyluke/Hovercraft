@@ -4,8 +4,8 @@
 #include "Terrain.h"
 #include "Vehicule.h"
 #include "Ballon.h"
-#include "Level.h"
 #include "Point2D.h"
+#include "bool.h"
 
 typedef struct {
 	Terrain* terrain;
@@ -17,7 +17,7 @@ typedef struct {
     int nbLevel;
 }Level;
 
-void MakeLevel(char* nameFichTerrain,  char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2, Level *l, int nbLevel);
+void MakeLevel(char* nameFichTerrain,  char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2, Level *l);
 
 
 //verifie si il y a eu une colision entre les éléments

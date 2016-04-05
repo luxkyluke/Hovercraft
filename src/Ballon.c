@@ -9,6 +9,9 @@ void MakeBallon(GLuint texture, Point2D* pos, Ballon* ballon){
     ballon->angle = 0.;
     ballon->position = pos;
     ballon->vitesse = 0.;
+    ballon->cercle-> radius = 2; 
+    ballon->cercle-> radiusCarre = 4; 
+    ballon->cercle->centre = ballon->position;
 }
 
 void DeplacerBallon(float angle, float acceleration){

@@ -11,7 +11,7 @@
 
 #include "Ballon.h"
 #include "Point2D.h"
-
+#include "Geometry.h"
 #include "Point2D.h"
 
 typedef struct {
@@ -19,6 +19,7 @@ typedef struct {
 	float angle;
 	Point2D* position;
 	float vitesse;
+	Cercle* cercle;
 }Ballon;
 
 void MakeBallon(GLuint texture, Point2D* pos, Ballon* ballon);

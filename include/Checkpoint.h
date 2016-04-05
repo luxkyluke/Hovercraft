@@ -3,10 +3,11 @@
 
 #include "Point2D.h"
 #include "bool.h"
+#include "Geometry.h"
 
 typedef	struct {
 	Point2D* position;
-	float radius;
+	Cercle* cercle;
 }Checkpoint;
 
 void MakeCheckpoint(Point2D* pos, float r, Checkpoint* checkpt);
