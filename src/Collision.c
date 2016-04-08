@@ -23,14 +23,18 @@ bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
 }
 
 void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
-	if(TouchedVehiculeVehicule(vehicule1, vehicule2)){
-		vehicule1-> acceleration = MultVector(vehicule1-> direction, -0.1);
-		vehicule2-> acceleration = MultVector(vehicule2-> direction, -0.1);
+	if(TouchedVehiculeVehicule(vehicule1, vehicule2) == true){
+		//vehicule1-> direction = MultVector(vehicule1->direction, -1);
+		//vehicule2-> direction = -MultVector(vehicule2-> direction, 10);
 	}
 }
 
 void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
-	if(TouchedVehiculeBallon(ballon, vehicule));
+	if(TouchedVehiculeBallon(ballon, vehicule) == true){
+		Vector2D dir;
+		dir = vehicule->direction;
+		DeplacerBallon(ballon,dir, 2.);
+	}
 }
 
 
@@ -38,7 +42,7 @@ void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
 
 //fonctions qui indiques si 2 élément sont entrer en contact ou non
 bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
-	/*Point2D posV = vehicule1->position;
+	Point2D posV = vehicule1->position;
 	float largeur = vehicule1->largeur;
 	float hauteur = vehicule1->hauteur;
 	float xMax = posV.x+largeur/2;
@@ -58,15 +62,17 @@ bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 		return true;
 
 	if (CollisionCercleCercle(vehicule1->cercle, vehicule2->cercle))
-		return true;*/
+		return true;
 
 	return false;
 }
 
 
 bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
-	if(IsTouchingVehicule(vehicule, ballon->position) || CollisionCercleCercle(vehicule->cercle, ballon->cercle))
+	if(IsTouchingVehicule(vehicule, ballon->position) == true || CollisionCercleCercle(vehicule->cercle, ballon->cercle) ==true){
+		printf("TA MERE\n");
 		return true;
+	}
 	return false;
 }
 

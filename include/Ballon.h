@@ -11,23 +11,24 @@
 
 
 #include "Point2D.h"
+#include "Vector2D.h"
 #include "Geometry.h"
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <stdio.h>
 
-
 typedef struct {
-	GLuint texture;
-	float angle;
-	Point2D position;
-	float vitesse;
-	Cercle* cercle;
+    GLuint texture;
+    Point2D position;
+    Vector2D direction;
+    float vitesse;
+    Cercle* cercle;
 }Ballon;
 
+
 void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon, float ballRadius);
-void DeplacerBallon(float angle, float acceleration);
+void DeplacerBallon(Ballon* ballon,Vector2D direction, float vitesse);
 void UpdateBallon(Ballon* h);
 void DessinBallon(Ballon* ball);
 

@@ -8,16 +8,30 @@ void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon, float ballRadius){
 		return;
 	}
     ballon->texture = texture;
-    ballon->angle = 0.;
     ballon->position = pos;
+    ballon->direction = VectorXY(0,ballRadius);
     ballon->vitesse = 0.;
     ballon->cercle = (Cercle*) malloc(sizeof(Cercle));
     MakeCercle(ballon->cercle, ballon->position, ballRadius);
 }
 
-void DeplacerBallon(float angle, float acceleration){
+/*
+typedef struct {
+    GLuint texture;
+    Point2D position;
+    Vector2D direction;
+    float vitesse;
+    Cercle* cercle;
+}Ballon;    */
 
+void DeplacerBallon(Ballon* ballon, Vector2D direction, float vitesse){
+    ballon->direction = direction;
+    ballon->vitesse = vitesse;
+    ballon->position.x += vitesse * ballon->direction.x;
+    ballon->position.y += vitesse * ballon->direction.y;
+    return;
 }
+
 
 void UpdateBallon(Ballon* b){
 
