@@ -39,6 +39,10 @@ void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 	}
 }
 
+void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
+	if(TouchedVehiculeBallon(ballon, vehicule));
+}
+
 
 
 

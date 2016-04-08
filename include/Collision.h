@@ -9,6 +9,7 @@
 #include "Terrain.h"
 #include "Vehicule.h"
 #include "Geometry.h"
+#include "Vector2D.h"
 
 //fonction qui calcule les consequences des colisions
 bool CollisionCercleCercle(Cercle*c1,Cercle*c2); //DONE
