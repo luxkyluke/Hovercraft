@@ -16,22 +16,24 @@
 
 //fonction qui calcule les consequences des colisions
 bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
-	printf("DANS COLLISION CERCLE !\n");
-	Vector2D distanceCentre = Vector(c1->centre, c2->centre);
+    Vector2D distanceCentre = Vector(c1->centre, c2->centre);
+    float tailleRayons = c1->radiusCarre + c2->radiusCarre;
+    printf("distanceCentre : %3.f | tailleRayons %3.f\n", SqrNorm(distanceCentre), tailleRayons*2);
+    if(SqrNorm(distanceCentre) <= tailleRayons*2) {
+        return true;
+    }
 
-	float tailleRayons = c1->radius + c2->radius;
-	printf("distanceCentre : %3.f | tailleRayons %3.f\n", Norm(distanceCentre), tailleRayons);
-	if(Norm(distanceCentre) <= tailleRayons)
-		return true;
-
-  	/*float distanceCentreCarre = (c1->centre.x-c2->centre.x)*(c1->centre.x-c2->centre.x) 
-  								+ (c1->centre.y-c2->centre.y)*(c1->centre.y-c2->centre.y);
- 	float distanceRadiusCarre = (c1->radiusCarre)+(c2->radiusCarre);
-  	if(IsZero(distanceCentreCarre - distanceRadiusCarre)) return true;*/
-  	return false;
+    /*float distanceCentreCarre = (c1->centre.x-c2->centre.x)*(c1->centre.x-c2->centre.x)
+                                + (c1->centre.y-c2->centre.y)*(c1->centre.y-c2->centre.y);
+    float distanceRadiusCarre = (c1->radiusCarre)+(c2->radiusCarre);
+    if(IsZero(distanceCentreCarre - distanceRadiusCarre)) return true;*/
+    return false;
+//    float distanceCentre = Norm(Vector(c1->centre, c2->centre));
+//    float distanceRayon = c1->radius + c2->radius;
+//    printf("distanceCentre : %3.f, distanceRayon : %3.f\n", distanceCentre, distanceRayon);
 }
 
-void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
+void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2) {
 	 if(TouchedVehiculeVehicule(vehicule1, vehicule2)){
 	 	printf("COLLISION VEHICULES\n");
 	// 	vehicule1-> acceleration = MultVector(vehicule1-> direction, -0.1);
@@ -40,7 +42,7 @@ void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 }
 
 void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
-	if(TouchedVehiculeBallon(ballon, vehicule));
+    if(TouchedVehiculeBallon(ballon, vehicule));
 }
 
 
@@ -85,6 +87,5 @@ bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP){
 		return true;
 	return false;
 }
-
 
 
