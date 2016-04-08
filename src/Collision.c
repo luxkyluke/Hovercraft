@@ -16,16 +16,26 @@
 
 //fonction qui calcule les consequences des colisions
 bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
-  float distanceCentreCarre = (c1->centre.x-c2->centre.x)*(c1->centre.x-c2->centre.x) + (c1->centre.y-c2->centre.y)*(c1->centre.y-c2->centre.y),
-        distanceRadiusCarre = (c1->radiusCarre)+(c2->radiusCarre);
-  if(IsZero(distanceCentreCarre - distanceRadiusCarre)) return true;
-  return false;
+	printf("DANS COLLISION CERCLE !\n");
+	Vector2D distanceCentre = Vector(c1->centre, c2->centre);
+
+	float tailleRayons = c1->radius + c2->radius;
+	printf("distanceCentre : %3.f | tailleRayons %3.f\n", Norm(distanceCentre), tailleRayons);
+	if(Norm(distanceCentre) <= tailleRayons)
+		return true;
+
+  	/*float distanceCentreCarre = (c1->centre.x-c2->centre.x)*(c1->centre.x-c2->centre.x) 
+  								+ (c1->centre.y-c2->centre.y)*(c1->centre.y-c2->centre.y);
+ 	float distanceRadiusCarre = (c1->radiusCarre)+(c2->radiusCarre);
+  	if(IsZero(distanceCentreCarre - distanceRadiusCarre)) return true;*/
+  	return false;
 }
 
 void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
-	if(TouchedVehiculeVehicule(vehicule1, vehicule2)){
-		vehicule1-> acceleration = MultVector(vehicule1-> direction, -0.1);
-		vehicule2-> acceleration = MultVector(vehicule2-> direction, -0.1);
+	 if(TouchedVehiculeVehicule(vehicule1, vehicule2)){
+	 	printf("COLLISION VEHICULES\n");
+	// 	vehicule1-> acceleration = MultVector(vehicule1-> direction, -0.1);
+	// 	vehicule2-> acceleration = MultVector(vehicule2-> direction, -0.1);
 	}
 }
 
@@ -34,7 +44,7 @@ void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 
 //fonctions qui indiques si 2 élément sont entrer en contact ou non
 bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
-	/*Point2D posV = vehicule1->position;
+	Point2D posV = vehicule1->position;
 	float largeur = vehicule1->largeur;
 	float hauteur = vehicule1->hauteur;
 	float xMax = posV.x+largeur/2;
@@ -47,14 +57,14 @@ bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 	Point2D pos13 = PointXY(xMax, yMin);
 	Point2D pos14 = PointXY(xMin, yMin);
 
-	if (IsTouchingVehicule(vehicule2, pos11) ||
+	/*if (IsTouchingVehicule(vehicule2, pos11) ||
 				IsTouchingVehicule(vehicule2, pos12) ||
 					IsTouchingVehicule(vehicule2, pos13) ||
 						IsTouchingVehicule(vehicule2, pos14))
-		return true;
+		return true;*/
 
 	if (CollisionCercleCercle(vehicule1->cercle, vehicule2->cercle))
-		return true;*/
+		return true;
 
 	return false;
 }

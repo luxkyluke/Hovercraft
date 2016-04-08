@@ -1,6 +1,7 @@
 #include <string.h>
 
 #include "Level.h"
+#include "Collision.h"
 #include "sdl_tools.h"
 
 #ifdef __APPLE__
@@ -60,6 +61,11 @@ void MakeLevel(Level* l, char* nameFichTerrain, char* pathTextureTerrain, char* 
     l->terrain= t;
     l->scoreP1 = 0;
     l->scoreP2 = 0;
+}
+
+bool CheckTouched(Level* l){
+    CollisionVehiculeVehicule(l->vp1, l->vp2);
+    return true;
 }
 
 void FreeLevel(Level * l){
