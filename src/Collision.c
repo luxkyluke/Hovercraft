@@ -12,7 +12,7 @@
 #include "Collision.h"
 #include <stdlib.h>
 #include <SDL/SDL.h>
-
+#include "Vector2D.h"
 
 
 /*fonction qui calcule les consequences des colisions*/
@@ -21,7 +21,7 @@ bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
 
     Vector2D distanceCentre = Vector(c1->centre, c2->centre);
     float tailleRayons = c1->radiusCarre + c2->radiusCarre;
-    if(SqrNorm(distanceCentre) <= tailleRayons*2){
+    if(SqrNorm(distanceCentre) <= tailleRayons*2.2){
     	printf("TRUEDUCUL\n");
         return true;
     }
@@ -33,8 +33,23 @@ bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
 void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 	if(TouchedVehiculeVehicule(vehicule1, vehicule2) == true){
 		//printf("COLLISION VEHICULES\n");
-		//vehicule1-> direction = MultVector(vehicule1->direction, -1);
-		//vehicule2-> direction = -MultVector(vehicule2-> direction, 10);
+        //vehicule1-> direction = MultVector(vehicule1->direction, -1);
+        //vehicule2-> direction = -MultVector(vehicule2-> direction, 10);
+
+        Vector2D newVector = Vector(vehicule1->cercle->centre, vehicule2->cercle->centre);
+        float dp = Norm(newVector);
+        newVector.x = newVector.x/dp;
+        newVector.y = newVector.y/dp;
+
+       Vector2D compVitesse = SubVectors(vehicule1->vitesse, vehicule2->vitesse);
+//        double dvx = vehicule1->vitesse.x - vehicule2->vitesse.x;
+//        double dvy = vehicule1->vitesse.y - vehicule2->vitesse.y;
+        double scalaire = DotProduct(newVector, compVitesse);
+        compVitesse.x = newVector.x*scalaire;
+        compVitesse.y = newVector.y*scalaire;
+
+        vehicule1->vitesse = SubVectors(vehicule1->vitesse, compVitesse);
+        vehicule2->vitesse = AddVectors(vehicule2->vitesse, compVitesse);
 	}
 }
 

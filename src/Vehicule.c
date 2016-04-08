@@ -62,7 +62,7 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint text, Player
 	h->cercle = (Cercle*) malloc(sizeof(Cercle));
 	MakeCercle(h->cercle, h->position, 0.5*largeur);
     h->facticeCercle = (Cercle*) malloc(sizeof(Cercle));
-    MakeCercle(h->facticeCercle, h->position, 0.5*largeur);
+    MakeCercle(h->facticeCercle, h->position, 0.8*largeur);
 	h->player = p;
 	h->texture = text;
     h->tourne = 0;
