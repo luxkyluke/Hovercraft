@@ -17,20 +17,16 @@
 /*fonction qui calcule les consequences des colisions*/
 
 bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
-	//printf("DANS COLLISION CERCLE !\n");
-	Vector2D distanceCentre = Vector(c1->centre, c2->centre);
 
-	float tailleRayons = c1->radius + c2->radius;
-	//printf("distanceCentre : %3.f | tailleRayons %3.f\n", Norm(distanceCentre), tailleRayons);
-	if(Norm(distanceCentre) <= tailleRayons)
-		return true;
+    Vector2D distanceCentre = Vector(c1->centre, c2->centre);
+    float tailleRayons = c1->radiusCarre + c2->radiusCarre;
+    printf("distanceCentre : %3.f | tailleRayons %3.f\n", SqrNorm(distanceCentre), tailleRayons*2);
+    if(SqrNorm(distanceCentre) <= tailleRayons*2) 
+        return true;
+    return false;
 
-  	/*float distanceCentreCarre = (c1->centre.x-c2->centre.x)*(c1->centre.x-c2->centre.x) 
-  								+ (c1->centre.y-c2->centre.y)*(c1->centre.y-c2->centre.y);
- 	float distanceRadiusCarre = (c1->radiusCarre)+(c2->radiusCarre);
-  	if(IsZero(distanceCentreCarre - distanceRadiusCarre)) return true;*/
-  	return false;
 }
+
 
 void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 	if(TouchedVehiculeVehicule(vehicule1, vehicule2) == true){
@@ -38,7 +34,6 @@ void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 		//vehicule1-> direction = MultVector(vehicule1->direction, -1);
 		//vehicule2-> direction = -MultVector(vehicule2-> direction, 10);
 	}
-
 }
 
 void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
@@ -46,7 +41,7 @@ void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
 		Vector2D dir;
 		dir = vehicule->direction;
 		DeplacerBallon(ballon,dir, 2.);
-	}
+    }
 }
 
 void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){
@@ -107,10 +102,13 @@ bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP){
 	return false;
 }
 
+<<<<<<< HEAD
 bool TouchedBallonTerrain(Ballon *ballon, Terrain * terrain){
 	if(IsWall(terrain, ballon->position) == true){
  		return true;
 }
 	return false;
 }
+=======
+>>>>>>> origin/master
 
