@@ -61,6 +61,8 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint text, Player
 	h-> hauteur = hauteur;
 	h->cercle = (Cercle*) malloc(sizeof(Cercle));
 	MakeCercle(h->cercle, h->position, 0.5*largeur);
+    h->facticeCercle = (Cercle*) malloc(sizeof(Cercle));
+    MakeCercle(h->facticeCercle, h->position, 0.5*largeur);
 	h->player = p;
 	h->texture = text;
     h->tourne = 0;
@@ -134,5 +136,6 @@ bool IsTouchingVehicule(Vehicule *v, Point2D pos){
 
 void UpdateCercle(Vehicule*v) {
     v->cercle->centre = PointPlusVector(v->position, MultVector(Normalize(v->direction),v->largeur/2.));
+    v->facticeCercle->centre = v->position;
 }
 
