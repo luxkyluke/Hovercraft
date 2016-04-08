@@ -24,6 +24,7 @@ typedef struct {
 	float hauteur;
 	float largeur;
 	Cercle* cercle;
+	Cercle* cercleFactis;
 	float angle;
 	Point2D position;
 	Vector2D direction;

@@ -112,9 +112,6 @@ bool IsTouchingVehicule(Vehicule *v, Point2D pos){
   float yMax = posV.y+hauteur/2.;
   float yMin = posV.y-hauteur/2.;
 
-  //printf("xMin %f < %f <xMax : %f, \n", xMin, pos.x, xMax);
- printf("yMin %f < %f <yMax : %f, \n", yMin, pos.y, yMax);
-
   if(pos.x <= xMax && pos.x >= xMin && pos.y <= yMax && pos.y >= yMin){
     printf("TRUE\n");
     return true;

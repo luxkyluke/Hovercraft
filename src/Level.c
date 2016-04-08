@@ -65,6 +65,7 @@ void MakeLevel(Level* l, char* nameFichTerrain, char* pathTextureTerrain, char* 
 
 bool CheckTouched(Level* l){
     CollisionVehiculeVehicule(l->vp1, l->vp2);
+    CollisionVehiculeBallon(l->ballon, l->vp1);
     return true;
 }
 
