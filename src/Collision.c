@@ -1,3 +1,4 @@
+
 /* A GARDER QUAND ON UTILISE OPENGL */
 #ifdef __APPLE__
     #include <OpenGL/gl.h>
@@ -60,43 +61,21 @@ void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){
 
 /*fonctions qui indiques si 2 élément sont entrer en contact ou non */
 bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
-//	Point2D posV = vehicule1->position;
-//	float largeur = vehicule1->largeur;
-//	float hauteur = vehicule1->hauteur;
-//	float xMax = posV.x+largeur/2;
-//	float xMin = posV.x-largeur/2;
-//	float yMax = posV.y+hauteur/2;
-//	float yMin = posV.y-hauteur/2;
-
-//	Point2D pos11 = PointXY(xMin, yMax);
-//	Point2D pos12 = PointXY(xMax, yMax);
-//	Point2D pos13 = PointXY(xMax, yMin);
-//	Point2D pos14 = PointXY(xMin, yMin);
-
-	if (IsTouchingVehicule(vehicule2, pos11) ||
-				IsTouchingVehicule(vehicule2, pos12) ||
-					IsTouchingVehicule(vehicule2, pos13) ||
-						IsTouchingVehicule(vehicule2, pos14))
-		return true;
-
     if (CollisionCercleCercle(vehicule1->cercle, vehicule2->cercle) ||
         CollisionCercleCercle(vehicule1->facticeCercle, vehicule2->cercle) ||
         CollisionCercleCercle(vehicule1->cercle, vehicule2->facticeCercle) ||
         CollisionCercleCercle(vehicule1->facticeCercle, vehicule2->facticeCercle)) {
         return true;
     }
-
 	return false;
 }
 
 
 bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
-
-	if(IsTouchingVehicule(vehicule, ballon->position) == true){ //PROBLEME: la collision se fait avec le centre du ballon et non tout le périmètre
-		printf("Ballon touché par vehicule CARRE\n");
-		return true;
-	}
-	if(CollisionCercleCercle(vehicule->cercle, ballon->cercle) == true);
+    if(CollisionCercleCercle(vehicule->cercle, ballon->cercle) ||
+       CollisionCercleCercle(vehicule->facticeCercle, ballon->cercle)) {
+        return true;
+    }
 		
 	return false;
 }

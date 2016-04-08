@@ -24,8 +24,8 @@ void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
   }
 }
 
-unsigned int windowHeight= 900;
-unsigned int windowWidth = 1800;
+unsigned int windowHeight= 600;
+unsigned int windowWidth = 1200;
 
 void MakeGame(Game* game, float duration){
 	if(game == NULL) {	
