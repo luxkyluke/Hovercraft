@@ -20,9 +20,10 @@ bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
 
     Vector2D distanceCentre = Vector(c1->centre, c2->centre);
     float tailleRayons = c1->radiusCarre + c2->radiusCarre;
-    printf("distanceCentre : %3.f | tailleRayons %3.f\n", SqrNorm(distanceCentre), tailleRayons*2);
-    if(SqrNorm(distanceCentre) <= tailleRayons*2) 
+    if(SqrNorm(distanceCentre) <= tailleRayons*2){
+    	printf("TRUEDUCUL\n");
         return true;
+    }
     return false;
 
 }
@@ -102,13 +103,12 @@ bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP){
 	return false;
 }
 
-<<<<<<< HEAD
+
 bool TouchedBallonTerrain(Ballon *ballon, Terrain * terrain){
 	if(IsWall(terrain, ballon->position) == true){
  		return true;
 }
 	return false;
 }
-=======
->>>>>>> origin/master
+
 

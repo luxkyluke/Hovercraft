@@ -21,14 +21,6 @@
 typedef struct {
     GLuint texture;
     Point2D position;
-    Point2D N;
-    Point2D NE;
-    Point2D E;
-    Point2D SE;
-    Point2D S;
-    Point2D SO;
-    Point2D O;
-    Point2D NO;
     Vector2D direction;
     float vitesse;
     Cercle* cercle;
