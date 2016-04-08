@@ -27,7 +27,7 @@ GLuint loadImage(char* image){
             format = GL_RGB;
             break;
         case 4:
-            format = GL_BGRA;
+            format = GL_RGBA;
             break;
         default:
             fprintf(stderr, "Format des pixels de l’image non pris en charge\n");

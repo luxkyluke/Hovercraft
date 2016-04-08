@@ -2,7 +2,7 @@
 #include "math.h"
 
 
-void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon){
+void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon, float ballRadius){
 	if(!ballon) {
 		printf("Impossible de créer le ballon, pointeur non alloué\n"); 
 		return;
@@ -11,9 +11,8 @@ void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon){
     ballon->angle = 0.;
     ballon->position = pos;
     ballon->vitesse = 0.;
-    ballon->cercle-> radius = 2; 
-    ballon->cercle-> radiusCarre = 4; 
-    ballon->cercle->centre = ballon->position;
+    ballon->cercle = (Cercle*) malloc(sizeof(Cercle));
+    MakeCercle(ballon->cercle, ballon->position, ballRadius);
 }
 
 void DeplacerBallon(float angle, float acceleration){

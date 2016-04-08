@@ -34,7 +34,7 @@ void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 
 //fonctions qui indiques si 2 élément sont entrer en contact ou non
 bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
-	Point2D posV = vehicule1->position;
+	/*Point2D posV = vehicule1->position;
 	float largeur = vehicule1->largeur;
 	float hauteur = vehicule1->hauteur;
 	float xMax = posV.x+largeur/2;
@@ -54,7 +54,7 @@ bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 		return true;
 
 	if (CollisionCercleCercle(vehicule1->cercle, vehicule2->cercle))
-		return true;
+		return true;*/
 
 	return false;
 }

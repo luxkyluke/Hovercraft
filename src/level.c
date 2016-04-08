@@ -19,6 +19,7 @@
 #define DEFAULT_VEHICUL_H 5.
 #define DEFAULT_BALL_POS_X 0.
 #define DEFAULT_BALL_POS_Y 0.
+#define DEFAULT_BALL_RADIUS 2.
 #define DEFAULT_BALL_TEXTURE_PATH "images/ballon.png"
 #define DEFAULT_VP1_TEXTURE_PATH "images/vp1.png"
 #define DEFAULT_VP2_TEXTURE_PATH "images/vp2.png"
@@ -51,7 +52,7 @@ void MakeLevel(Level* l, char* nameFichTerrain, char* pathTextureTerrain, char* 
     MakeTerrain(textureIdTerrain, fileTerrain, t);
     MakeVehicule(PointXY(DEFAULT_VP1_POS_X, DEFAULT_VP1_POS_Y), DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, textureVP1, player1, vp1);
     MakeVehicule(PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y), DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, textureVP2, player1, vp2);
-    MakeBallon(imageBallon, PointXY(DEFAULT_BALL_POS_X,DEFAULT_BALL_POS_Y), ballon);
+    MakeBallon(imageBallon, PointXY(DEFAULT_BALL_POS_X,DEFAULT_BALL_POS_Y), ballon, DEFAULT_BALL_RADIUS);
 
     l->ballon = ballon;
     l->vp1 = vp1;

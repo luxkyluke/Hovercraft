@@ -62,8 +62,8 @@ int AddLevel(Game* game, char* nameFichTerrain,  char* pathTextureTerrain, char*
 		printf("Probleme makeLevel dans AddLevel\n");
 		return -1;
 	}
-
 	game->nbLevels += 1;
+	
 	return id;
 	return 0;
 }

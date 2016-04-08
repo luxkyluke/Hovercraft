@@ -26,7 +26,7 @@ typedef struct {
 	Cercle* cercle;
 }Ballon;
 
-void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon);
+void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon, float ballRadius);
 void DeplacerBallon(float angle, float acceleration);
 void UpdateBallon(Ballon* h);
 void DessinBallon(Ballon* ball);

@@ -51,14 +51,12 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint text, Player
 	h-> vitesse = defaultVit;
 	h-> largeur = largeur;
 	h-> hauteur = hauteur;
-	h-> cercle->radius = 0.5 * largeur;
-	h-> cercle->radiusCarre = h-> cercle->radius * h-> cercle->radius;
-	h-> cercle-> centre = PointXY(pos.x, pos.y);
+	h->cercle = (Cercle*) malloc(sizeof(Cercle));
+	MakeCercle(h->cercle, h->position, 0.5*largeur);
 	h->player = p;
 	h->texture = text;
     h->tourne = 0;
 }
-
 
 
 // PARTIE PHYSIQUE
