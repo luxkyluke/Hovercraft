@@ -104,9 +104,7 @@ void PlayLevel(Game* game, int idLevel){
 
     
 
-   glPushMatrix();
-      DessinTerrain(level->terrain, windowWidth, windowHeight);
-   glPopMatrix();
+    DessinTerrain(level->terrain, windowWidth, windowHeight);
 
 
     //printf("level->terrain-> : %3.f\n", VP1->position.x);
@@ -124,7 +122,7 @@ void PlayLevel(Game* game, int idLevel){
     // Echange du front et du back buffer : mise à jour de la fenêtre 
     SDL_GL_SwapBuffers();
 
-
+    CheckTouched(level);
 
     // Boucle traitant les evenements 
     SDL_Event e;

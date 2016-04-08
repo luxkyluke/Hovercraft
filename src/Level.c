@@ -1,12 +1,13 @@
 #include <string.h>
 
 #include "Level.h"
+#include "Collision.h"
 #include "sdl_tools.h"
 
 #ifdef __APPLE__
     #include <OpenGL/gl.h>
     #include <OpenGL/glu.h>
-#elseq
+#else
     #include <GL/gl.h>
     #include <GL/glu.h>
 #endif
@@ -26,7 +27,7 @@
 
 void MakeLevel(Level* l, char* nameFichTerrain, char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2){
 	if(l == NULL) {
-		printf("Impossible de créer le level, pointeur non alloué\n"); 
+		printf("Impossible de créer le level, pointeur non alloué\n");
 		return;
 	}
 	FILE *fileTerrain;
@@ -38,7 +39,7 @@ void MakeLevel(Level* l, char* nameFichTerrain, char* pathTextureTerrain, char* 
     GLuint textureIdTerrain = loadImage(pathTextureTerrain);
     GLuint textureVP1 = loadImage(DEFAULT_VP1_TEXTURE_PATH);
     GLuint textureVP2 = loadImage(DEFAULT_VP2_TEXTURE_PATH);
-    
+
 	char terrainTxt[30] = "./";
 	strcat(terrainTxt, nameFichTerrain);
 	strcat(terrainTxt, ".txt");
@@ -62,11 +63,16 @@ void MakeLevel(Level* l, char* nameFichTerrain, char* pathTextureTerrain, char* 
     l->scoreP2 = 0;
 }
 
+bool CheckTouched(Level* l){
+    CollisionVehiculeVehicule(l->vp1, l->vp2);
+    return true;
+}
+
 void FreeLevel(Level * l){
 	FreeTerrain(l->terrain);
 	free(l->terrain);
     l->terrain = NULL;
-	free(l->vp2);	
+	free(l->vp2);
     l->vp2 = NULL;
 	free(l->vp1);
     l->vp1 = NULL;

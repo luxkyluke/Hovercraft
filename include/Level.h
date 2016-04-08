@@ -22,7 +22,7 @@ void MakeLevel(Level *l, char* nameFichTerrain,  char* pathTextureTerrain, char*
 
 //verifie si il y a eu une colision entre les éléments
 //Ajouter des scores si but etc...
-bool CheckTouched();
+bool CheckTouched(Level *l);
 
 void AddScoreP1(Level* l, int score);
 void AddScoreP2(Level* l, int score);
