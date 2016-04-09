@@ -52,6 +52,10 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     while(fgets(ligne, NB_MAX_COLONNE, terrainTxt)) { 
         for(j=0; j < NB_MAX_COLONNE; j++){
             if(ligne[j] == '0'){
+                if(t->nbCheckpts >= NB_MAX_CHECKPT){
+                    printf("Trop de checkpoints ! 30 Max\n");
+                    return;
+                }
                 Checkpoint chp;
                 MakeCheckpoint(PointXY(j, i), DEFAULT_RAYON_CHECKPT, &chp);
                 t->checkpts[t->nbCheckpts] = &chp;
@@ -72,7 +76,9 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     
     MakeBut(hauteurButD, PointXY(DEFAULT_BUTP2_POS_X, hauteurButD*0.5), t->butP2);
     MakeBut(hauteurButG, PointXY(DEFAULT_BUTP1_POS_X, hauteurButG*0.5), t->butP1);
-    for
+    for (j=0; j<t->nbCheckpts; ++j){
+        printf("Checkpoint x:%3.f, y:%3.f\n", t->checkpts[j]->cercle->centre.x, t->checkpts[j]->cercle->centre.y);
+    }
 }
 
 bool IsWall(Terrain* t, Point2D pos){
