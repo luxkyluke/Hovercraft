@@ -102,7 +102,24 @@ void PlayLevel(Game* game, int idLevel){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    
+
+
+//ZONE DE TEST//////////
+    /*glBegin(GL_LINES);
+      glColor3f(0.,1.,0.); 
+        glVertex2f(level->ballon->cercle->centre.x,level->ballon->cercle->centre.y);
+        glVertex2f(level->ballon->direction.x, level->ballon->direction.y);
+    glEnd();
+
+    glPushMatrix();
+        glTranslatef(level->ballon->cercle->centre.x, level->ballon->cercle->centre.y, 0);
+        glScalef(level->ballon->cercle->radius, level->ballon->cercle->radius, 0.);
+        dessinCercle(100, 0.8, 0.4, 0.1, 0);
+      glPopMatrix();
+*/
+///////////////////////////
+
+
 
     DessinTerrain(level->terrain, windowWidth, windowHeight);
 
