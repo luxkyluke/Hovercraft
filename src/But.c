@@ -12,9 +12,9 @@ void MakeBut(int hauteur, Point2D pos, But* b) {
 }
 
 bool BallIsInGoal(But* but, Ballon* ball) {
-    if(ball->position.x > but->position.x
-        && ball->position.y < (but->position.y + but->hauteur/2.)
-        && ball->position.y > (but->position.y - but->hauteur/2.))
+    if(ball->cercle->centre.x > but->position.x
+        && ball->cercle->centre.y < (but->position.y + but->hauteur/2.)
+        && ball->cercle->centre.y > (but->position.y - but->hauteur/2.))
         return true;
     return false;
 }
