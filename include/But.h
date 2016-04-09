@@ -5,11 +5,11 @@
 #include "bool.h"
 
 typedef struct {
-	int hauteur;
-	Point2D position;
+	Point2D top;
+	Point2D bottom;
 }But;
 
-void MakeBut(int hauteur, Point2D pos, But* b);
+void MakeBut(Point2D top, Point2D bottom, But* b);
 bool BallIsInGoal(But* but, Ballon* ball);
 
 
