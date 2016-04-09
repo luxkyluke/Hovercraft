@@ -8,33 +8,30 @@ void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon, float ballRadius){
 		return;
 	}
     ballon->texture = texture;
-    ballon->position = pos;
     ballon->direction = VectorXY(0,ballRadius);
-    ballon->vitesse = 0.;
+    ballon->vitesse = VectorXY(0,0);
+    ballon-> acceleration = VectorXY(0,0.);
     ballon->cercle = (Cercle*) malloc(sizeof(Cercle));
-    MakeCercle(ballon->cercle, ballon->position, ballRadius);
+    MakeCercle(ballon->cercle, pos, ballRadius);
 }
 
-/*
-typedef struct {
-    GLuint texture;
-    Point2D position;
-    Vector2D direction;
-    float vitesse;
-    Cercle* cercle;
-}Ballon;    */
 
-void DeplacerBallon(Ballon* ballon, Vector2D direction, float vitesse){
-    ballon->direction = direction;
-    ballon->vitesse = vitesse;
-    ballon->position.x += vitesse * ballon->direction.x;
-    ballon->position.y += vitesse * ballon->direction.y;
-    return;
+void UpdateVitesseBall(Ballon* h){
+		h-> vitesse = AddVectors(h-> vitesse, h-> acceleration);
+		h-> vitesse = SubVectors(h-> vitesse, DivVector(h-> vitesse, 100.));
+	return;
+}
+
+void UpdatePositionBall(Ballon* h){
+	h->cercle->centre.x += h-> vitesse.x;
+	h->cercle->centre.y += h-> vitesse.y;
+	return;
 }
 
 
 void UpdateBallon(Ballon* b){
-
+	UpdateVitesseBall(b);
+	UpdatePositionBall(b);
     return;
 }
 
@@ -43,6 +40,7 @@ void DessinBallon(Ballon* ball) {
 	glPushMatrix();
 	    glEnable(GL_TEXTURE_2D);
 	    glBindTexture(GL_TEXTURE_2D, ball->texture);
+	    glTranslatef(ball->cercle->centre.x, ball->cercle->centre.y, 0);
 	    glScalef(2, 2, 1.f);
 	    glColor3f(255, 255, 255);
 	    glBegin(GL_POLYGON);

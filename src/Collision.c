@@ -12,23 +12,9 @@
 #include "Collision.h"
 #include <stdlib.h>
 #include <SDL/SDL.h>
-#include "Vector2D.h"
 
 
 /*fonction qui calcule les consequences des colisions*/
-
-bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
-
-    Vector2D distanceCentre = Vector(c1->centre, c2->centre);
-    float tailleRayons = c1->radiusCarre + c2->radiusCarre;
-    if(SqrNorm(distanceCentre) <= tailleRayons*2.2){
-    	printf("TRUEDUCUL\n");
-        return true;
-    }
-    return false;
-
-}
-
 
 void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 	if(TouchedVehiculeVehicule(vehicule1, vehicule2) == true){
@@ -38,7 +24,7 @@ void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 
         Vector2D newVector = Vector(vehicule1->cercle->centre, vehicule2->cercle->centre);
         float dp = Norm(newVector);
-        newVector.x = newVector.x/dp;
+        newVector.x = newVector.x/dp; //idem à Normalize(newVecotor);
         newVector.y = newVector.y/dp;
 
        Vector2D compVitesse = SubVectors(vehicule1->vitesse, vehicule2->vitesse);
@@ -55,15 +41,17 @@ void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 
 void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
 	if(TouchedVehiculeBallon(ballon, vehicule) == true){
-		Vector2D dir;
-		dir = vehicule->direction;
-		DeplacerBallon(ballon,dir, 2.);
+        ballon->direction = MultVector(vehicule->direction, ballon->cercle->radius);
+        ballon->acceleration = MultVector(ballon-> direction, 0.01);
     }
+    else
+        ballon-> acceleration = VectorXY(0,0.);
+    UpdateBallon(ballon);
 }
 
 void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){
 	if(TouchedBallonTerrain(ballon, terrain)){
-		//ballon->position + ballon->cercle->radius
+		//ballon->cercle->centre + ballon->cercle->radius
 	}
 }
 /*if(xCercle + 0.5 + dx > 10. || xCercle - 0.5 + dx < -10.)
@@ -75,6 +63,19 @@ void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){
 
 
 /*fonctions qui indiques si 2 élément sont entrer en contact ou non */
+
+bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
+
+    Vector2D distanceCentre = Vector(c1->centre, c2->centre);
+    float tailleRayons = c1->radiusCarre + c2->radiusCarre;
+    if(SqrNorm(distanceCentre) <= tailleRayons*2.2){
+        printf("TRUEDUCUL\n");
+        return true;
+    }
+    return false;
+
+}
+
 bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 	Point2D posV = vehicule1->position;
 	float largeur = vehicule1->largeur;
@@ -123,7 +124,7 @@ bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP){
 
 
 bool TouchedBallonTerrain(Ballon *ballon, Terrain * terrain){
-	if(IsWall(terrain, ballon->position) == true){
+	if(IsWall(terrain, ballon->cercle->centre) == true){
  		return true;
 }
 	return false;

@@ -20,16 +20,17 @@
 
 typedef struct {
     GLuint texture;
-    Point2D position;
     Vector2D direction;
-    float vitesse;
+    Vector2D vitesse;
+    Vector2D acceleration;
     Cercle* cercle;
 }Ballon;
 
 
 void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon, float ballRadius);
-void DeplacerBallon(Ballon* ballon,Vector2D direction, float vitesse);
-void UpdateBallon(Ballon* h);
+void UpdatePositionBall(Ballon* b);
+void UpdateVitesseBall(Ballon* b);
+void UpdateBallon(Ballon* b);
 void DessinBallon(Ballon* ball);
 
 #endif
