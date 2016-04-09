@@ -139,7 +139,7 @@ void PlayLevel(Game* game, int idLevel){
     // Echange du front et du back buffer : mise à jour de la fenêtre 
     SDL_GL_SwapBuffers();
 
-    //CheckTouched(level);
+    CheckTouched(level);
 
     // Boucle traitant les evenements 
     SDL_Event e;
