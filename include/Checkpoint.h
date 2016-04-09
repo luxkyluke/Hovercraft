@@ -6,12 +6,11 @@
 #include "Geometry.h"
 
 typedef	struct {
-	Point2D* position;
 	Cercle* cercle;
 }Checkpoint;
 
-void MakeCheckpoint(Point2D* pos, float r, Checkpoint* checkpt);
-bool IsCheckpoint(Point2D* pos);
+void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt);
+bool IsCheckpoint(Point2D pos);
 void FreeCheckpoint(Checkpoint* checkpt);
 
 #endif

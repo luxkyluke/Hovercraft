@@ -9,31 +9,39 @@
 /* FIN DU A GARDER */
 
 #include "Vehicule.h"
+#include "Geometry.h"
 #include <stdlib.h>
 #include <SDL/SDL.h>
 
 //Dessin de l'hovercraft
 void DessinVehicule(Vehicule* v){
   glPushMatrix();
-  		glEnable(GL_TEXTURE_2D);
+//  		glEnable(GL_TEXTURE_2D);
 	    //float test = (float)windowWidth - (float)windowWidth/2;
 	    //printf("hrllo %f \n", 100.*(float)windowHeight/(float)windowWidth);
 	    //glColor3f(255, 255, 255);
-	    glBindTexture(GL_TEXTURE_2D, v->texture);
+//	    glBindTexture(GL_TEXTURE_2D, v->texture);
 	    //printf("texture vp %d\n", v->texture);
 	   	glTranslatef(v->position.x, v->position.y, 0);
   	  	glRotatef(v->angle,0.,0.,1.);
   	  	glScalef(v->largeur, v->hauteur, 0.);
-  	  	//printf("v->largeur : %d, v->hauteur %d\n", v->largeur);
 	  	dessinCarre(1,1,1,0.2);
 		glPushMatrix();
 		  glTranslatef(0., 0.5,0.);
 		  dessinCercle(100, 1,1,0.2, 1);
 		glPopMatrix();
-		glBindTexture(GL_TEXTURE_2D, 0);
-	    glDisable(GL_TEXTURE_2D);
+
+//		glBindTexture(GL_TEXTURE_2D, 0);
+//	    glDisable(GL_TEXTURE_2D);
   glPopMatrix();
 
+  glPushMatrix();
+      glBegin(GL_POINTS);
+          glPointSize(18);
+          glColor3f(1,0,0);
+          glVertex2d(v->cercle->centre.x, v->cercle->centre.y);
+      glEnd();
+  glPopMatrix();
 }
 
 void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint text, Player p, Vehicule *h){
@@ -53,6 +61,8 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint text, Player
 	h-> hauteur = hauteur;
 	h->cercle = (Cercle*) malloc(sizeof(Cercle));
 	MakeCercle(h->cercle, h->position, 0.5*largeur);
+    h->facticeCercle = (Cercle*) malloc(sizeof(Cercle));
+    MakeCercle(h->facticeCercle, h->position, 0.8*largeur);
 	h->player = p;
 	h->texture = text;
     h->tourne = 0;
@@ -91,6 +101,7 @@ void UpdateRotation(Vehicule* h){
 }
 
 void UpdateVehicule(Vehicule* h){
+    UpdateCercle(h);
 	UpdateRotation(h);
 	UpdateAcceleration(h);
 	UpdateVitesse(h);
@@ -112,15 +123,16 @@ bool IsTouchingVehicule(Vehicule *v, Point2D pos){
   float yMax = posV.y+hauteur/2.;
   float yMin = posV.y-hauteur/2.;
 
-  //printf("xMin %f < %f <xMax : %f, \n", xMin, pos.x, xMax);
- printf("yMin %f < %f <yMax : %f, \n", yMin, pos.y, yMax);
-
   if(pos.x <= xMax && pos.x >= xMin && pos.y <= yMax && pos.y >= yMin){
     printf("TRUE\n");
     return true;
   }
     
   return false;
+}
 
+void UpdateCercle(Vehicule*v) {
+    v->cercle->centre = PointPlusVector(v->position, MultVector(Normalize(v->direction),v->largeur/2.));
+    v->facticeCercle->centre = v->position;
 }
 

@@ -24,6 +24,7 @@ typedef struct {
 	float hauteur;
 	float largeur;
 	Cercle* cercle;
+    Cercle* facticeCercle;
 	float angle;
 	Point2D position;
 	Vector2D direction;
@@ -41,6 +42,7 @@ void UpdatePosition(Vehicule* h);
 void UpdateRotation(Vehicule* h);
 void UpdateVehicule(Vehicule* h);
 void FreeVehicule(Vehicule *h);
+void UpdateCercle(Vehicule *v);
 bool IsTouchingVehicule(Vehicule *v, Point2D pos);
 
 #endif

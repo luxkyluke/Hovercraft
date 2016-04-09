@@ -42,8 +42,8 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     t->texture = texture;
     t->checkpts = (Checkpoint **) malloc(NB_MAX_CHECKPT*sizeof(Checkpoint*));
     t->nbCheckpts = 0;
-    hauteurButG = 0;
-    hauteurButD = 0;
+    int hauteurButG = 0;
+    int hauteurButD = 0;
     t->butP1 = (But*) malloc(sizeof(But));
     t->butP2 = (But*) malloc(sizeof(But));
 
@@ -54,6 +54,7 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
             if(ligne[j] == '0'){
                 Checkpoint chp;
                 MakeCheckpoint(PointXY(j, i), DEFAULT_RAYON_CHECKPT, &chp);
+                t->checkpts[t->nbCheckpts] = &chp;
                 t->nbCheckpts++;
             }
         }
@@ -75,7 +76,9 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
 }
 
 bool IsWall(Terrain* t, Point2D pos){
-    if(t->terrain[pos.y][pos.x] == '-')
+    int x = (int) pos.x;
+    int y = (int) pos.y;
+    if(t->terrain[x][y] == '-')
         return true;
     return false;
 }
