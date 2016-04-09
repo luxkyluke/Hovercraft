@@ -72,7 +72,7 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     
     MakeBut(hauteurButD, PointXY(DEFAULT_BUTP2_POS_X, hauteurButD*0.5), t->butP2);
     MakeBut(hauteurButG, PointXY(DEFAULT_BUTP1_POS_X, hauteurButG*0.5), t->butP1);
-
+    for
 }
 
 bool IsWall(Terrain* t, Point2D pos){
