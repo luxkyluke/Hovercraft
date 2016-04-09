@@ -46,7 +46,7 @@ void DessinVehicule(Vehicule* v){
 
 void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint text, Player p, Vehicule *h){
 	if(!h) {
-		printf("Impossible de créer le véhicule, pointeur non alloué\n"); 
+		printf("Impossible de créer le véhicule, pointeur non alloué\n");
 		return;
 	}
 	h-> position = pos;
@@ -92,17 +92,17 @@ void UpdatePosition(Vehicule* h){
 }
 
 void UpdateRotation(Vehicule* h){
-	if(h->tourne != 0){
-		h->angle = h->angle - (h->tourne * 2);
-		h->direction.x = -sin((PI*h-> angle)/180);
-		h->direction.y = cos((PI*h-> angle)/180);
-	}
+    if(h->tourne != 0){
+        h->angle = h->angle - (h->tourne * 2);
+        h->direction.x = -sin((PI*h-> angle)/180);
+        h->direction.y = cos((PI*h-> angle)/180);
+    }
 	return;
 }
 
 void UpdateVehicule(Vehicule* h){
     UpdateCercle(h);
-	UpdateRotation(h);
+    UpdateRotation(h);
 	UpdateAcceleration(h);
 	UpdateVitesse(h);
 	UpdatePosition(h);
@@ -127,7 +127,7 @@ bool IsTouchingVehicule(Vehicule *v, Point2D pos){
     printf("TRUE\n");
     return true;
   }
-    
+
   return false;
 }
 
