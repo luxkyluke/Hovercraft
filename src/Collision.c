@@ -61,11 +61,11 @@ bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 	Point2D pos13 = PointXY(xMax, yMin);
 	Point2D pos14 = PointXY(xMin, yMin);
 
-	/*if (IsTouchingVehicule(vehicule2, pos11) ||
+	if (IsTouchingVehicule(vehicule2, pos11) ||
 				IsTouchingVehicule(vehicule2, pos12) ||
 					IsTouchingVehicule(vehicule2, pos13) ||
 						IsTouchingVehicule(vehicule2, pos14))
-		return true;*/
+		return true;
 
 	if (CollisionCercleCercle(vehicule1->cercle, vehicule2->cercle))
 		return true;

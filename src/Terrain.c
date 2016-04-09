@@ -1,6 +1,8 @@
 #include "Terrain.h"
 #include <string.h>
 #include <stdio.h>
+#include <assert.h>
+#include <stdlib.h>
 
 char *str_dup(char const *s){
     char *pc = NULL;
@@ -17,6 +19,10 @@ char *str_dup(char const *s){
 
 #define NB_MAX_LIGNE 100
 #define NB_MAX_COLONNE 200
+#define NB_MAX_CHECKPT 30
+#define DEFAULT_RAYON_CHECKPT 5.
+#define DEFAULT_BUTP1_POS_X 95.
+#define DEFAULT_BUTP2_POS_X -95.
 
 void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     if(!t) {
@@ -29,28 +35,48 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     }
     //char* tablignes[NB_MAX_LIGNE];
     t->terrain = (char **) malloc(NB_MAX_LIGNE*NB_MAX_COLONNE*sizeof(char*));
-    int i=0;
+    int j,i=0;
 
     t->largeur = NB_MAX_COLONNE;
     t->hauteur = NB_MAX_LIGNE;
     t->texture = texture;
+    t->checkpts = (Checkpoint **) malloc(NB_MAX_CHECKPT*sizeof(Checkpoint*));
+    t->nbCheckpts = 0;
+    hauteurButG = 0;
+    hauteurButD = 0;
+    t->butP1 = (But*) malloc(sizeof(But));
+    t->butP2 = (But*) malloc(sizeof(But));
 
     char ligne[NB_MAX_COLONNE];
-    while(fgets(ligne, NB_MAX_COLONNE, terrainTxt)) {   
-        if(i>=NB_MAX_LIGNE){
+
+    while(fgets(ligne, NB_MAX_COLONNE, terrainTxt)) { 
+        for(j=0; j < NB_MAX_COLONNE; j++){
+            if(ligne[j] == '0'){
+                Checkpoint chp;
+                MakeCheckpoint(PointXY(j, i), DEFAULT_RAYON_CHECKPT, &chp);
+                t->nbCheckpts++;
+            }
+        }
+        if(ligne[0] == 'x')
+            hauteurButG++;
+        if(ligne[NB_MAX_COLONNE-1] == 'x')
+            hauteurButD++;
+        if(i >= NB_MAX_LIGNE){
             printf("Le fichier txtTerrain contient trop de ligne !\n");
             return;
         }
         t->terrain[i] = str_dup(ligne); 
         i++;
     }
-    /*t->checkpts;
-    t->nbCheckpts = 0;
-    t->butP1;
-    t->butP2;*/
+    
+    MakeBut(hauteurButD, PointXY(DEFAULT_BUTP2_POS_X, hauteurButD*0.5), t->butP2);
+    MakeBut(hauteurButG, PointXY(DEFAULT_BUTP1_POS_X, hauteurButG*0.5), t->butP1);
+
 }
 
 bool IsWall(Terrain* t, Point2D pos){
+    if(t->terrain[pos.y][pos.x] == '-')
+        return true;
     return false;
 }
 
