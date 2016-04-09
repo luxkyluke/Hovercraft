@@ -23,8 +23,8 @@ void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain);
 bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2); //AR
 bool TouchedBallonBut(Ballon *ballon, But* but);
 bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP); //AR
-bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule); //AR
-bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain);
+bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule); //DONE
+bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain); 
 bool TouchedBallonTerrain(Ballon *ballon, Terrain * terrain);
 
 

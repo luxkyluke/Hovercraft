@@ -41,7 +41,7 @@ void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 
 void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
 	if(TouchedVehiculeBallon(ballon, vehicule) == true){
-        ballon->direction = MultVector(vehicule->direction, ballon->cercle->radius);
+        ballon->direction = Vector(vehicule->cercle->centre, ballon->cercle->centre);
         ballon->acceleration = MultVector(ballon-> direction, 0.01);
     }
     else
@@ -60,6 +60,15 @@ void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){
         dy *=-1;
       xCercle += dx;
       yCercle += dy;*/
+/*
+void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){ 
+    if(TouchedVehiculeTerrain(vehicule, terrain)){
+        
+    }
+*/
+
+
+
 
 
 /*fonctions qui indiques si 2 élément sont entrer en contact ou non */
@@ -68,8 +77,8 @@ bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
 
     Vector2D distanceCentre = Vector(c1->centre, c2->centre);
     float tailleRayons = c1->radiusCarre + c2->radiusCarre;
-    if(SqrNorm(distanceCentre) <= tailleRayons*2.2){
-        printf("TRUEDUCUL\n");
+    if(SqrNorm(distanceCentre) <= tailleRayons*3.){
+        printf("COLLISION CERCLE CERCLE\n");
         return true;
     }
     return false;
@@ -106,9 +115,21 @@ bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP){
 
 bool TouchedBallonTerrain(Ballon *ballon, Terrain * terrain){
 	if(IsWall(terrain, ballon->cercle->centre) == true){
- 		return true;
+        printf("Cest un mur BOLOSSE\n");
+        return true;
 }
 	return false;
 }
+
+bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain * terrain){
+    if(IsWall(terrain, vehicule->cercle->centre) == true || 
+        IsWall(terrain, vehicule->facticeCercle->centre)){
+        printf("Cest un mur BOLOSSE\n");
+        return true;
+    }
+    return false;
+}
+
+
 
 

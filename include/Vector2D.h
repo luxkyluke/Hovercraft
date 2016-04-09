@@ -1,11 +1,13 @@
 #ifndef VECTOR2D_H_
 #define VECTOR2D_H_
 
+#include "Point2D.h"
 typedef struct {
     float x, y;
 } Vector2D;
 
 Vector2D VectorXY(float x, float y);
+Vector2D VectorXYPoint2D(Point2D P1, Point2D P2);
 Vector2D AddVectors(Vector2D u, Vector2D v);
 Vector2D SubVectors(Vector2D u, Vector2D v);
 Vector2D MultVector(Vector2D u, float a);

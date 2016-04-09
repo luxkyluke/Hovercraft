@@ -82,8 +82,8 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
 }
 
 bool IsWall(Terrain* t, Point2D pos){
-    int x = (int) pos.x;
-    int y = (int) pos.y;
+    int x = (int) pos.x + 100;
+    int y = (int) pos.y + 50;
     if(t->terrain[x][y] == '-')
         return true;
     return false;

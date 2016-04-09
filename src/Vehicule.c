@@ -114,6 +114,7 @@ void FreeVehicule(Vehicule* v){
 	v->cercle = NULL;
 }
 
+/*
 bool IsTouchingVehicule(Vehicule *v, Point2D pos){
   Point2D posV = v->position;
   float largeur = v->largeur;
@@ -130,7 +131,7 @@ bool IsTouchingVehicule(Vehicule *v, Point2D pos){
     
   return false;
 }
-
+*/
 void UpdateCercle(Vehicule*v) {
     v->cercle->centre = PointPlusVector(v->position, MultVector(Normalize(v->direction),v->largeur/2.));
     v->facticeCercle->centre = v->position;
