@@ -134,8 +134,6 @@ bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP){
     return false;
 }
 
-
-
 bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain){
 	if(CercleIsInWall(terrain, ballon->cercle) == true){
         printf("Cest un mur BOLOSSE\n");

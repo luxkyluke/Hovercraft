@@ -28,18 +28,18 @@ unsigned int windowHeight= 600;
 unsigned int windowWidth = 1200;
 
 void MakeGame(Game* game, float duration){
-	if(game == NULL) {	
-		printf("Impossible de créer le game, pointeur non alloué\n"); 
+	if(game == NULL) {
+		printf("Impossible de créer le game, pointeur non alloué\n");
 		return;
 	}
 
-	 // Initialisation de la SDL 
+	 // Initialisation de la SDL
 	if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
 	  fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
 	  return;
 	}
 
-	// Ouverture d'une fenêtre et création d'un contexte OpenGL 
+	// Ouverture d'une fenêtre et création d'un contexte OpenGL
 	setVideoMode(windowWidth, windowHeight);
 	reshape(windowWidth, windowHeight);
 
@@ -63,50 +63,57 @@ int AddLevel(Game* game, char* nameFichTerrain,  char* pathTextureTerrain, char*
 		return -1;
 	}
 	game->nbLevels += 1;
-	
+
 	return id;
 	return 0;
 }
 
 void PlayLevel(Game* game, int idLevel){
-	
+
 	if(!game || idLevel >= game->nbLevels)
 		return;
 
-	
+
 
   Level* level = game->levels[idLevel];
   Vehicule* VP1 = level->vp1;
   Vehicule* VP2 = level->vp2;
- 
 
-  
-
-  // Titre de la fenêtre 
+  // Titre de la fenêtre
   char windowname[30];
   sprintf(windowname, "HoverLigue Niveau %d !", idLevel+1);
   SDL_WM_SetCaption(windowname, NULL);
 
-  // Boucle d'affichage 
+  // Boucle d'affichage
   int loop = 1;
+
+  float zoomLevel = 1;
+  float test = 10;
 
 
   while(loop) {
-    // Récupération du temps au début de la boucle 
+    // Récupération du temps au début de la boucle
     Uint32 startTime = SDL_GetTicks();
 
-    // Placer ici le code de dessin 
+    // Placer ici le code de dessin
    	glClearColor(0, 0 , 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glMatrixMode(GL_MODELVIEW);
+
+    glPushMatrix();
+    zoomLevel+=0.01;
+    printf("gloubi gloubi %f %F\n",VP1->position.x, VP1->position.y );
     glLoadIdentity();
+    // glTranslatef(VP1->position.x,VP1->position.y,0);
+    // glScalef(zoomLevel,zoomLevel,zoomLevel);
+    test+=0.001;
 
 
 
 //ZONE DE TEST//////////
     /*glBegin(GL_LINES);
-      glColor3f(0.,1.,0.); 
+      glColor3f(0.,1.,0.);
         glVertex2f(level->ballon->cercle->centre.x,level->ballon->cercle->centre.y);
         glVertex2f(level->ballon->direction.x, level->ballon->direction.y);
     glEnd();
@@ -127,39 +134,41 @@ void PlayLevel(Game* game, int idLevel){
     //printf("level->terrain-> : %3.f\n", VP1->position.x);
     //Mouvement de l'Vehicule
     UpdateVehicule(VP1);
-   
+
     DessinVehicule(VP1);
 
     UpdateVehicule(VP2);
-    
+
     DessinVehicule(VP2);
-    
     DessinBallon(level->ballon);
 
-    // Echange du front et du back buffer : mise à jour de la fenêtre 
+    glPopMatrix();
+        glMatrixMode(GL_MODELVIEW);
+
+    // Echange du front et du back buffer : mise à jour de la fenêtre
     SDL_GL_SwapBuffers();
 
     CheckTouched(level);
 
-    // Boucle traitant les evenements 
+    // Boucle traitant les evenements
     SDL_Event e;
     while(SDL_PollEvent(&e)) {
-      // L'utilisateur ferme la fenêtre : 
+      // L'utilisateur ferme la fenêtre :
       if(e.type == SDL_QUIT) {
         loop = 0;
         break;
       }
 
-      // Quelques exemples de traitement d'evenements : 
+      // Quelques exemples de traitement d'evenements :
       switch(e.type) {
-        // Clic souris 
+        // Clic souris
         case SDL_MOUSEBUTTONUP:
 
           break;
 
-        // move the mouse 
+        // move the mouse
 
-        // Touche clavier 
+        // Touche clavier
         case SDL_KEYDOWN:
           //printf("touche pressée (code = %d)\n", e.key.keysym.sym);
           if(e.key.keysym.sym ==  SDLK_z)
@@ -194,7 +203,7 @@ void PlayLevel(Game* game, int idLevel){
             VP2->tourne = 0;
           break;
 
-        // resize window 
+        // resize window
         case SDL_VIDEORESIZE:
           windowWidth  = e.resize.w;
           windowHeight = e.resize.h;
@@ -206,16 +215,16 @@ void PlayLevel(Game* game, int idLevel){
       }
     }
 
-    // Calcul du temps écoulé 
+    // Calcul du temps écoulé
     Uint32 elapsedTime = SDL_GetTicks() - startTime;
 
-    // Si trop peu de temps s'est écoulé, on met en pause le programme 
+    // Si trop peu de temps s'est écoulé, on met en pause le programme
     if(elapsedTime < FRAMERATE_MILLISECONDS) {
       SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
     }
   }
 
-  // Liberation des ressources associées à la SDL 
+  // Liberation des ressources associées à la SDL
   SDL_Quit();
 
 }

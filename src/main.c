@@ -32,15 +32,15 @@ int main(int argc, char** argv) {
 
 
   Game* game = (Game *) malloc(sizeof(Game));
-  
+
   MakeGame(game, 300);
   //MakeLevel(level1, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
   int id = AddLevel(game, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
- 
+
   PlayLevel(game, id);
 
   FreeGame(game);
-  
+
 
   return EXIT_SUCCESS;
 }

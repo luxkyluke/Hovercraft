@@ -93,11 +93,11 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
 bool IsWall(Terrain* t, Point2D pos){
     if(pos.x>100. || pos.y>50. || pos.x<-100. || pos.y<-50.)
         return true;
-    int x = (int) pos.x + 100;
     int y = (int) pos.y + 50;
-    printf("x:%d, posx: %d\n",x, pos.x);
+    int x = (int) pos.x + 100;
+//    printf("x:%d, posx: %f\n",x, pos.x);
     if(t->terrain[y][x] == '-'){
-        printf("x:%d, posx: %d\n",x, pos.x);
+//        printf("x:%d, posx: %d\n",x, pos.x);
         //t->pointCollision = PointXY(x,y);
         return true;
     }
@@ -110,7 +110,7 @@ bool CercleIsInWall(Terrain* t, Cercle* c){ //xman ect forment un carré ...
     float ymax = c->centre.y + c->radius;
     float ymin = c->centre.y - c->radius;
 
-    if(IsWall(t, PointXY(xmax, ymax)) || IsWall(t, PointXY(xmax, ymin)) 
+    if(IsWall(t, PointXY(xmax, ymax)) || IsWall(t, PointXY(xmax, ymin))
         || IsWall(t, PointXY(xmin, ymax)) || IsWall(t, PointXY(xmin, ymin)) == true){
         return  true;
     }
