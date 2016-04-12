@@ -50,24 +50,26 @@ void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
 }
 
 void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){
-	if(TouchedBallonTerrain(ballon, terrain)){
-		//ballon->cercle->centre + ballon->cercle->radius
+	if(TouchedBallonTerrain(ballon, terrain) == true){
+        //if(ballon->cercle->centre.x > 0)
+		//ballon->direction = Vector(ballon->cercle->centre, terrain->pointCollision);
+        //ballon->cercle->centre + ballon->cercle->radius
+
+    
 	}
 }
-/*if(xCercle + 0.5 + dx > 10. || xCercle - 0.5 + dx < -10.)
-        dx *=-1;
-      if(yCercle + 0.5 + dy > 10*((float)windowHeight/(float)windowWidth) || yCercle - 0.5 + dy < -10*((float)windowHeight/(float)windowWidth))
-        dy *=-1;
-      xCercle += dx;
-      yCercle += dy;*/
 /*
 void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){ 
-    if(TouchedVehiculeTerrain(vehicule, terrain)){
-        
+    if(TouchedVehiculeTerrain(vehicule, terrain) == true){
+        Vector2D dir = Vector(vehicule->cercle->centre, terrain->pointCollision);
+        // AR vehicule->direction = AddVector(dir, PI);
+
+        return;
     }
+    else 
+        return;
+}
 */
-
-
 
 
 
@@ -113,23 +115,20 @@ bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP){
 }
 
 
-bool TouchedBallonTerrain(Ballon *ballon, Terrain * terrain){
-	if(IsWall(terrain, ballon->cercle->centre) == true){
+
+bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain){
+	if(CercleIsInWall(terrain, ballon->cercle) == true){
         printf("Cest un mur BOLOSSE\n");
         return true;
-}
+    }
 	return false;
 }
 
-bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain * terrain){
-    if(IsWall(terrain, vehicule->cercle->centre) == true || 
-        IsWall(terrain, vehicule->facticeCercle->centre)){
+bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
+    if(CercleIsInWall(terrain, vehicule->cercle) || 
+        CercleIsInWall(terrain, vehicule->facticeCercle)){
         printf("Cest un mur BOLOSSE\n");
         return true;
     }
     return false;
 }
-
-
-
-

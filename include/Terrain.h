@@ -21,7 +21,8 @@ typedef struct {
 	int largeur;
 	int hauteur;
 	GLuint texture;
-	char ** terrain;	
+	char ** terrain;
+	Point2D pointCollision;	
 	Checkpoint **checkpts;
 	int nbCheckpts;
 	But* butP1;
@@ -31,6 +32,7 @@ typedef struct {
 void MakeTerrain(GLuint text, FILE* fichTerrain, Terrain* t);
 void DessinTerrain(Terrain* t, unsigned int windowWidth, unsigned int windowHeight);
 bool IsWall(Terrain* t, Point2D pos);
+bool CercleIsInWall(Terrain* t, Cercle* c);
 void FreeTerrain(Terrain* t);
 
 #endif
