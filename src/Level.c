@@ -61,6 +61,9 @@ void MakeLevel(Level* l, char* nameFichTerrain, char* pathTextureTerrain, char* 
     l->terrain= t;
     l->scoreP1 = 0;
     l->scoreP2 = 0;
+        printf("positionx  %f      positiony  %f\n", l->vp1->cercle->centre.x, l->vp1->cercle->centre.y );
+                printf("radius  %f\n", l->vp1->cercle->radius );
+
 }
 
 bool CheckTouched(Level* l){
