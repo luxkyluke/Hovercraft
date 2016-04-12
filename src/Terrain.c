@@ -40,6 +40,7 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     t->largeur = NB_MAX_COLONNE;
     t->hauteur = NB_MAX_LIGNE;
     t->texture = texture;
+    t->pointCollision = PointXY(-1,-1);
     t->checkpts = (Checkpoint **) malloc(NB_MAX_CHECKPT*sizeof(Checkpoint*));
     t->nbCheckpts = 0;
     int hauteurButG = 0;
@@ -95,9 +96,9 @@ bool IsWall(Terrain* t, Point2D pos){
         return true;
     int x = (int) pos.x + 100;
     int y = (int) pos.y + 50;
-    printf("x:%d, posx: %d\n",x, pos.x);
+    //printf("x:%d, posx: %d\n",x, pos.x);
     if(t->terrain[y][x] == '-'){
-        printf("x:%d, posx: %d\n",x, pos.x);
+        //printf("x:%d, posx: %d\n",x, pos.x);
         //t->pointCollision = PointXY(x,y);
         return true;
     }

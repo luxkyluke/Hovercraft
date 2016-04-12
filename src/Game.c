@@ -105,12 +105,12 @@ void PlayLevel(Game* game, int idLevel){
 
 
 //ZONE DE TEST//////////
-    /*glBegin(GL_LINES);
+    glBegin(GL_LINES);
       glColor3f(0.,1.,0.); 
-        glVertex2f(level->ballon->cercle->centre.x,level->ballon->cercle->centre.y);
+        glVertex2f(0,0);
         glVertex2f(level->ballon->direction.x, level->ballon->direction.y);
     glEnd();
-
+/*
     glPushMatrix();
         glTranslatef(level->ballon->cercle->centre.x, level->ballon->cercle->centre.y, 0);
         glScalef(level->ballon->cercle->radius, level->ballon->cercle->radius, 0.);
@@ -119,9 +119,8 @@ void PlayLevel(Game* game, int idLevel){
 */
 ///////////////////////////
 
-      printf("x=%f     y=%f \n",VP1->position.x, VP1->position.y );
 
-    DessinTerrain(level->terrain, windowWidth, windowHeight);
+    //DessinTerrain(level->terrain, windowWidth, windowHeight);
 
 
     //printf("level->terrain-> : %3.f\n", VP1->position.x);
