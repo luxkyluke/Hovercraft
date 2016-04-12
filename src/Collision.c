@@ -72,12 +72,16 @@ void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
 void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){
 	if(TouchedBallonTerrain(ballon, terrain) == true){ 
         //if(ballon->cercle->centre.x > 0)
-        float angle;
+        //float angle;
+        //ballon->vitesse.x = 0;
+        //ballon->vitesse.y = 0;
 		Vector2D NewDir = Vector(ballon->cercle->centre, terrain->pointCollision);
-        angle = (PI*45)/180;
-        NewDir.x = -sin(angle);
-        NewDir.y = cos(angle);
+        //angle = (PI*45)/180;
+        //NewDir.x = -sin(angle);
+        //NewDir.y = cos(angle);
         ballon->direction = NewDir;
+        //ballon->direction = MultVector(ballon->direction, 0.01);
+        printf("%f         %f\n", NewDir.x, NewDir.y);
 	}
     else 
         return;
@@ -151,7 +155,7 @@ bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain){
 bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
     if(CercleIsInWall(terrain, vehicule->cercle) || 
         CercleIsInWall(terrain, vehicule->facticeCercle)){
-        //printf("Cest un mur BOLOSSE\n");
+        printf("Cest un mur BOLOSSE\n");
         return true;
     }
     return false;

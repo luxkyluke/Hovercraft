@@ -93,15 +93,15 @@ bool IsWall(Terrain* t, Point2D pos){
     if(pos.x>100. || pos.y>50. || pos.x<-100. || pos.y<-50.)
         return true;
     int x = getXTerrain(pos.x);
-    int y = getYTerrain(pos.y);
+    int y = getYTerrain(pos.y); 
     //printf("x:%d, y: %d\n",x, y);
     if(x>200 || x<0 || y>100 || y<0){
         printf("Erreur de calcul x terrain et y terrain\n");
         return false;
     }
     if( t->terrain[y][x] == '-'){
-        //printf("x:%d, posx: %3.f\n",x, pos.x);
-        t->pointCollision = PointXY(x,y);
+        printf("posx:%3.f, posy: %3.f\n",pos.x, pos.y);
+        t->pointCollision = pos;
         return true;
     }
     return false;
@@ -117,7 +117,7 @@ int getYTerrain(float y){
     return ret;
 }
 
-bool CercleIsInWall(Terrain* t, Cercle* c){ //xman ect forment un carré ...
+bool CercleIsInWall(Terrain* t, Cercle* c){ 
     float xmax = c->centre.x + c->radius;
     float xmin = c->centre.x - c->radius;
     float ymax = c->centre.y + c->radius;
@@ -125,7 +125,8 @@ bool CercleIsInWall(Terrain* t, Cercle* c){ //xman ect forment un carré ...
 
     if(IsWall(t, PointXY(xmax, ymax)) || IsWall(t, PointXY(xmax, ymin)) 
         || IsWall(t, PointXY(xmin, ymax)) || IsWall(t, PointXY(xmin, ymin)) == true){
-        return  true;
+            printf("x=%3.f, y=%3.f\n", c->centre.x, c->centre.y);
+            return  true;
     }
     return false;
 }
