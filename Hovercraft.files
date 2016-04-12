@@ -21,7 +21,7 @@ src/Collision.c
 src/Color3f.c
 src/Game.c
 src/geometry.c
-src/level.c
+src/Level.c
 src/main.c
 src/Point2D.c
 src/sdl_tools.c

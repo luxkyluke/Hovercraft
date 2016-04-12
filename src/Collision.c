@@ -70,7 +70,9 @@ void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
 }
 
 void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){
-	if(TouchedBallonTerrain(ballon, terrain) == true){ 
+    BallIsInGoal(terrain->butP1, ballon);
+    BallIsInGoal(terrain->butP2, ballon);
+    if(TouchedBallonTerrain(ballon, terrain) == true){
         //if(ballon->cercle->centre.x > 0)
         //float angle;
         //ballon->vitesse.x = 0;
@@ -132,7 +134,6 @@ bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
        CollisionCercleCercle(vehicule->facticeCercle, ballon->cercle)) {
         return true;
     }
-
     return false;
 }
 
@@ -141,8 +142,6 @@ bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP){
         return true;
     return false;
 }
-
-
 
 bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain){
 	if(CercleIsInWall(terrain, ballon->cercle) == true){

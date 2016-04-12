@@ -62,3 +62,20 @@ void DessinBallon(Ballon* ball) {
 
 }
 
+float getXTerrain(float x){
+    return x + 100;
+}
+
+float getYTerrain(float y){
+    float ret = abs(y - 50);
+    return ret;
+}
+
+float getXSDL(float x){
+    return x - 100;
+}
+
+float getYSDL(float y){
+    float ret = - y + 50;
+    return ret;
+}
