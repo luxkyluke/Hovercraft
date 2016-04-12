@@ -34,7 +34,6 @@ void DessinTerrain(Terrain* t, unsigned int windowWidth, unsigned int windowHeig
 bool IsWall(Terrain* t, Point2D pos);
 bool CercleIsInWall(Terrain* t, Cercle* c);
 void FreeTerrain(Terrain* t);
-int getXTerrain(float x);
-int getYTerrain(float y);
+
 
 #endif

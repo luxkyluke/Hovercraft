@@ -70,7 +70,9 @@ void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
 }
 
 void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){
-	if(TouchedBallonTerrain(ballon, terrain) == true){
+    BallIsInGoal(terrain->butP1, ballon);
+    BallIsInGoal(terrain->butP2, ballon);
+    if(TouchedBallonTerrain(ballon, terrain) == true){
         //if(ballon->cercle->centre.x > 0)
 		//ballon->direction = Vector(ballon->cercle->centre, terrain->pointCollision);
         //ballon->cercle->centre + ballon->cercle->radius

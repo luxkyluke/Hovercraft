@@ -23,9 +23,12 @@ void MakeLevel(Level *l, char* nameFichTerrain,  char* pathTextureTerrain, char*
 //verifie si il y a eu une colision entre les éléments
 //Ajouter des scores si but etc...
 bool CheckTouched(Level *l);
-
+void reshape(unsigned int windowWidth, unsigned int windowHeight) ;
 void AddScoreP1(Level* l, int score);
 void AddScoreP2(Level* l, int score);
 void FreeLevel(Level* l);
+void DessinLevel(Level* l);
+void UpdateLevel(Level* l);
+void PlayLevel(Level* l, int windowWidth, int windowHeight, int i);
 
 #endif
