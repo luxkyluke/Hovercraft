@@ -102,7 +102,24 @@ void PlayLevel(Game* game, int idLevel){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    
+
+
+//ZONE DE TEST//////////
+    /*glBegin(GL_LINES);
+      glColor3f(0.,1.,0.); 
+        glVertex2f(level->ballon->cercle->centre.x,level->ballon->cercle->centre.y);
+        glVertex2f(level->ballon->direction.x, level->ballon->direction.y);
+    glEnd();
+
+    glPushMatrix();
+        glTranslatef(level->ballon->cercle->centre.x, level->ballon->cercle->centre.y, 0);
+        glScalef(level->ballon->cercle->radius, level->ballon->cercle->radius, 0.);
+        dessinCercle(100, 0.8, 0.4, 0.1, 0);
+      glPopMatrix();
+*/
+///////////////////////////
+
+      printf("x=%f     y=%f \n",VP1->position.x, VP1->position.y );
 
     DessinTerrain(level->terrain, windowWidth, windowHeight);
 
@@ -144,7 +161,7 @@ void PlayLevel(Game* game, int idLevel){
 
         // Touche clavier 
         case SDL_KEYDOWN:
-          printf("touche pressée (code = %d)\n", e.key.keysym.sym);
+          //printf("touche pressée (code = %d)\n", e.key.keysym.sym);
           if(e.key.keysym.sym ==  SDLK_z)
             VP2->avance = 1;
           if(e.key.keysym.sym == SDLK_UP)
@@ -161,7 +178,7 @@ void PlayLevel(Game* game, int idLevel){
           break;
 
         case SDL_KEYUP:
-          printf("touche lachée (code = %d)\n", e.key.keysym.sym);
+          //printf("touche lachée (code = %d)\n", e.key.keysym.sym);
           if(e.key.keysym.sym == SDLK_z)
             VP2->avance = 0;
           if(e.key.keysym.sym == SDLK_UP)

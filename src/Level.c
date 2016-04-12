@@ -67,6 +67,11 @@ bool CheckTouched(Level* l){
     CollisionVehiculeVehicule(l->vp1, l->vp2);
     CollisionVehiculeBallon(l->ballon, l->vp1);
     CollisionVehiculeBallon(l->ballon, l->vp2);
+    //TouchedBallonTerrain(l->ballon, l->terrain);
+    TouchedVehiculeTerrain(l->vp1, l->terrain);
+    //CollisionVehiculeTerrain(l->vp1, l->terrain);
+    //CollisionVehiculeTerrain(l->vp2, l->terrain);
+    //CollisionBallonTerrain(l->ballon, l->terrain);
     return true;
 }
 

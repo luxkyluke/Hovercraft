@@ -1,6 +1,8 @@
 #include "Terrain.h"
 #include <string.h>
 #include <stdio.h>
+#include <assert.h>
+#include <stdlib.h>
 
 char *str_dup(char const *s){
     char *pc = NULL;
@@ -15,8 +17,12 @@ char *str_dup(char const *s){
 }
 
 
-#define NB_MAX_LIGNE 100
-#define NB_MAX_COLONNE 200
+#define NB_MAX_LIGNE 102
+#define NB_MAX_COLONNE 202
+#define NB_MAX_CHECKPT 30
+#define DEFAULT_RAYON_CHECKPT 5.
+#define DEFAULT_BUTP1_POS_X 200.
+#define DEFAULT_BUTP2_POS_X 0.
 
 void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     if(!t) {
@@ -29,32 +35,85 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     }
     //char* tablignes[NB_MAX_LIGNE];
     t->terrain = (char **) malloc(NB_MAX_LIGNE*NB_MAX_COLONNE*sizeof(char*));
-    int i=0;
+    int j,i=0;
 
     t->largeur = NB_MAX_COLONNE;
     t->hauteur = NB_MAX_LIGNE;
     t->texture = texture;
+    t->checkpts = (Checkpoint **) malloc(NB_MAX_CHECKPT*sizeof(Checkpoint*));
+    t->nbCheckpts = 0;
+    int hauteurButG = 0;
+    int hauteurButD = 0;
+    float butG_pos_y= -1., butD_pos_y=-1.;
+    t->butP1 = (But*) malloc(sizeof(But));
+    t->butP2 = (But*) malloc(sizeof(But));
 
     char ligne[NB_MAX_COLONNE];
-    while(fgets(ligne, NB_MAX_COLONNE, terrainTxt)) {   
-        if(i>=NB_MAX_LIGNE){
+
+    while(fgets(ligne, NB_MAX_COLONNE, terrainTxt)) { 
+        if(i > NB_MAX_LIGNE){
             printf("Le fichier txtTerrain contient trop de ligne !\n");
             return;
         }
+        for(j=0; j < NB_MAX_COLONNE; j++){
+            if(ligne[j] == '0'){
+                if(t->nbCheckpts >= NB_MAX_CHECKPT){
+                    printf("Trop de checkpoints ! 30 Max\n");
+                    return;
+                }
+                Checkpoint chp;
+                MakeCheckpoint(PointXY(j, i), DEFAULT_RAYON_CHECKPT, &chp);
+                t->checkpts[t->nbCheckpts] = CopyCheckpt(&chp);
+                t->nbCheckpts++;
+            }
+        }
+        if(ligne[0] == 'x'){
+            if(butG_pos_y < 0)
+                butG_pos_y = i;
+            hauteurButG++;
+        }
+        if(ligne[NB_MAX_COLONNE-3] == 'x'){
+            if(butD_pos_y < 0)
+                butD_pos_y = i;
+            hauteurButD++;
+        }
+        
         t->terrain[i] = str_dup(ligne); 
+        //printf("%s\n", ligne);
         i++;
     }
-    /*t->checkpts;
-    t->nbCheckpts = 0;
-    t->butP1;
-    t->butP2;*/
+   // printf("%d\n", i);
+    
+    MakeBut(PointXY(DEFAULT_BUTP2_POS_X, butD_pos_y), PointXY(DEFAULT_BUTP2_POS_X, butD_pos_y+hauteurButD), t->butP2);
+    MakeBut(PointXY(DEFAULT_BUTP1_POS_X, butG_pos_y), PointXY(DEFAULT_BUTP1_POS_X, butD_pos_y+hauteurButG), t->butP1);
+    // printf("butP1 top : x %3.f, y %3.f, bottom: x%3.f, y%3.f\n", t->butP1->top.x, t->butP1->top.y, t->butP1->bottom.x, t->butP1->bottom.y);
+    // printf("butP2 x:%3.f, y:%3.f, bottom: x%3.f, y%3.f\n", t->butP2->top.x, t->butP2->top.y, t->butP2->bottom.x, t->butP2->bottom.y);
 }
 
 bool IsWall(Terrain* t, Point2D pos){
-    int x = (int) pos.x;
-    int y = (int) pos.y;
-    if(t->terrain[x][y] == '-')
+    if(pos.x>100. || pos.y>50. || pos.x<-100. || pos.y<-50.)
         return true;
+    int x = (int) pos.x + 100;
+    int y = (int) pos.y + 50;
+    printf("x:%d, posx: %d\n",x, pos.x);
+    if(t->terrain[y][x] == '-'){
+        printf("x:%d, posx: %d\n",x, pos.x);
+        //t->pointCollision = PointXY(x,y);
+        return true;
+    }
+    return false;
+}
+
+bool CercleIsInWall(Terrain* t, Cercle* c){ //xman ect forment un carré ...
+    float xmax = c->centre.x + c->radius;
+    float xmin = c->centre.x - c->radius;
+    float ymax = c->centre.y + c->radius;
+    float ymin = c->centre.y - c->radius;
+
+    if(IsWall(t, PointXY(xmax, ymax)) || IsWall(t, PointXY(xmax, ymin)) 
+        || IsWall(t, PointXY(xmin, ymax)) || IsWall(t, PointXY(xmin, ymin)) == true){
+        return  true;
+    }
     return false;
 }
 
@@ -65,10 +124,11 @@ void FreeTerrain(Terrain* t){
         t->terrain[i] = NULL;
     }
     free(t->terrain);
-    printf("FreeTerrain OK\n");
-    /*for(i=0; i<t->nbCheckpts; i++){
+    for(i=0; i < t->nbCheckpts; i++){
         FreeCheckpoint(t->checkpts[i]);
-    }*/
+        t->checkpts[i]=NULL;
+    }
+    printf("FreeTerrain OK\n");
 }
 
 void DessinTerrain(Terrain* t, unsigned int windowWidth, unsigned int windowHeight) {

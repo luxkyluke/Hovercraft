@@ -20,11 +20,11 @@ void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain);
 void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain);
 
 //fonctions qui indiques si 2 élément sont entrer en contact ou non
-bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2); //DONE
+bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2); //AR
 bool TouchedBallonBut(Ballon *ballon, But* but);
-bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP); //DONE
+bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP); //AR
 bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule); //DONE
-bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain);
+bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain); 
 bool TouchedBallonTerrain(Ballon *ballon, Terrain * terrain);
 
 

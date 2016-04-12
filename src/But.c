@@ -2,21 +2,22 @@
 #include <stdio.h>
 
 
-void MakeBut(int hauteur, int largeur, Point2D pos, But* b) {
+void MakeBut(Point2D top, Point2D bottom, But* b) {
     if (b == NULL) {
         printf("Le but est NULL\n");
         return;
     }
-    b->hauteur = hauteur;
-    b->largeur = largeur;
-    b->position = pos;
+    b->top = top;
+    b->bottom = bottom;
 }
 
 bool BallIsInGoal(But* but, Ballon* ball) {
-    if( ball->position.x > (but->position.x - but->largeur/2.)
-        && ball->position.x < (but->position.x + but->largeur/2.)
-        && ball->position.y < (but->position.y + but->hauteur/2.)
-        && ball->position.y > (but->position.y - but->hauteur/2.))
+    float x = ball->cercle->centre.x + 100;
+    float y = ball->cercle->centre.y + 50;
+    if(abs(x) > abs(but->top.x)
+        && abs(x) > abs(but->bottom.x)
+        && y < but->bottom.y
+        && y > but->top.y)
         return true;
     return false;
 }
