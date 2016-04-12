@@ -17,26 +17,46 @@
 /*fonction qui calcule les consequences des colisions*/
 
 void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
-	if(TouchedVehiculeVehicule(vehicule1, vehicule2) == true){
-		//printf("COLLISION VEHICULES\n");
+    if(TouchedVehiculeVehicule(vehicule1, vehicule2) == true){
+        //printf("COLLISION VEHICULES\n");
         //vehicule1-> direction = MultVector(vehicule1->direction, -1);
         //vehicule2-> direction = -MultVector(vehicule2-> direction, 10);
 
-        Vector2D newVector = Vector(vehicule1->cercle->centre, vehicule2->cercle->centre);
-        float dp = Norm(newVector);
-        newVector.x = newVector.x/dp; //idem à Normalize(newVecotor);
-        newVector.y = newVector.y/dp;
+//        Vector2D newVector = Vector(vehicule1->cercle->centre, vehicule2->cercle->centre);
+//        float dp = Norm(newVector);
+//        newVector.x = newVector.x/dp; //idem à Normalize(newVecotor);
+//        newVector.y = newVector.y/dp;
 
-       Vector2D compVitesse = SubVectors(vehicule1->vitesse, vehicule2->vitesse);
+//       Vector2D compVitesse = SubVectors(vehicule1->vitesse, vehicule2->vitesse);
 //        double dvx = vehicule1->vitesse.x - vehicule2->vitesse.x;
 //        double dvy = vehicule1->vitesse.y - vehicule2->vitesse.y;
-        double scalaire = DotProduct(newVector, compVitesse);
-        compVitesse.x = newVector.x*scalaire;
-        compVitesse.y = newVector.y*scalaire;
+//        double scalaire = DotProduct(newVector, compVitesse);
+//        compVitesse.x = newVector.x*scalaire;
+//        compVitesse.y = newVector.y*scalaire;
 
-        vehicule1->vitesse = SubVectors(vehicule1->vitesse, compVitesse);
-        vehicule2->vitesse = AddVectors(vehicule2->vitesse, compVitesse);
-	}
+//        vehicule1->vitesse = SubVectors(vehicule1->vitesse, compVitesse);
+//        vehicule2->vitesse = AddVectors(vehicule2->vitesse, compVitesse);
+        Vector2D tmpAcceleration = vehicule1->acceleration,
+                 tmpDirection = vehicule1->direction,
+                 tmpVitesse =vehicule1->vitesse;
+
+        vehicule1->acceleration = vehicule2->acceleration;
+//        vehicule1->direction = vehicule2->direction;
+        vehicule1->vitesse= vehicule2->vitesse;
+
+        vehicule1->direction.x *= vehicule2->direction.x;
+        vehicule1->direction.y *= vehicule2->direction.y;
+
+//        vehicule2->direction = tmpDirection;
+        vehicule2->acceleration = tmpAcceleration;
+
+        vehicule2->direction.x *= tmpDirection.x;
+        vehicule2->direction.y *= tmpDirection.y;
+
+        vehicule2->vitesse= tmpVitesse;
+        UpdateVehicule(vehicule1);
+        UpdateVehicule(vehicule2);
+    }
 }
 
 void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
@@ -95,7 +115,7 @@ bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
         return true;
     }
 
-	return false;
+    return false;
 }
 
 
@@ -104,14 +124,14 @@ bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
        CollisionCercleCercle(vehicule->facticeCercle, ballon->cercle)) {
         return true;
     }
-		
-	return false;
+
+    return false;
 }
 
 bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP){
-	if(CollisionCercleCercle(vehicule->cercle, chkP->cercle))
-		return true;
-	return false;
+    if(CollisionCercleCercle(vehicule->cercle, chkP->cercle))
+        return true;
+    return false;
 }
 
 

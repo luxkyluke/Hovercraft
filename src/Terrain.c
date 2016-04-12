@@ -21,8 +21,8 @@ char *str_dup(char const *s){
 #define NB_MAX_COLONNE 202
 #define NB_MAX_CHECKPT 30
 #define DEFAULT_RAYON_CHECKPT 5.
-#define DEFAULT_BUTP1_POS_X 95.
-#define DEFAULT_BUTP2_POS_X -95.
+#define DEFAULT_BUTP1_POS_X 200.
+#define DEFAULT_BUTP2_POS_X 0.
 
 void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     if(!t) {
@@ -44,6 +44,7 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     t->nbCheckpts = 0;
     int hauteurButG = 0;
     int hauteurButD = 0;
+    float butG_pos_y= -1., butD_pos_y=-1.;
     t->butP1 = (But*) malloc(sizeof(But));
     t->butP2 = (But*) malloc(sizeof(But));
 
@@ -66,10 +67,16 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
                 t->nbCheckpts++;
             }
         }
-        if(ligne[0] == 'x')
+        if(ligne[0] == 'x'){
+            if(butG_pos_y < 0)
+                butG_pos_y = i;
             hauteurButG++;
-        if(ligne[NB_MAX_COLONNE-1] == 'x')
+        }
+        if(ligne[NB_MAX_COLONNE-3] == 'x'){
+            if(butD_pos_y < 0)
+                butD_pos_y = i;
             hauteurButD++;
+        }
         
         t->terrain[i] = str_dup(ligne); 
         //printf("%s\n", ligne);
@@ -77,9 +84,10 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     }
    // printf("%d\n", i);
     
-    MakeBut(hauteurButD, PointXY(DEFAULT_BUTP2_POS_X, hauteurButD*0.5), t->butP2);
-    MakeBut(hauteurButG, PointXY(DEFAULT_BUTP1_POS_X, hauteurButG*0.5), t->butP1);
-    
+    MakeBut(PointXY(DEFAULT_BUTP2_POS_X, butD_pos_y), PointXY(DEFAULT_BUTP2_POS_X, butD_pos_y+hauteurButD), t->butP2);
+    MakeBut(PointXY(DEFAULT_BUTP1_POS_X, butG_pos_y), PointXY(DEFAULT_BUTP1_POS_X, butD_pos_y+hauteurButG), t->butP1);
+    // printf("butP1 top : x %3.f, y %3.f, bottom: x%3.f, y%3.f\n", t->butP1->top.x, t->butP1->top.y, t->butP1->bottom.x, t->butP1->bottom.y);
+    // printf("butP2 x:%3.f, y:%3.f, bottom: x%3.f, y%3.f\n", t->butP2->top.x, t->butP2->top.y, t->butP2->bottom.x, t->butP2->bottom.y);
 }
 
 bool IsWall(Terrain* t, Point2D pos){
