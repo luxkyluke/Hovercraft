@@ -99,9 +99,11 @@ void FreeLevel(Level * l){
 }
 
 void DessinLevel(Level* l){
+    DessinTerrain(l->terrain);
     DessinVehicule(l->vp1);
     DessinVehicule(l->vp2);
     DessinBallon(l->ballon);
+
 }
 
 void UpdateLevel(Level* l){
@@ -158,13 +160,14 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
 ///////////////////////////
 
 
-    DessinTerrain(level->terrain, windowWidth, windowHeight);
+
 
     UpdateLevel(level);
 
     DessinLevel(level);
 
     CheckTouched(level);
+
 
     // Echange du front et du back buffer : mise à jour de la fenêtre
     SDL_GL_SwapBuffers();

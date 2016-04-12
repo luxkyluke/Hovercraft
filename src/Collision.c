@@ -134,7 +134,6 @@ bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
        CollisionCercleCercle(vehicule->facticeCercle, ballon->cercle)) {
         return true;
     }
-
     return false;
 }
 
@@ -143,8 +142,6 @@ bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP){
         return true;
     return false;
 }
-
-
 
 bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain){
 	if(CercleIsInWall(terrain, ballon->cercle) == true){

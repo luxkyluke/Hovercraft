@@ -30,7 +30,7 @@ typedef struct {
 }Terrain;
 
 void MakeTerrain(GLuint text, FILE* fichTerrain, Terrain* t);
-void DessinTerrain(Terrain* t, unsigned int windowWidth, unsigned int windowHeight);
+void DessinTerrain(Terrain* t);
 bool IsWall(Terrain* t, Point2D pos);
 bool CercleIsInWall(Terrain* t, Cercle* c);
 void FreeTerrain(Terrain* t);

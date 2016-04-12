@@ -92,25 +92,16 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
 bool IsWall(Terrain* t, Point2D pos){
     if(pos.x>100. || pos.y>50. || pos.x<-100. || pos.y<-50.)
         return true;
-<<<<<<< HEAD
     int x = (int) getXTerrain(pos.x);
     int y = (int) getYTerrain(pos.y);
-=======
-    int x = getXTerrain(pos.x);
-    int y = getYTerrain(pos.y); 
->>>>>>> origin/master
     //printf("x:%d, y: %d\n",x, y);
     if(x>200 || x<0 || y>100 || y<0){
         printf("Erreur de calcul x terrain et y terrain\n");
-        t->pointCollision = pos;
+        //t->pointCollision = pos;
         return true;
     }
     if( t->terrain[y][x] == '-'){
-<<<<<<< HEAD
-        //printf("x:%d, posx: %3.f\n",x, pos.x);
-=======
-        printf("posx:%3.f, posy: %3.f\n",pos.x, pos.y);
->>>>>>> origin/master
+        //printf("posx:%3.f, posy: %3.f\n",pos.x, pos.y);
         t->pointCollision = pos;
         return true;
     }
@@ -147,11 +138,9 @@ void FreeTerrain(Terrain* t){
     printf("FreeTerrain OK\n");
 }
 
-void DessinTerrain(Terrain* t, unsigned int windowWidth, unsigned int windowHeight) {
+void DessinTerrain(Terrain* t) {
     glPushMatrix();
         glEnable(GL_TEXTURE_2D);
-        //float test = (float)windowWidth - (float)windowWidth/2;
-        //printf("hrllo %f \n", 100.*(float)windowHeight/(float)windowWidth);
         glColor3f(255, 255, 255);
         glBindTexture(GL_TEXTURE_2D, t->texture);
        
@@ -165,5 +154,11 @@ void DessinTerrain(Terrain* t, unsigned int windowWidth, unsigned int windowHeig
         glBindTexture(GL_TEXTURE_2D, 0);
         glDisable(GL_TEXTURE_2D);
     glPopMatrix();
+    DessinBut(t->butP1);
+    DessinBut(t->butP2);
+    int i;
+    for(i=0; i<t->nbCheckpts; i++){
+        //DessinCheckpoint(t->checkpts[i]);
+    }
 }
 
