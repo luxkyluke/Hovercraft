@@ -40,6 +40,7 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     t->largeur = NB_MAX_COLONNE;
     t->hauteur = NB_MAX_LIGNE;
     t->texture = texture;
+    t->pointCollision = PointXY(-1,-1);
     t->checkpts = (Checkpoint **) malloc(NB_MAX_CHECKPT*sizeof(Checkpoint*));
     t->nbCheckpts = 0;
     int hauteurButG = 0;
@@ -91,8 +92,13 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
 bool IsWall(Terrain* t, Point2D pos){
     if(pos.x>100. || pos.y>50. || pos.x<-100. || pos.y<-50.)
         return true;
+<<<<<<< HEAD
     int x = (int) getXTerrain(pos.x);
     int y = (int) getYTerrain(pos.y);
+=======
+    int x = getXTerrain(pos.x);
+    int y = getYTerrain(pos.y); 
+>>>>>>> origin/master
     //printf("x:%d, y: %d\n",x, y);
     if(x>200 || x<0 || y>100 || y<0){
         printf("Erreur de calcul x terrain et y terrain\n");
@@ -100,7 +106,11 @@ bool IsWall(Terrain* t, Point2D pos){
         return true;
     }
     if( t->terrain[y][x] == '-'){
+<<<<<<< HEAD
         //printf("x:%d, posx: %3.f\n",x, pos.x);
+=======
+        printf("posx:%3.f, posy: %3.f\n",pos.x, pos.y);
+>>>>>>> origin/master
         t->pointCollision = pos;
         return true;
     }
@@ -109,7 +119,7 @@ bool IsWall(Terrain* t, Point2D pos){
 
 
 
-bool CercleIsInWall(Terrain* t, Cercle* c){ //xman ect forment un carré ...
+bool CercleIsInWall(Terrain* t, Cercle* c){ 
     float xmax = c->centre.x + c->radius;
     float xmin = c->centre.x - c->radius;
     float ymax = c->centre.y + c->radius;
@@ -117,7 +127,8 @@ bool CercleIsInWall(Terrain* t, Cercle* c){ //xman ect forment un carré ...
 
     if(IsWall(t, PointXY(xmax, ymax)) || IsWall(t, PointXY(xmax, ymin)) 
         || IsWall(t, PointXY(xmin, ymax)) || IsWall(t, PointXY(xmin, ymin)) == true){
-        return  true;
+            printf("x=%3.f, y=%3.f\n", c->centre.x, c->centre.y);
+            return  true;
     }
     return false;
 }
