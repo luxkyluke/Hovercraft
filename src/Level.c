@@ -197,7 +197,7 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
 
         // Touche clavier
         case SDL_KEYDOWN:
-          //printf("touche pressée (code = %d)\n", e.key.keysym.sym);
+          printf("touche pressée (code = %d)\n", e.key.keysym.unicode);
           if(e.key.keysym.sym ==  SDLK_z)
             VP2->avance = 1;
           if(e.key.keysym.sym == SDLK_UP)
@@ -214,7 +214,7 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
           break;
 
         case SDL_KEYUP:
-          //printf("touche lachée (code = %d)\n", e.key.keysym.sym);
+          //printf("touche lachée (code = %d)\n", e.key.keysym.unicode);
           if(e.key.keysym.sym == SDLK_z)
             VP2->avance = 0;
           if(e.key.keysym.sym == SDLK_UP)
