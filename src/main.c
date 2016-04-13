@@ -40,7 +40,6 @@ int main(int argc, char** argv) {
   PlayGame(game);
 
   FreeGame(game);
-  
 
   return EXIT_SUCCESS;
 }

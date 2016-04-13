@@ -1,5 +1,5 @@
 #include "Ballon.h"
-#include "math.h"
+#include <math.h>
 
 
 void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon, float ballRadius){
