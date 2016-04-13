@@ -117,7 +117,7 @@ bool CercleIsInWall(Terrain* t, Cercle* c){
 
     if(IsWall(t, PointXY(xmax, ymax)) || IsWall(t, PointXY(xmax, ymin)) 
         || IsWall(t, PointXY(xmin, ymax)) || IsWall(t, PointXY(xmin, ymin)) == true){
-            printf("x=%3.f, y=%3.f\n", c->centre.x, c->centre.y);
+            //printf("x=%3.f, y=%3.f\n", c->centre.x, c->centre.y);
             return  true;
     }
     return false;

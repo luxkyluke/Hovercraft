@@ -18,7 +18,7 @@ void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon, float ballRadius){
 
 void UpdateVitesseBall(Ballon* h){
 		h-> vitesse = AddVectors(h-> vitesse, h-> acceleration);
-		h-> vitesse = SubVectors(h-> vitesse, DivVector(h-> vitesse, 100.));
+		h-> vitesse = SubVectors(h-> vitesse, DivVector(h-> vitesse, 200.));
 	return;
 }
 
