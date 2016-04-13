@@ -1,0 +1,10 @@
+Finir les collisions
+Finir le zoom
+Affichage du score
+Affichage des checkpoints
+Bonus (Freeze ect)
+Finir But 
+Menu
+Minimap
+Graphisme
+Ajout de son (SDL-sound)

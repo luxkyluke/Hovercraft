@@ -97,7 +97,6 @@ bool IsWall(Terrain* t, Point2D pos){
     //printf("x:%d, y: %d\n",x, y);
     if(x>200 || x<0 || y>100 || y<0){
         printf("Erreur de calcul x terrain et y terrain\n");
-        //t->pointCollision = pos;
         return true;
     }
     if( t->terrain[y][x] == '-'){

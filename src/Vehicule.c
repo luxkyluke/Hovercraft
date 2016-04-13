@@ -54,15 +54,16 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint text, Player
 	Vector2D defaultDir = VectorXY(0,1);
 	Vector2D defaultAcc = VectorXY(0,0);
 	Vector2D defaultVit = VectorXY(0,0);
+	Point2D defaultPosC = AddPoints(pos, PointXY(0.5*hauteur, 0.5*hauteur));
 	h-> direction = defaultDir;
 	h-> acceleration = defaultAcc;
 	h-> vitesse = defaultVit;
 	h-> largeur = largeur;
 	h-> hauteur = hauteur;
 	h->cercle = (Cercle*) malloc(sizeof(Cercle));
-	MakeCercle(h->cercle, h->position, 0.5*largeur);
+	MakeCercle(h->cercle, defaultPosC, 0.5*largeur);
     h->facticeCercle = (Cercle*) malloc(sizeof(Cercle));
-    MakeCercle(h->facticeCercle, h->position, 0.8*largeur);
+    MakeCercle(h->facticeCercle, h->position, 0.5*largeur);
 	h->player = p;
 	h->texture = text;
     h->tourne = 0;
@@ -101,11 +102,11 @@ void UpdateRotation(Vehicule* h){
 }
 
 void UpdateVehicule(Vehicule* h){
-    UpdateCercle(h);
     UpdateRotation(h);
 	UpdateAcceleration(h);
 	UpdateVitesse(h);
 	UpdatePosition(h);
+	UpdateCercle(h);
 	return;
 }
 
