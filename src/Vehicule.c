@@ -73,7 +73,7 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint text, Player
 // PARTIE PHYSIQUE
 void UpdateAcceleration(Vehicule* h){
 	if(h->avance == 1){
-		h-> acceleration = MultVector(h-> direction, 0.01);
+		h-> acceleration = MultVector(h-> direction, 0.015);
 	}
 	else
 		h-> acceleration = VectorXY(0,0.);

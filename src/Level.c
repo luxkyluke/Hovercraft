@@ -12,10 +12,10 @@
     #include <GL/glu.h>
 #endif
 
-#define DEFAULT_VP1_POS_X 95.
+#define DEFAULT_VP1_POS_X 90.
 #define DEFAULT_VP1_POS_Y 0.
 #define DEFAULT_VP2_POS_Y 0.
-#define DEFAULT_VP2_POS_X -95.
+#define DEFAULT_VP2_POS_X -90.
 #define DEFAULT_VEHICUL_W 5.
 #define DEFAULT_VEHICUL_H 5.
 #define DEFAULT_BALL_POS_X 0.
@@ -71,19 +71,14 @@ void MakeLevel(Level* l, char* nameFichTerrain, char* pathTextureTerrain, char* 
     l->terrain= t;
     l->scoreP1 = 0;
     l->scoreP2 = 0;
-        printf("positionx  %f      positiony  %f\n", l->vp1->cercle->centre.x, l->vp1->cercle->centre.y );
-                printf("radius  %f\n", l->vp1->cercle->radius );
-
 }
 
 bool CheckTouched(Level* l){
     CollisionVehiculeVehicule(l->vp1, l->vp2);
     CollisionVehiculeBallon(l->ballon, l->vp1);
     CollisionVehiculeBallon(l->ballon, l->vp2);
-    TouchedBallonTerrain(l->ballon, l->terrain);
-    TouchedVehiculeTerrain(l->vp1, l->terrain);
-    //CollisionVehiculeTerrain(l->vp1, l->terrain);
-    //CollisionVehiculeTerrain(l->vp2, l->terrain);
+    CollisionVehiculeTerrain(l->vp1, l->terrain);
+    CollisionVehiculeTerrain(l->vp2, l->terrain);
     CollisionBallonTerrain(l->ballon, l->terrain);
     return true;
 }
@@ -148,10 +143,10 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
 
 
 //ZONE DE TEST//////////
-    /*glBegin(GL_LINES);
+/*    glBegin(GL_LINES);
       glColor3f(0.,1.,0.);
-        glVertex2f(level->ballon->cercle->centre.x,level->ballon->cercle->centre.y);
-        glVertex2f(level->ballon->direction.x, level->ballon->direction.y);
+        glVertex2f(0,0);
+        glVertex2f(level->vp1->direction.x, level->vp1->direction.y);
     glEnd();
 
     glPushMatrix();
