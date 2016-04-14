@@ -77,6 +77,6 @@ float getXSDL(int x){
 
 float getYSDL(int y){
     float ret = 50. - y ;
-    printf("RET !! %3.f\n", ret);
+    //printf("RET !! %3.f\n", ret);
     return ret;
 }
