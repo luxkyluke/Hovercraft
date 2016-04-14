@@ -70,36 +70,49 @@ void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
 }
 
 void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){
-    BallIsInGoal(terrain->butP1, ballon);
-    BallIsInGoal(terrain->butP2, ballon);
+    //BallIsInGoal(terrain->butP1, ballon);
+    //BallIsInGoal(terrain->butP2, ballon);
     if(TouchedBallonTerrain(ballon, terrain) == true){
-        //if(ballon->cercle->centre.x > 0)
-        //float angle;
-        //ballon->vitesse.x = 0;
-        //ballon->vitesse.y = 0;
-		Vector2D NewDir = Vector(ballon->cercle->centre, terrain->pointCollision);
-        //angle = (PI*45)/180;
-        //NewDir.x = -sin(angle);
-        //NewDir.y = cos(angle);
-        ballon->direction = NewDir;
-        //ballon->direction = MultVector(ballon->direction, 0.01);
-        printf("%f         %f\n", NewDir.x, NewDir.y);
+        if(StatusCollisionTerrain(terrain) == 1){
+            ballon->vitesse.x *= -1;
+            return;
+        }
+        if(StatusCollisionTerrain(terrain) == 2){
+            ballon->vitesse.y *= -1;
+            return;
+        }
+
+        if(StatusCollisionTerrain(terrain) == 3){
+            ballon->vitesse.y *= -1;
+            ballon->vitesse.x *= -1;
+            return;
+        }
 	}
     else 
         return;
 }
-/*
+
 void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){ 
     if(TouchedVehiculeTerrain(vehicule, terrain) == true){
-        Vector2D dir = Vector(vehicule->cercle->centre, terrain->pointCollision);
-        // AR vehicule->direction = AddVector(dir, PI);
+        if(StatusCollisionTerrain(terrain) == 1){
+            vehicule->vitesse.x *= -1;
+            return;
+        }
+        if(StatusCollisionTerrain(terrain) == 2){
+            vehicule->vitesse.y *= -1;
+            return;
+        }
 
-        return;
+        if(StatusCollisionTerrain(terrain) == 3){
+            vehicule->vitesse.y *= -1;
+            vehicule->vitesse.x *= -1;
+            return;
+        }
     }
     else 
         return;
 }
-*/
+
 
 
 
@@ -138,7 +151,7 @@ bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
 }
 
 bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP){
-    if(CollisionCercleCercle(vehicule->cercle, chkP->cercle))
+    if(CollisionCercleCercle(vehicule->cercle, chkP->cercle)) //Ajouter cerclefactice si ne considère pas le fait que le vehicule doit arriver de face
         return true;
     return false;
 }
@@ -154,9 +167,19 @@ bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain){
 bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
     if(CercleIsInWall(terrain, vehicule->cercle) || 
         CercleIsInWall(terrain, vehicule->facticeCercle) == true){
-        printf("xT = %3.f, yT = %3.f\n", vehicule->cercle->centre.x, vehicule->cercle->centre.y);
+        //printf("xT = %3.f, yT = %3.f\n", vehicule->cercle->centre.x, vehicule->cercle->centre.y);
+        //printf("xptCol =%f     yptCol=%f\n", terrain->pointCollision.x,  terrain->pointCollision.y);
         printf("Vehicule t'es dans le mur BOLOSSE\n");
         return true;
     }
     return false;
+}
+
+int StatusCollisionTerrain(Terrain* t){
+    int retour = 0;
+    if(t->pointCollision.x > 99  || t->pointCollision.x < -99) //collision verticale
+        retour += 1;
+    if(t->pointCollision.y > 49 || t->pointCollision.y < -49) //collision horizontale
+        retour +=2;
+    return retour;
 }
