@@ -26,7 +26,7 @@ char *str_dup(char const *s){
 
 void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     if(!t) {
-        printf("Impossible de créer le terrain, pointeur non alloué\n"); 
+        printf("Impossible de creer le terrain, pointeur non alloué\n");
         return;
     }
     if(terrainTxt == NULL){
