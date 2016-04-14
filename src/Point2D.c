@@ -8,3 +8,7 @@ Point2D PointXY(float x, float y) {
     p.y = y;
     return p;
 }
+
+Point2D AddPoints(Point2D u, Point2D v) {
+    return PointXY(u.x + v.x, u.y + v.y);
+}

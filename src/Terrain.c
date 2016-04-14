@@ -26,7 +26,7 @@ char *str_dup(char const *s){
 
 void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     if(!t) {
-        printf("Impossible de créer le terrain, pointeur non alloué\n"); 
+        printf("Impossible de creer le terrain, pointeur non alloué\n");
         return;
     }
     if(terrainTxt == NULL){
@@ -40,6 +40,7 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     t->largeur = NB_MAX_COLONNE;
     t->hauteur = NB_MAX_LIGNE;
     t->texture = texture;
+    t->pointCollision = PointXY(-1,-1);
     t->checkpts = (Checkpoint **) malloc(NB_MAX_CHECKPT*sizeof(Checkpoint*));
     t->nbCheckpts = 0;
     int hauteurButG = 0;
@@ -86,33 +87,38 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     
     MakeBut(PointXY(DEFAULT_BUTP2_POS_X, butD_pos_y), PointXY(DEFAULT_BUTP2_POS_X, butD_pos_y+hauteurButD), t->butP2);
     MakeBut(PointXY(DEFAULT_BUTP1_POS_X, butG_pos_y), PointXY(DEFAULT_BUTP1_POS_X, butD_pos_y+hauteurButG), t->butP1);
-    // printf("butP1 top : x %3.f, y %3.f, bottom: x%3.f, y%3.f\n", t->butP1->top.x, t->butP1->top.y, t->butP1->bottom.x, t->butP1->bottom.y);
-    // printf("butP2 x:%3.f, y:%3.f, bottom: x%3.f, y%3.f\n", t->butP2->top.x, t->butP2->top.y, t->butP2->bottom.x, t->butP2->bottom.y);
-}
+ }
 
 bool IsWall(Terrain* t, Point2D pos){
     if(pos.x>100. || pos.y>50. || pos.x<-100. || pos.y<-50.)
         return true;
-    int y = (int) pos.y + 50;
-    int x = (int) pos.x + 100;
-//    printf("x:%d, posx: %f\n",x, pos.x);
-    if(t->terrain[y][x] == '-'){
-//        printf("x:%d, posx: %d\n",x, pos.x);
-        //t->pointCollision = PointXY(x,y);
+    int x = (int) getXTerrain(pos.x);
+    int y = (int) getYTerrain(pos.y);
+    //printf("x:%d, y: %d\n",x, y);
+    if(x>200 || x<0 || y>100 || y<0){
+        printf("Erreur de calcul x terrain et y terrain\n");
+        return true;
+    }
+    if( t->terrain[y][x] == '-'){
+        //printf("posx:%3.f, posy: %3.f\n",pos.x, pos.y);
+        t->pointCollision = pos;
         return true;
     }
     return false;
 }
 
-bool CercleIsInWall(Terrain* t, Cercle* c){ //xman ect forment un carré ...
+
+
+bool CercleIsInWall(Terrain* t, Cercle* c){ 
     float xmax = c->centre.x + c->radius;
     float xmin = c->centre.x - c->radius;
     float ymax = c->centre.y + c->radius;
     float ymin = c->centre.y - c->radius;
 
-    if(IsWall(t, PointXY(xmax, ymax)) || IsWall(t, PointXY(xmax, ymin))
+    if(IsWall(t, PointXY(xmax, ymax)) || IsWall(t, PointXY(xmax, ymin)) 
         || IsWall(t, PointXY(xmin, ymax)) || IsWall(t, PointXY(xmin, ymin)) == true){
-        return  true;
+            printf("x=%3.f, y=%3.f\n", c->centre.x, c->centre.y);
+            return  true;
     }
     return false;
 }
@@ -131,11 +137,9 @@ void FreeTerrain(Terrain* t){
     printf("FreeTerrain OK\n");
 }
 
-void DessinTerrain(Terrain* t, unsigned int windowWidth, unsigned int windowHeight) {
+void DessinTerrain(Terrain* t) {
     glPushMatrix();
         glEnable(GL_TEXTURE_2D);
-        //float test = (float)windowWidth - (float)windowWidth/2;
-        //printf("hrllo %f \n", 100.*(float)windowHeight/(float)windowWidth);
         glColor3f(255, 255, 255);
         glBindTexture(GL_TEXTURE_2D, t->texture);
        
@@ -149,5 +153,11 @@ void DessinTerrain(Terrain* t, unsigned int windowWidth, unsigned int windowHeig
         glBindTexture(GL_TEXTURE_2D, 0);
         glDisable(GL_TEXTURE_2D);
     glPopMatrix();
+    DessinBut(t->butP1);
+    DessinBut(t->butP2);
+    int i;
+    for(i=0; i<t->nbCheckpts; i++){
+        //DessinCheckpoint(t->checkpts[i]);
+    }
 }
 

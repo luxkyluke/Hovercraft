@@ -22,8 +22,8 @@ typedef struct {
 }Game;
 
 void MakeGame(Game* game, float duration);
-int AddLevel(Game* game, char* nameFichTerrain,  char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2);
-void PlayLevel(Game* game, int idLevel);
+void AddLevel(Game* game, char* nameFichTerrain,  char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2);
+void PlayGame(Game* game);
 void FreeGame(Game* g);
 
 #endif

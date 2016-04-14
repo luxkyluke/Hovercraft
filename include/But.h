@@ -11,6 +11,6 @@ typedef struct {
 
 void MakeBut(Point2D top, Point2D bottom, But* b);
 bool BallIsInGoal(But* but, Ballon* ball);
-
+void DessinBut(But* b);
 
 #endif
