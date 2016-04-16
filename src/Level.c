@@ -85,6 +85,9 @@ bool CheckTouched(Level* l){
     CollisionVehiculeTerrain(l->vp1, l->terrain);
     CollisionVehiculeTerrain(l->vp2, l->terrain);
     CollisionBallonTerrain(l->ballon, l->terrain);
+    if(CollisionBallonBut(l->ballon, l->terrain)) {
+      l->camera->start=1;
+    }
     return true;
 }
 
@@ -112,6 +115,43 @@ void DessinLevel(Level* l){
 void UpdateLevel(Level* l){
     UpdateVehicule(l->vp1);
     UpdateVehicule(l->vp2);
+}
+
+// Reset Vehicule position and ball
+void ResetLevel(Level* l) {
+    // Reset first vehicule.
+    l->vp1->position = PointXY(DEFAULT_VP1_POS_X, DEFAULT_VP1_POS_Y);
+    l->vp1->vitesse = VectorXY(0,0);
+    l->vp1->angle = 0;
+    l->vp1->direction = VectorXY(0,1);
+    // Reset second vehicule.
+    l->vp2->position = PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y);
+    l->vp2->vitesse = VectorXY(0,0);
+    l->vp2->angle = 0;
+    l->vp2->direction = VectorXY(0,1);
+    // Reset ball.
+    l->ballon->cercle->centre = PointXY(0,0);
+    l->ballon->vitesse = VectorXY(0,0);
+    // Reset Camera
+    l->camera->zoomLevel=1;
+    l->camera->start=0;
+}
+
+void RalentiLevel(Level* level) {
+  level->vp1->vitesse=DivVector(level->vp1->vitesse,1.1);
+  level->vp2->vitesse=DivVector(level->vp2->vitesse,1.1);
+  level->ballon->vitesse=DivVector(level->ballon->vitesse,1.1);
+}
+
+void UpdateCamera(Level* level) {
+    if(level->camera->zoomLevel<4 && level->camera->start == 1) {
+      LookAt(level->camera, level->ballon->cercle->centre, level->camera->zoomLevel);
+      level->camera->zoomLevel+=0.01;
+      RalentiLevel(level);
+    }
+    else if(level->camera->zoomLevel>=4){
+      ResetLevel(level);
+    }
 }
 
 void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
@@ -148,12 +188,7 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
     //Camera//
     glPushMatrix();
     glLoadIdentity();
-    if(level->camera->zoomLevel<4) {
-      LookAt(level->camera, VP1->position, level->camera->zoomLevel);
-      level->camera->zoomLevel+=0.01;
-    }
-    else
-      level->camera->zoomLevel=0;
+    UpdateCamera(level);
 
 
 
@@ -243,6 +278,12 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
             VP2->tourne = 0;
           if(e.key.keysym.sym == SDLK_d)
             VP2->tourne = 0;
+          if(e.key.keysym.sym == SDLK_r)
+            ResetLevel(level);
+          if(e.key.keysym.sym == SDLK_t)
+            level->camera->start=1;
+          if(e.key.keysym.sym == SDLK_y)
+            RalentiLevel(level);
           break;
 
         // resize window

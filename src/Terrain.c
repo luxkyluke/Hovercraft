@@ -68,12 +68,13 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
                 t->nbCheckpts++;
             }
         }
-        if(ligne[0] == 'x'){
+        t->largeur = j;
+        if(ligne[5] == 'x'){
             if(butG_pos_y < 0)
                 butG_pos_y = i;
             hauteurButG++;
         }
-        if(ligne[NB_MAX_COLONNE-3] == 'x'){
+        if(ligne[NB_MAX_COLONNE-8] == 'x'){
             if(butD_pos_y < 0)
                 butD_pos_y = i;
             hauteurButD++;
@@ -83,23 +84,32 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
         //printf("%s\n", ligne);
         i++;
     }
+    t->hauteur=i;
    // printf("%d\n", i);
     
-    MakeBut(PointXY(DEFAULT_BUTP2_POS_X, butD_pos_y), PointXY(DEFAULT_BUTP2_POS_X, butD_pos_y+hauteurButD), t->butP2);
-    MakeBut(PointXY(DEFAULT_BUTP1_POS_X, butG_pos_y), PointXY(DEFAULT_BUTP1_POS_X, butD_pos_y+hauteurButG), t->butP1);
+    MakeBut(PointXY(DEFAULT_BUTP2_POS_X, butG_pos_y+hauteurButG), PointXY(DEFAULT_BUTP2_POS_X,
+    		butG_pos_y), t->butP2, player2);
+    MakeBut(PointXY(DEFAULT_BUTP1_POS_X, butD_pos_y+hauteurButD), PointXY(DEFAULT_BUTP1_POS_X,
+    		butD_pos_y) , t->butP1, player1);
  }
 
+bool EstDansTerrain(Terrain* t, Point2D pos){
+	if(pos.x>t->largeur || pos.y>t->hauteur || pos.x<-(t->largeur) || pos.y<-(t->hauteur))
+		return false;
+	return true;
+}
+
 bool IsWall(Terrain* t, Point2D pos){
-    if(pos.x>100. || pos.y>50. || pos.x<-100. || pos.y<-50.)
-        return true;
+    if(!EstDansTerrain(t, pos))
+        return false;
     int x = (int) getXTerrain(pos.x);
     int y = (int) getYTerrain(pos.y);
     //printf("x:%d, y: %d\n",x, y);
     if(x>200 || x<0 || y>100 || y<0){
         printf("Erreur de calcul x terrain et y terrain\n");
-        return true;
+        return false;
     }
-    if( t->terrain[y][x] == '-'){
+    if( t->terrain[y][x] == '-' || t->terrain[y][x] == '|'){
         //printf("posx:%3.f, posy: %3.f\n",pos.x, pos.y);
         t->pointCollision = pos;
         return true;
@@ -109,14 +119,15 @@ bool IsWall(Terrain* t, Point2D pos){
 
 
 
+
 bool CercleIsInWall(Terrain* t, Cercle* c){ 
     float xmax = c->centre.x + c->radius;
     float xmin = c->centre.x - c->radius;
     float ymax = c->centre.y + c->radius;
     float ymin = c->centre.y - c->radius;
 
-    if(IsWall(t, PointXY(xmax, ymax)) || IsWall(t, PointXY(xmax, ymin)) 
-        || IsWall(t, PointXY(xmin, ymax)) || IsWall(t, PointXY(xmin, ymin)) == true){
+    if(IsWall(t, c->centre) || IsWall(t, PointXY(xmax, ymax)) || IsWall(t, PointXY(xmax, ymin))
+        || IsWall(t, PointXY(xmin, ymax)) || IsWall(t, PointXY(xmin, ymin))){
             //printf("x=%3.f, y=%3.f\n", c->centre.x, c->centre.y);
             return  true;
     }
@@ -153,11 +164,17 @@ void DessinTerrain(Terrain* t) {
         glBindTexture(GL_TEXTURE_2D, 0);
         glDisable(GL_TEXTURE_2D);
     glPopMatrix();
+
     DessinBut(t->butP1);
     DessinBut(t->butP2);
     int i;
     for(i=0; i<t->nbCheckpts; i++){
-        //DessinCheckpoint(t->checkpts[i]);
+        DessinCheckpoint(t->checkpts[i]);
     }
 }
 
+char getCaraTerrain(Terrain *t, Point2D pos){
+	int x = (int) getXTerrain(pos.x);
+	int y = (int) getYTerrain(pos.y);
+	return t->terrain[y][x];
+}

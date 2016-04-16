@@ -22,6 +22,7 @@
 #include "../include/Ballon.h"
 #include "../include/Terrain.h"
 #include "../include/Collision.h"
+#include "../include/Camera.h"
 #include "../include/Level.h"
 #include "../include/Game.h"
 
@@ -32,11 +33,11 @@ int main(int argc, char** argv) {
 
 
   Game* game = (Game *) malloc(sizeof(Game));
-  
+
   MakeGame(game, 300);
   //MakeLevel(level1, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
   AddLevel(game, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
- 
+
   PlayGame(game);
 
   FreeGame(game);

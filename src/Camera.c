@@ -1,4 +1,3 @@
-#include "Camera.h"
 #include <stdlib.h>
 #ifdef __APPLE__
     #include <OpenGL/gl.h>
@@ -7,6 +6,8 @@
     #include <GL/gl.h>
     #include <GL/glu.h>
 #endif
+
+#include "Camera.h"
 
 
 void MakeCamera(Camera* c) {
@@ -23,6 +24,6 @@ void MakeCamera(Camera* c) {
 void LookAt(Camera* c, Point2D direction, float zoomLevel) {
     c->direction = direction;
     c->zoomLevel = zoomLevel;
-    glScalef(c->zoomLevel,c->zoomLevel,c->zoomLevel);
+    glScalef(c->zoomLevel,c->zoomLevel,c->zoomLevel);//650 1300
     glTranslatef(-c->direction.x, -c->direction.y,0);
 }
