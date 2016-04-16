@@ -14,15 +14,23 @@ void MakeBut(Point2D top, Point2D bottom, But* b, Player p) {
 }
 
 bool BallIsInGoal(But* but, Ballon* ball) {
-    float x = getXTerrain(abs(ball->cercle->centre.x));
-    float y = getYTerrain(ball->cercle->centre.y);
-    if(x <= but->top.x
-        && x >= but->bottom.x
-        && y >= but->bottom.y
-        && y <= but->top.y){
-        printf("GOAAAAL pour player%d!\n", but->player);
-        return true;
+    float x = getXSDL(but->top.x);
+    float topy = getYSDL(but->top.y);
+    float bottomy = getYSDL(but->bottom.y);
+
+    if(ball->cercle->centre.y < bottomy && ball->cercle->centre.y > topy){
+    	return false;
     }
+    if(x>0){
+    	if(ball->cercle->centre.x >= x){
+			printf("GOAAAAL pour player%d!\n", but->player);
+			return true;
+    	}
+    }
+	else if (ball->cercle->centre.x <= x){
+		printf("GOAAAAL pour player%d!\n", but->player);
+		return true;
+	}
     return false;
 }
 

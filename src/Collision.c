@@ -173,8 +173,8 @@ bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
         CercleIsInWall(terrain, vehicule->facticeCercle)){
         //printf("xT = %3.f, yT = %3.f\n", vehicule->cercle->centre.x, vehicule->cercle->centre.y);
         //printf("xptCol =%f     yptCol=%f\n", terrain->pointCollision.x,  terrain->pointCollision.y);
-        printf("Vehicule player %d dans le mur pos x %3.f, y %3.f\n",
-        		vehicule->player, vehicule->cercle->centre.x, vehicule->cercle->centre.y);
+        //printf("Vehicule player %d dans le mur pos x %3.f, y %3.f\n",
+        		//vehicule->player, vehicule->cercle->centre.x, vehicule->cercle->centre.y);
         return true;
     }
     return false;
