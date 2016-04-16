@@ -88,11 +88,11 @@ void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){
             return;
         }
 	}
-    else 
+    else
         return;
 }
 
-void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){ 
+void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
     if(TouchedVehiculeTerrain(vehicule, terrain) == true){
         if(StatusCollisionTerrain(terrain) == 1){
             vehicule->vitesse.x *= -1;
@@ -109,7 +109,7 @@ void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
             return;
         }
     }
-    else 
+    else
         return;
 }
 
@@ -165,7 +165,7 @@ bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain){
 }
 
 bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
-    if(CercleIsInWall(terrain, vehicule->cercle) || 
+    if(CercleIsInWall(terrain, vehicule->cercle) ||
         CercleIsInWall(terrain, vehicule->facticeCercle) == true){
         //printf("xT = %3.f, yT = %3.f\n", vehicule->cercle->centre.x, vehicule->cercle->centre.y);
         //printf("xptCol =%f     yptCol=%f\n", terrain->pointCollision.x,  terrain->pointCollision.y);

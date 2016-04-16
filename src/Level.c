@@ -3,6 +3,7 @@
 #include "Level.h"
 #include "Collision.h"
 #include "sdl_tools.h"
+#include "Camera.h"
 
 #ifdef __APPLE__
     #include <OpenGL/gl.h>
@@ -49,6 +50,7 @@ void MakeLevel(Level* l, char* nameFichTerrain, char* pathTextureTerrain, char* 
     GLuint textureIdTerrain = loadImage(pathTextureTerrain);
     GLuint textureVP1 = loadImage(DEFAULT_VP1_TEXTURE_PATH);
     GLuint textureVP2 = loadImage(DEFAULT_VP2_TEXTURE_PATH);
+  Camera *cam = (Camera *) malloc(sizeof(Camera));
 
 	char terrainTxt[30] = "./";
 	strcat(terrainTxt, nameFichTerrain);
@@ -64,10 +66,13 @@ void MakeLevel(Level* l, char* nameFichTerrain, char* pathTextureTerrain, char* 
     MakeVehicule(PointXY(DEFAULT_VP1_POS_X, DEFAULT_VP1_POS_Y), DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, textureVP1, player1, vp1);
     MakeVehicule(PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y), DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, textureVP2, player1, vp2);
     MakeBallon(imageBallon, PointXY(DEFAULT_BALL_POS_X,DEFAULT_BALL_POS_Y), ballon, DEFAULT_BALL_RADIUS);
+    MakeCamera(cam);
+
 
     l->ballon = ballon;
     l->vp1 = vp1;
     l->vp2 = vp2;
+    l->camera = cam;
     l->terrain= t;
     l->scoreP1 = 0;
     l->scoreP2 = 0;
@@ -128,7 +133,6 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
   // Boucle d'affichage
   int loop = 1;
 
-
   while(loop) {
     // Récupération du temps au début de la boucle
     Uint32 startTime = SDL_GetTicks();
@@ -141,9 +145,23 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
     glLoadIdentity();
 
 
+    //Camera//
+    glPushMatrix();
+    glLoadIdentity();
+    if(level->camera->zoomLevel<4) {
+      LookAt(level->camera, VP1->position, level->camera->zoomLevel);
+      level->camera->zoomLevel+=0.01;
+    }
+    else
+      level->camera->zoomLevel=0;
+
+
+
+
+
 
 //ZONE DE TEST//////////
-/*    glBegin(GL_LINES);
+    glBegin(GL_LINES);
       glColor3f(0.,1.,0.);
         glVertex2f(0,0);
         glVertex2f(level->vp1->direction.x, level->vp1->direction.y);
@@ -153,8 +171,8 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
         glTranslatef(level->ballon->cercle->centre.x, level->ballon->cercle->centre.y, 0);
         glScalef(level->ballon->cercle->radius, level->ballon->cercle->radius, 0.);
         dessinCercle(100, 0.8, 0.4, 0.1, 0);
-      glPopMatrix();
-*/
+    glPopMatrix();
+
 ///////////////////////////
 
 
@@ -165,6 +183,8 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
     DessinLevel(level);
 
     CheckTouched(level);
+
+    glPopMatrix();
 
 
     // Echange du front et du back buffer : mise à jour de la fenêtre

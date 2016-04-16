@@ -6,6 +6,7 @@
 #include "Ballon.h"
 #include "Point2D.h"
 #include "bool.h"
+#include "Camera.h"
 
 typedef struct {
 	Terrain* terrain;
@@ -15,6 +16,7 @@ typedef struct {
 	int scoreP1;
 	int scoreP2;
     int nbLevel;
+    Camera* camera;
 }Level;
 
 void MakeLevel(Level *l, char* nameFichTerrain,  char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2);
