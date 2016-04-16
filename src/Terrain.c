@@ -21,8 +21,8 @@ char *str_dup(char const *s){
 #define NB_MAX_COLONNE 202
 #define NB_MAX_CHECKPT 30
 #define DEFAULT_RAYON_CHECKPT 5.
-#define DEFAULT_BUTP1_POS_X 200.
-#define DEFAULT_BUTP2_POS_X 0.
+#define DEFAULT_BUTG_POS_X 194.
+#define DEFAULT_BUTD_POS_X 5.
 
 void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     if(!t) {
@@ -69,12 +69,12 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
             }
         }
         t->largeur = j;
-        if(ligne[5] == 'x'){
+        if(ligne[(int)DEFAULT_BUTD_POS_X] == 'x'){
             if(butG_pos_y < 0)
                 butG_pos_y = i;
             hauteurButG++;
         }
-        if(ligne[NB_MAX_COLONNE-8] == 'x'){
+        if(ligne[(int)DEFAULT_BUTG_POS_X] == 'x'){
             if(butD_pos_y < 0)
                 butD_pos_y = i;
             hauteurButD++;
@@ -87,10 +87,12 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     t->hauteur=i;
    // printf("%d\n", i);
     
-    MakeBut(PointXY(DEFAULT_BUTP2_POS_X, butG_pos_y+hauteurButG), PointXY(DEFAULT_BUTP2_POS_X,
-    		butG_pos_y), t->butP2, player2);
-    MakeBut(PointXY(DEFAULT_BUTP1_POS_X, butD_pos_y+hauteurButD), PointXY(DEFAULT_BUTP1_POS_X,
-    		butD_pos_y) , t->butP1, player1);
+    MakeBut(PointXY(DEFAULT_BUTG_POS_X,butG_pos_y),
+    		PointXY(DEFAULT_BUTG_POS_X, butG_pos_y+hauteurButG),
+			t->butP2, player2);
+    MakeBut(PointXY(DEFAULT_BUTD_POS_X,butD_pos_y),
+    		PointXY(DEFAULT_BUTD_POS_X, butD_pos_y+hauteurButD),
+			t->butP1, player1);
  }
 
 bool EstDansTerrain(Terrain* t, Point2D pos){
