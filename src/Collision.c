@@ -70,8 +70,8 @@ void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
 }
 
 void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){
-    //BallIsInGoal(terrain->butP1, ballon);
-    //BallIsInGoal(terrain->butP2, ballon);
+    BallIsInGoal(terrain->butP1, ballon);
+    BallIsInGoal(terrain->butP2, ballon);
     if(TouchedBallonTerrain(ballon, terrain) == true){
         if(StatusCollisionTerrain(terrain) == 1){
             ballon->vitesse.x *= -1;
@@ -157,7 +157,7 @@ bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP){
 }
 
 bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain){
-	if(CercleIsInWall(terrain, ballon->cercle) == true){
+	if(CercleIsInWall(terrain, ballon->cercle)){
         printf("Ballon cest un mur BOLOSSE\n");
         return true;
     }
@@ -166,20 +166,28 @@ bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain){
 
 bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
     if(CercleIsInWall(terrain, vehicule->cercle) || 
-        CercleIsInWall(terrain, vehicule->facticeCercle) == true){
+        CercleIsInWall(terrain, vehicule->facticeCercle)){
         //printf("xT = %3.f, yT = %3.f\n", vehicule->cercle->centre.x, vehicule->cercle->centre.y);
         //printf("xptCol =%f     yptCol=%f\n", terrain->pointCollision.x,  terrain->pointCollision.y);
-        printf("Vehicule t'es dans le mur BOLOSSE\n");
+        printf("Vehicule player %d dans le mur pos x %3.f, y %3.f\n",
+        		vehicule->player, vehicule->cercle->centre.x, vehicule->cercle->centre.y);
         return true;
     }
     return false;
 }
 
+
+
 int StatusCollisionTerrain(Terrain* t){
     int retour = 0;
-    if(t->pointCollision.x > 99  || t->pointCollision.x < -99) //collision verticale
+    /*if(t->pointCollision.x > 99  || t->pointCollision.x < -99
+    		|| t->pointCollision.x > 94  || t->pointCollision.x < -94) //collision verticale
         retour += 1;
     if(t->pointCollision.y > 49 || t->pointCollision.y < -49) //collision horizontale
-        retour +=2;
+        retour +=2;*/
+    if(getCaraTerrain(t, t->pointCollision) == '|')
+    	retour += 1;
+    if(getCaraTerrain(t, t->pointCollision) == '-')
+    	retour +=2;
     return retour;
 }
