@@ -49,9 +49,16 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint text, Player
 		printf("Impossible de créer le véhicule, pointeur non alloué\n");
 		return;
 	}
+	Vector2D defaultDir;
 	h-> position = pos;
-	h-> angle = 0;
-	Vector2D defaultDir = VectorXY(0,1);
+	if(p == player1){
+		h-> angle = 90;
+		defaultDir = VectorXY(-1,0);
+	}
+	else{
+		h-> angle = -90;
+		defaultDir = VectorXY(1,0);
+	}
 	Vector2D defaultAcc = VectorXY(0,0);
 	Vector2D defaultVit = VectorXY(0,0);
 	Point2D defaultPosC = AddPoints(pos, PointXY(0.5*hauteur, 0.5*hauteur));

@@ -42,3 +42,4 @@ GLuint loadImage(char* image){
     glDisable(GL_TEXTURE_2D);
     return textures;
 }
+

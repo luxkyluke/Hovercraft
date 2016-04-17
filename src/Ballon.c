@@ -1,5 +1,5 @@
 #include "Ballon.h"
-#include <math.h>
+#include "common.h"
 
 
 void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon, float ballRadius){
@@ -18,11 +18,16 @@ void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon, float ballRadius){
 
 void UpdateVitesseBall(Ballon* h){
 		h-> vitesse = AddVectors(h-> vitesse, h-> acceleration);
-		h-> vitesse = SubVectors(h-> vitesse, DivVector(h-> vitesse, 200.));
+		h-> vitesse = SubVectors(h-> vitesse, DivVector(h-> vitesse, 300.));
 	return;
 }
 
 void UpdatePositionBall(Ballon* h){
+	/*if(!EstDansTerrain(PointXY(h->cercle->centre.x += h-> vitesse.x, h->cercle->centre.y += h-> vitesse.y))){
+		h->cercle->centre.x -= h-> vitesse.x;
+		h->cercle->centre.y -= h-> vitesse.y;
+		return;
+	}*/
 	h->cercle->centre.x += h-> vitesse.x;
 	h->cercle->centre.y += h-> vitesse.y;
 	return;
@@ -41,7 +46,7 @@ void DessinBallon(Ballon* ball) {
 	    glEnable(GL_TEXTURE_2D);
 	    glBindTexture(GL_TEXTURE_2D, ball->texture);
 	    glTranslatef(ball->cercle->centre.x, ball->cercle->centre.y, 0);
-	    glScalef(2, 2, 1.f);
+	    glScalef(ball->cercle->radius, ball->cercle->radius, 1);
 	    glColor3f(255, 255, 255);
 	    glBegin(GL_POLYGON);
 	        for (angle=0.0; angle<360.0; angle+=2.0) {
@@ -62,21 +67,4 @@ void DessinBallon(Ballon* ball) {
 
 }
 
-float getXTerrain(float x){
-    return x + 100;
-}
 
-float getYTerrain(float y){
-    float ret = abs(y - 50);
-    return ret;
-}
-
-float getXSDL(int x){
-    return x - 100.;
-}
-
-float getYSDL(int y){
-    float ret = 50. - y ;
-    //printf("RET !! %3.f\n", ret);
-    return ret;
-}

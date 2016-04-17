@@ -22,6 +22,7 @@
 #include "../include/Ballon.h"
 #include "../include/Terrain.h"
 #include "../include/Collision.h"
+#include "../include/Camera.h"
 #include "../include/Level.h"
 #include "../include/Game.h"
 #include "../include/Menu.h"

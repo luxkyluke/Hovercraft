@@ -18,6 +18,7 @@ void CollisionVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP);	//
 void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule);		//DONE
 void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain);	//DONE
 void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain);			//DONE
+bool CollisionBallonBut(Ballon* ballon, Terrain* terrain, Player* buteur);              //DONE
 
 //fonctions qui indiques si 2 élément sont entrer en contact ou non
 bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2); //DONE

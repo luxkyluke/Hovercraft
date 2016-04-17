@@ -1,6 +1,7 @@
 #ifndef LEVEL_H_
 #define LEVEL_H_
 
+#include "Camera.h"
 #include "Terrain.h"
 #include "Vehicule.h"
 #include "Ballon.h"
@@ -14,6 +15,7 @@ typedef struct {
 	Ballon* ballon;
 	int scoreP1;
 	int scoreP2;
+    Camera* camera;
     int nbLevel;
 }Level;
 
@@ -30,5 +32,7 @@ void FreeLevel(Level* l);
 void DessinLevel(Level* l);
 void UpdateLevel(Level* l);
 void PlayLevel(Level* l, int windowWidth, int windowHeight, int i);
+void ResetLevel(Level* l);
+void UpdateCameraLevel(Level* level);
 
 #endif
