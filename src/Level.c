@@ -135,6 +135,7 @@ void ResetLevel(Level* l) {
     // Reset first vehicule.
 	ResetVehicule(l->vp1, PointXY(DEFAULT_VP1_POS_X, DEFAULT_VP1_POS_Y), player1);
     // Reset second vehicule.
+    ResetVehicule(l->vp2, PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y), player2);
 
     // Reset ball.
     ResetBallon(l->ballon);
