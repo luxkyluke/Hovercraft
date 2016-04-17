@@ -49,22 +49,8 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint text, Player
 		printf("Impossible de créer le véhicule, pointeur non alloué\n");
 		return;
 	}
-	Vector2D defaultDir;
-	h-> position = pos;
-	if(p == player1){
-		h-> angle = 90;
-		defaultDir = VectorXY(-1,0);
-	}
-	else{
-		h-> angle = -90;
-		defaultDir = VectorXY(1,0);
-	}
-	Vector2D defaultAcc = VectorXY(0,0);
-	Vector2D defaultVit = VectorXY(0,0);
+	ResetVehicule(h, pos, p);
 	Point2D defaultPosC = AddPoints(pos, PointXY(0.5*hauteur, 0.5*hauteur));
-	h-> direction = defaultDir;
-	h-> acceleration = defaultAcc;
-	h-> vitesse = defaultVit;
 	h-> largeur = largeur;
 	h-> hauteur = hauteur;
 	h->cercle = (Cercle*) malloc(sizeof(Cercle));
@@ -120,6 +106,24 @@ void UpdateVehicule(Vehicule* h){
 void FreeVehicule(Vehicule* v){
 	free(v->cercle);
 	v->cercle = NULL;
+}
+
+void ResetVehicule(Vehicule* h, Point2D pos, Player p){
+	Vector2D defaultDir;
+	h-> position = pos;
+	if(p == player1){
+		h-> angle = 90;
+		defaultDir = VectorXY(-1,0);
+	}
+	else{
+		h-> angle = -90;
+		defaultDir = VectorXY(1,0);
+	}
+	Vector2D defaultAcc = VectorXY(0,0);
+	Vector2D defaultVit = VectorXY(0,0);
+	h-> direction = defaultDir;
+	h-> acceleration = defaultAcc;
+	h-> vitesse = defaultVit;
 }
 
 /*

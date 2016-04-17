@@ -133,21 +133,13 @@ void UpdateLevel(Level* l){
 // Reset Vehicule position and ball
 void ResetLevel(Level* l) {
     // Reset first vehicule.
-    l->vp1->position = PointXY(DEFAULT_VP1_POS_X, DEFAULT_VP1_POS_Y);
-    l->vp1->vitesse = VectorXY(0,0);
-    l->vp1->angle = 0;
-    l->vp1->direction = VectorXY(0,1);
+	ResetVehicule(l->vp1, PointXY(DEFAULT_VP1_POS_X, DEFAULT_VP1_POS_Y), player1);
     // Reset second vehicule.
-    l->vp2->position = PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y);
-    l->vp2->vitesse = VectorXY(0,0);
-    l->vp2->angle = 0;
-    l->vp2->direction = VectorXY(0,1);
+
     // Reset ball.
-    l->ballon->cercle->centre = PointXY(0,0);
-    l->ballon->vitesse = VectorXY(0,0);
+    ResetBallon(l->ballon);
     // Reset Camera
-    l->camera->zoomLevel=1;
-    l->camera->start=0;
+    ResetCamera(l->camera);
 }
 
 void RalentiLevel(Level* level) {

@@ -33,6 +33,7 @@ void UpdatePositionBall(Ballon* b);
 void UpdateVitesseBall(Ballon* b);
 void UpdateBallon(Ballon* b);
 void DessinBallon(Ballon* ball);
+void ResetBallon(Ballon* b);
 float getXTerrain(float x);
 float getYTerrain(float y);
 float getXSDL(int x);

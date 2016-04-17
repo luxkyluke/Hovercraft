@@ -1,9 +1,9 @@
 Finir les collisions
 Finir le zoom
 Affichage du score
-Affichage des checkpoints
+Affichage des checkpoints OK
 Bonus (Freeze ect)
-Finir But 
+Finir But OK 
 Menu
 Minimap
 Graphisme

@@ -64,7 +64,10 @@ void DessinBallon(Ballon* ball) {
 	    glBindTexture(GL_TEXTURE_2D, 0);
 	    glDisable(GL_TEXTURE_2D);
    	glPopMatrix();
-
 }
 
+void ResetBallon(Ballon* b){
+	 b->cercle->centre = PointXY(0,0);
+	 b->vitesse = VectorXY(0,0);
+}
 

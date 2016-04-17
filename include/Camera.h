@@ -12,4 +12,5 @@ typedef struct{
 
 void MakeCamera(Camera* a);
 void LookAt(Camera* c, Point2D direction, float zoomLevel);
+void ResetCamera(Camera* c);
 #endif
