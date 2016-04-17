@@ -54,8 +54,6 @@ void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
         vehicule2->direction.y *= tmpDirection.y;
 
         vehicule2->vitesse= tmpVitesse;
-        UpdateVehicule(vehicule1);
-        UpdateVehicule(vehicule2);
     }
 }
 

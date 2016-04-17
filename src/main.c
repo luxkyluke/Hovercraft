@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <math.h>
 
-
+#include "../include/sdl_tools.h"
 #include "../include/Geometry.h"
 #include "../include/Vehicule.h"
 #include "../include/Player.h"
@@ -25,22 +25,27 @@
 #include "../include/Camera.h"
 #include "../include/Level.h"
 #include "../include/Game.h"
+#include "../include/Menu.h"
 
-
+#define DEFAULT_MENU_TEXTURE_PATH "./images/menutest.jpg"
+#define DEFAULT_MENU_WIDTH 50
+#define DEFAULT_MENU_HEIGHT 70
 
 
 int main(int argc, char** argv) {
 
-
+  Menu* menu = (Menu *) malloc(sizeof(Menu));
   Game* game = (Game *) malloc(sizeof(Game));
 
   MakeGame(game, 300);
   //MakeLevel(level1, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
-  AddLevel(game, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
+ 
+  MakeMenu(DEFAULT_MENU_TEXTURE_PATH, DEFAULT_MENU_WIDTH, DEFAULT_MENU_HEIGHT, menu, game);
 
-  PlayGame(game);
+  CallMenuDemarrage(menu);
 
   FreeGame(game);
+  FreeMenu(menu);
 
   return EXIT_SUCCESS;
 }

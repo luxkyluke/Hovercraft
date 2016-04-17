@@ -35,7 +35,6 @@ GLuint loadImage(char* image){
     }
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, myTexture->w, myTexture->h, 0, format, GL_UNSIGNED_BYTE, myTexture->pixels);
-    printf("Tout est OK ! :D\n");
 
     SDL_FreeSurface(myTexture);
     glBindTexture(GL_TEXTURE_2D, 0);
