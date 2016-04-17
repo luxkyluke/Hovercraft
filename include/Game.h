@@ -21,6 +21,7 @@ typedef struct {
 	float duration; //en seconde
 }Game;
 
+void setVideoMode(unsigned int windowWidth, unsigned int windowHeight);
 void MakeGame(Game* game, float duration);
 void AddLevel(Game* game, char* nameFichTerrain,  char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2);
 void PlayGame(Game* game);

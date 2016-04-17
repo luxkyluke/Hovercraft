@@ -183,16 +183,10 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
 
       // Quelques exemples de traitement d'evenements :
       switch(e.type) {
-        // Clic souris
-        case SDL_MOUSEBUTTONUP:
-
-          break;
-
-        // move the mouse
-
+        
         // Touche clavier
         case SDL_KEYDOWN:
-          printf("touche pressée (code = %d)\n", e.key.keysym.unicode);
+          printf("touche pressée (code = %d)\n", e.key.keysym.sym);
           if(e.key.keysym.sym ==  SDLK_z)
             VP2->avance = 1;
           if(e.key.keysym.sym == SDLK_UP)
@@ -223,6 +217,11 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
             VP2->tourne = 0;
           if(e.key.keysym.sym == SDLK_d)
             VP2->tourne = 0;
+          if(e.key.keysym.sym == SDLK_ESCAPE){
+            loop = 0;
+            break;
+          }
+          
           break;
 
         // resize window
