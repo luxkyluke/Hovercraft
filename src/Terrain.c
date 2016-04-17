@@ -6,7 +6,7 @@
 
 char *str_dup(char const *s){
     char *pc = NULL;
- 
+
     if (s != NULL){
         pc = malloc((strlen(s) + 1) * sizeof *pc);
         if (pc != NULL) {
@@ -51,7 +51,7 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
 
     char ligne[NB_MAX_COLONNE];
 
-    while(fgets(ligne, NB_MAX_COLONNE, terrainTxt)) { 
+    while(fgets(ligne, NB_MAX_COLONNE, terrainTxt)) {
         if(i > NB_MAX_LIGNE){
             printf("Le fichier txtTerrain contient trop de ligne !\n");
             return;
@@ -79,14 +79,14 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
                 butD_pos_y = i;
             hauteurButD++;
         }
-        
-        t->terrain[i] = str_dup(ligne); 
+
+        t->terrain[i] = str_dup(ligne);
         //printf("%s\n", ligne);
         i++;
     }
     t->hauteur=i;
    // printf("%d\n", i);
-    
+
     MakeBut(PointXY(DEFAULT_BUTG_POS_X,butG_pos_y),
     		PointXY(DEFAULT_BUTG_POS_X, butG_pos_y+hauteurButG),
 			t->butP2, player2);
@@ -122,7 +122,7 @@ bool IsWall(Terrain* t, Point2D pos){
 
 
 
-bool CercleIsInWall(Terrain* t, Cercle* c){ 
+bool CercleIsInWall(Terrain* t, Cercle* c){
     float xmax = c->centre.x + c->radius;
     float xmin = c->centre.x - c->radius;
     float ymax = c->centre.y + c->radius;
@@ -155,7 +155,7 @@ void DessinTerrain(Terrain* t) {
         glEnable(GL_TEXTURE_2D);
         glColor3f(255, 255, 255);
         glBindTexture(GL_TEXTURE_2D, t->texture);
-       
+
         glScalef(2, 2, 1.f);
         glBegin(GL_QUADS);
             glTexCoord2f(1,0); glVertex2f(100*0.5 , 50.*.5);

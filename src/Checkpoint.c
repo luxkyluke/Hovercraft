@@ -5,8 +5,12 @@ void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt){
 	checkpt->cercle = (Cercle *) malloc(sizeof(Cercle));
 	MakeCercle(checkpt->cercle, pos, r);
 	checkpt->checked = false;
+	checkpt->interceptedTime = 0;
 }
-bool IsCheckpoint(Point2D pos);
+bool IsCheckpoint(Point2D pos) {
+	// checkpt->intercepedTime = SDL_GetTicks();
+	return false;
+}
 
 void FreeCheckpoint(Checkpoint* checkpt){
 	free(checkpt->cercle);
@@ -27,7 +31,7 @@ Checkpoint* CopyCheckpt(Checkpoint* checkpt){
 void DessinCheckpoint(Checkpoint* checkpt){
 	if(!checkpt->checked){
 		glPushMatrix();
-			glTranslatef(checkpt->cercle->centre.x, checkpt->cercle->centre.y, 0);
+			glTranslatef(checkpt->cercle->centre.x - 100, checkpt->cercle->centre.y - 50, 0);
 			glScalef(checkpt->cercle->radius, checkpt->cercle->radius, 1);
 			dessinCercle(100, 0., 0., 1., 1);
 		glPopMatrix();

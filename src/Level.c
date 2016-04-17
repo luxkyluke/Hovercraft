@@ -4,6 +4,7 @@
 #include "Collision.h"
 #include "sdl_tools.h"
 #include "Camera.h"
+#include "Checkpoint.h"
 
 #ifdef __APPLE__
     #include <OpenGL/gl.h>
@@ -284,6 +285,10 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
             level->camera->start=1;
           if(e.key.keysym.sym == SDLK_y)
             RalentiLevel(level);
+          if(e.key.keysym.sym == SDLK_p){
+            level->terrain->checkpts[0]->checked = true;
+            level->terrain->checkpts[0]->interceptedTime = SDL_GetTicks();
+          }
           break;
 
         // resize window

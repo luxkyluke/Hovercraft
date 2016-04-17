@@ -20,6 +20,7 @@
 typedef	struct {
 	Cercle* cercle;
 	bool checked;
+    int interceptedTime;
 }Checkpoint;
 
 void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt);

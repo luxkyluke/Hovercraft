@@ -59,7 +59,7 @@ void dessinCercle(int n, float r, float v, float b, int fill){
       mysin = sin(i*2*Pi/n)/2;
       glVertex2f(mycos, mysin);
     }
-  glEnd();
+    glEnd();
   }
   else{
     glBegin(GL_POLYGON);
