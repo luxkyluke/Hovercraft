@@ -63,7 +63,7 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
                     return;
                 }
                 Checkpoint chp;
-                MakeCheckpoint(PointXY(j, i), DEFAULT_RAYON_CHECKPT, &chp);
+                MakeCheckpoint(PointXY(getXSDL(j), getYSDL(i)), DEFAULT_RAYON_CHECKPT, &chp);
                 t->checkpts[t->nbCheckpts] = CopyCheckpt(&chp);
                 t->nbCheckpts++;
             }
@@ -100,6 +100,7 @@ bool EstDansTerrain(Terrain* t, Point2D pos){
 		return false;
 	return true;
 }
+
 
 bool IsWall(Terrain* t, Point2D pos){
     if(!EstDansTerrain(t, pos))

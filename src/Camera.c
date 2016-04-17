@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #ifdef __APPLE__
     #include <OpenGL/gl.h>
     #include <OpenGL/glu.h>
@@ -12,7 +13,7 @@
 
 void MakeCamera(Camera* c) {
     if(c == NULL) {
-        printf("Impossible de créer la caméra, pointeur non alloué\n");
+        printf("Impossible de creer la camera, pointeur non alloue\n");
         return;
     }
 
@@ -27,3 +28,5 @@ void LookAt(Camera* c, Point2D direction, float zoomLevel) {
     glScalef(c->zoomLevel,c->zoomLevel,c->zoomLevel);//650 1300
     glTranslatef(-c->direction.x, -c->direction.y,0);
 }
+
+

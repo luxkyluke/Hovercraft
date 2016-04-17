@@ -24,7 +24,7 @@ typedef	struct {
 }Checkpoint;
 
 void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt);
-bool IsCheckpoint(Point2D pos);
+bool IsCheckpoint(Checkpoint* checkpt, Cercle* c);
 void FreeCheckpoint(Checkpoint* checkpt);
 Checkpoint* CopyCheckpt(Checkpoint* checkpt);
 void DessinCheckpoint(Checkpoint* checkpt);

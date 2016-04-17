@@ -30,6 +30,9 @@
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
+//boolean pour pr�ciser quand la camera est en action
+bool camera_is_in_work = false;
+
 void reshape(unsigned int windowWidth, unsigned int windowHeight) {
   glViewport(0, 0, windowWidth, windowHeight);
   glMatrixMode(GL_PROJECTION);
@@ -86,8 +89,17 @@ bool CheckTouched(Level* l){
     CollisionVehiculeTerrain(l->vp1, l->terrain);
     CollisionVehiculeTerrain(l->vp2, l->terrain);
     CollisionBallonTerrain(l->ballon, l->terrain);
-    if(CollisionBallonBut(l->ballon, l->terrain)) {
-      l->camera->start=1;
+    Player buteur;
+    if(CollisionBallonBut(l->ballon, l->terrain, &buteur)) {
+	  if(buteur == player1){
+		  l->scoreP1 += 1;
+		  printf("score P1 : %d\n", l->scoreP1);
+	  }
+	  else{
+		  l->scoreP2 += 1;
+		  printf("score P2 : %d\n", l->scoreP2);
+	  }
+	  l->camera->start=1;
     }
     return true;
 }
@@ -144,14 +156,21 @@ void RalentiLevel(Level* level) {
   level->ballon->vitesse=DivVector(level->ballon->vitesse,1.1);
 }
 
-void UpdateCamera(Level* level) {
+void UpdateCameraLevel(Level* level) {
+//	if(level->camera->zoomLevel<4 && level->camera->start == 1)
+//		UpdateCamera(level->camera, level->ballon);
+//	else if(level->camera->zoomLevel>=4){
+//	      ResetLevel(level);
+//	}
     if(level->camera->zoomLevel<4 && level->camera->start == 1) {
-      LookAt(level->camera, level->ballon->cercle->centre, level->camera->zoomLevel);
-      level->camera->zoomLevel+=0.01;
-      RalentiLevel(level);
+    	camera_is_in_work = true;
+    	LookAt(level->camera, level->ballon->cercle->centre, level->camera->zoomLevel);
+    	level->camera->zoomLevel+=0.01;
+    	RalentiLevel(level);
     }
     else if(level->camera->zoomLevel>=4){
       ResetLevel(level);
+      camera_is_in_work = false;
     }
 }
 
@@ -189,7 +208,7 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
     //Camera//
     glPushMatrix();
     glLoadIdentity();
-    UpdateCamera(level);
+    UpdateCameraLevel(level);
 
 
 
@@ -217,8 +236,8 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
     UpdateLevel(level);
 
     DessinLevel(level);
-
-    CheckTouched(level);
+    if(!camera_is_in_work)
+    	CheckTouched(level);
 
     glPopMatrix();
 
@@ -248,7 +267,7 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
 
         // Touche clavier
         case SDL_KEYDOWN:
-          printf("touche pressée (code = %d)\n", e.key.keysym.unicode);
+          //printf("touche pressée (code = %d)\n", e.key.keysym.unicode);
           if(e.key.keysym.sym ==  SDLK_z)
             VP2->avance = 1;
           if(e.key.keysym.sym == SDLK_UP)

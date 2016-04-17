@@ -23,12 +23,12 @@ bool BallIsInGoal(But* but, Ballon* ball) {
     }
     if(x>0){
     	if(ball->cercle->centre.x >= x){
-			printf("GOAAAAL pour player%d!\n", but->player);
-			return true;
+			//printf("GOAAAAL pour player%d!\n", but->player);
+    		return true;
     	}
     }
 	else if (ball->cercle->centre.x <= x){
-		printf("GOAAAAL pour player%d!\n", but->player);
+		//printf("GOAAAAL pour player%d!\n", but->player);
 		return true;
 	}
     return false;

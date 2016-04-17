@@ -2,6 +2,7 @@
 #define CAMERA_H_
 
 #include "Point2D.h"
+#include "Ballon.h"
 
 typedef struct{
     float zoomLevel;

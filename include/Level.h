@@ -33,6 +33,6 @@ void DessinLevel(Level* l);
 void UpdateLevel(Level* l);
 void PlayLevel(Level* l, int windowWidth, int windowHeight, int i);
 void ResetLevel(Level* l);
-void UpdateCamera(Level* level);
+void UpdateCameraLevel(Level* level);
 
 #endif

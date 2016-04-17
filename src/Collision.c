@@ -90,14 +90,26 @@ void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){
         return;
 }
 
-bool CollisionBallonBut(Ballon* ballon, Terrain* terrain) {
-    if(BallIsInGoal(terrain->butP1, ballon) || BallIsInGoal(terrain->butP2, ballon))
-        return true;
+bool CollisionBallonBut(Ballon* ballon, Terrain* terrain, Player* buteur) {
+    if(BallIsInGoal(terrain->butP1, ballon)){
+    	*buteur = player1;
+    	return true;
+    }
+    if(BallIsInGoal(terrain->butP2, ballon)){
+    	*buteur = player2;
+    	return true;
+    }
     return false;
 }
 
 void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
-    if(TouchedVehiculeTerrain(vehicule, terrain) == true){
+	int i;
+	for (i=0; i<terrain->nbCheckpts; ++i){
+		if(IsCheckpoint(terrain->checkpts[i], vehicule->cercle)){
+
+		}
+	}
+	if(TouchedVehiculeTerrain(vehicule, terrain) == true){
         if(StatusCollisionTerrain(terrain) == 1){
             vehicule->vitesse.x *= -1;
             return;
@@ -127,7 +139,6 @@ bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
     Vector2D distanceCentre = Vector(c1->centre, c2->centre);
     float tailleRayons = c1->radiusCarre + c2->radiusCarre;
     if(SqrNorm(distanceCentre) <= tailleRayons*3.){
-        printf("COLLISION CERCLE CERCLE\n");
         return true;
     }
     return false;
@@ -147,29 +158,23 @@ bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 
 
 bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
-    if(CollisionCercleCercle(vehicule->cercle, ballon->cercle) ||
+    if(CollisionCercleCercle(vehicule->cercle, ballon->cercle)||
        CollisionCercleCercle(vehicule->facticeCercle, ballon->cercle)) {
         return true;
     }
     return false;
 }
 
-bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP){
-    if(CollisionCercleCercle(vehicule->cercle, chkP->cercle)) //Ajouter cerclefactice si ne considère pas le fait que le vehicule doit arriver de face
-        return true;
-    return false;
-}
-
 bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain){
 	if(CercleIsInWall(terrain, ballon->cercle)){
-        printf("Ballon cest un mur BOLOSSE\n");
+        //printf("Ballon cest un mur BOLOSSE\n");
         return true;
     }
 	return false;
 }
 
 bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
-    if(CercleIsInWall(terrain, vehicule->cercle) ||
+	if(CercleIsInWall(terrain, vehicule->cercle) ||
         CercleIsInWall(terrain, vehicule->facticeCercle)){
         //printf("xT = %3.f, yT = %3.f\n", vehicule->cercle->centre.x, vehicule->cercle->centre.y);
         //printf("xptCol =%f     yptCol=%f\n", terrain->pointCollision.x,  terrain->pointCollision.y);
