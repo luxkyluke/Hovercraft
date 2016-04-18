@@ -35,5 +35,6 @@ void PlayLevel(Level* l, int windowWidth, int windowHeight, int i);
 void ResetLevel(Level* l);
 void UpdateCameraLevel(Level* level);
 void DessinMinimap(Ballon* ballon, Vehicule* vp1, Vehicule* vp2);
+void CheckBonus(Level* level);
 
 #endif

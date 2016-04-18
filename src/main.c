@@ -26,6 +26,7 @@
 #include "../include/Level.h"
 #include "../include/Game.h"
 #include "../include/Menu.h"
+#include "../include/Bonus.h"
 
 #define DEFAULT_MENU_TEXTURE_PATH "./images/menutest.jpg"
 #define DEFAULT_MENU_WIDTH 50
@@ -39,7 +40,7 @@ int main(int argc, char** argv) {
 
   MakeGame(game, 300);
   //MakeLevel(level1, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
- 
+
   MakeMenu(DEFAULT_MENU_TEXTURE_PATH, DEFAULT_MENU_WIDTH, DEFAULT_MENU_HEIGHT, menu, game);
 
   CallMenuDemarrage(menu);

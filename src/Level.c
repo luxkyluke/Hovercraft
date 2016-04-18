@@ -5,6 +5,8 @@
 #include "sdl_tools.h"
 #include "Camera.h"
 #include "Checkpoint.h"
+#include "Vehicule.h"
+#include <time.h>
 
 #ifdef __APPLE__
     #include <OpenGL/gl.h>
@@ -196,6 +198,30 @@ void UpdateCameraLevel(Level* level) {
     }
 }
 
+void CheckBonus(Level* level) {
+  CheckBoost(level->vp1);
+  CheckBoost(level->vp2);
+
+  if(level->vp1->bonus == freeze) {
+    if(SDL_GetTicks() - level->vp1->timerBonus > 4000) {
+      printf("Dépassé de 4s.\n");
+      level->vp1->bonus = none;
+      level->vp1->timerBonus = SDL_GetTicks();
+    } else {
+      FreezeVehicule(level->vp2);
+    }
+  } else if(level->vp2->bonus == freeze) {
+    if(SDL_GetTicks() - level->vp2->timerBonus > 4000) {
+      printf("Dépassé de 4s.\n");
+      level->vp2->bonus = none;
+      level->vp2->timerBonus = SDL_GetTicks();
+    } else {
+      FreezeVehicule(level->vp1);
+    }
+  }
+}
+
+
 void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
 
     if(!level)
@@ -203,6 +229,7 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
 
   Vehicule* VP1 = level->vp1;
   Vehicule* VP2 = level->vp2;
+  srand(time(NULL));
 
 
 
@@ -259,6 +286,9 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
     UpdateLevel(level);
 
     DessinLevel(level);
+
+    CheckBonus(level);
+
 
     if(!camera_is_in_work)
     	CheckTouched(level);

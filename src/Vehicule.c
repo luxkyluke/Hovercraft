@@ -60,6 +60,8 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint text, Player
 	h->player = p;
 	h->texture = text;
     h->tourne = 0;
+    h->bonus = 0;
+    h->timerBonus = 0;
 }
 
 
@@ -149,3 +151,25 @@ void UpdateCercle(Vehicule*v) {
     v->facticeCercle->centre = v->position;
 }
 
+void BoostVehicule(Vehicule* v) {
+    if(v->bonus == boost) {
+        v->direction = MultVector(v-> direction, 1.03);
+    }
+}
+
+void FreezeVehicule(Vehicule* v) {
+    v->acceleration = VectorXY(0,0);
+    v->vitesse = VectorXY(0,0);
+}
+
+void CheckBoost(Vehicule* v) {
+  if(v->bonus == boost) {
+    if(SDL_GetTicks() - v->timerBonus > 4000) {
+      printf("Dépassé de 4s.\n");
+      v->bonus = none;
+      v->timerBonus = SDL_GetTicks();
+    } else {
+      BoostVehicule(v);
+    }
+  }
+}

@@ -10,6 +10,7 @@
 /* FIN DU A GARDER */
 
 #include "Collision.h"
+#include "Vehicule.h"
 #include <stdlib.h>
 #include <SDL/SDL.h>
 
@@ -104,7 +105,9 @@ void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
 	int i;
 	for (i=0; i<terrain->nbCheckpts; ++i){
 		if(IsCheckpoint(terrain->checkpts[i], vehicule->cercle)){
-
+            printf("collision\n");
+            vehicule->timerBonus = SDL_GetTicks();
+            vehicule->bonus = terrain->checkpts[i]->type;
 		}
 	}
 	if(TouchedVehiculeTerrain(vehicule, terrain) == true){

@@ -6,8 +6,8 @@
 #include "Vector2D.h"
 #include "Geometry.h"
 #include "bool.h"
-
-#include <math.h>
+#include "Bonus.h"
+#include <Math.h>
 #define PI 3.14
 
 /* A GARDER QUAND ON UTILISE OPENGL */
@@ -32,7 +32,11 @@ typedef struct {
 	Vector2D acceleration;
 	int avance, tourne;
 	Player player;
+    int bonus;
+    int timerBonus;
 }Vehicule;
+
+typedef enum _bonus {none = 0, boost = 1, freeze = 2} bonus;
 
 void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint text, Player p, Vehicule* v);
 void DessinVehicule(Vehicule * v);
@@ -44,6 +48,9 @@ void UpdateVehicule(Vehicule* h);
 void FreeVehicule(Vehicule *h);
 void UpdateCercle(Vehicule *v);
 void ResetVehicule(Vehicule* v, Point2D pos, Player p);
+void BoostVehicule(Vehicule* v);
+void FreezeVehicule(Vehicule* v);
+void CheckBoost(Vehicule* v);
 //bool IsTouchingVehicule(Vehicule *v, Point2D pos);
 
 #endif

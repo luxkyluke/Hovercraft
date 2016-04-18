@@ -1,16 +1,18 @@
 #include "Checkpoint.h"
 #include "Geometry.h"
 #include "Collision.h"
+#include <time.h>
+#include <stdlib.h>
 
 void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt){
 	checkpt->cercle = (Cercle *) malloc(sizeof(Cercle));
 	MakeCercle(checkpt->cercle, pos, r);
 	checkpt->checked = false;
-	checkpt->interceptedTime = 0;
+	checkpt->interceptedTime = 1;
+	checkpt->type = rand() % 3;
 }
-bool IsCheckpoint(Checkpoint* checkpt, Cercle* c) {
-	// checkpt->intercepedTime = SDL_GetTicks();
 
+bool IsCheckpoint(Checkpoint* checkpt, Cercle* c) {
 	if(CollisionCercleCercle(checkpt->cercle, c)){
 		checkpt->checked = true;
 		return true;

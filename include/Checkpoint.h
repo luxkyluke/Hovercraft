@@ -5,6 +5,7 @@
 #include "bool.h"
 #include "Geometry.h"
 #include <stdlib.h>
+#include "Bonus.h"
 
 #ifdef __APPLE__
     #include <OpenGL/gl.h>
@@ -21,6 +22,7 @@ typedef	struct {
 	Cercle* cercle;
 	bool checked;
     int interceptedTime;
+    int type;
 }Checkpoint;
 
 void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt);
