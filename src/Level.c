@@ -117,12 +117,41 @@ void FreeLevel(Level * l){
     printf("FreeLevel OK\n");
 }
 
+void DessinMinimap(Ballon* ballon, Vehicule* vp1, Vehicule* vp2) {
+  glPushMatrix();
+  glTranslatef(0,-50,0);
+    glScalef(0.25,0.25,1);
+    glPushMatrix();
+      glScalef(190,100,1);
+      dessinCarre(0,1,0,0);
+    glPopMatrix();
+
+    glPushMatrix();
+      glTranslatef(ballon->cercle->centre.x, ballon->cercle->centre.y,0);
+      glScalef(10,10,1);
+      dessinCercle(50,1,1,0,1);
+    glPopMatrix();
+
+    glPushMatrix();
+      glTranslatef(vp1->position.x, vp1->position.y,0);
+      glScalef(10,10,1);
+      dessinCercle(50,0,1,1,1);
+    glPopMatrix();
+
+    glPushMatrix();
+      glTranslatef(vp2->position.x, vp2->position.y,0);
+      glScalef(10,10,1);
+      dessinCercle(50,1,0,1,1);
+    glPopMatrix();
+  glPopMatrix();
+}
+
 void DessinLevel(Level* l){
     DessinTerrain(l->terrain);
     DessinVehicule(l->vp1);
     DessinVehicule(l->vp2);
     DessinBallon(l->ballon);
-
+    DessinMinimap(l->ballon, l->vp1, l->vp2);
 }
 
 void UpdateLevel(Level* l){
@@ -226,13 +255,16 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
 
 
 
+
     UpdateLevel(level);
 
     DessinLevel(level);
+
     if(!camera_is_in_work)
     	CheckTouched(level);
 
     glPopMatrix();
+
 
 
     // Echange du front et du back buffer : mise à jour de la fenêtre
@@ -251,7 +283,7 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
 
       // Quelques exemples de traitement d'evenements :
       switch(e.type) {
-        
+
         // Touche clavier
         case SDL_KEYDOWN:
 

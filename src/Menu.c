@@ -1,11 +1,11 @@
-#include "Menu.h"
+#include "../include/Menu.h"
 
 unsigned int windowH= 400;
 unsigned int windowW = 600;
 
 void MakeMenu(char* pathTexture, int width, int height, Menu* menu, Game* game){
 	if(!menu) {
-		printf("Impossible de créer le menu, pointeur non alloué\n"); 
+		printf("Impossible de créer le menu, pointeur non alloué\n");
 		return;
 	}
     /* Initialisation de la SDL */
@@ -13,7 +13,7 @@ void MakeMenu(char* pathTexture, int width, int height, Menu* menu, Game* game){
     fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
     return;
   }
-  
+
   /* Ouverture d'une fenêtre et création d'un contexte OpenGL */
   setVideoMode(windowW, windowH);
   reshape(windowW, windowH);
@@ -52,13 +52,13 @@ void CallMenuDemarrage(Menu* menu){
 
   /* Titre de la fenêtre */
   SDL_WM_SetCaption("Bienvenue dans HoverLigue !!!!!!!", NULL);
-  
+
   /* Boucle d'affichage */
   int loop = 1;
   while(loop) {
     /* Récupération du temps au début de la boucle */
     Uint32 startTime = SDL_GetTicks();
-    
+
 	DessinMenu(menu);
 	/*
 	glBegin(GL_LINES);
@@ -70,7 +70,7 @@ void CallMenuDemarrage(Menu* menu){
 
     /* Echange du front et du back buffer : mise à jour de la fenêtre */
     SDL_GL_SwapBuffers();
-    
+
     /* Boucle traitant les evenements */
     SDL_Event e;
     while(SDL_PollEvent(&e)) {
@@ -79,10 +79,10 @@ void CallMenuDemarrage(Menu* menu){
         loop = 0;
         break;
       }
-      
+
       /* Quelques exemples de traitement d'evenements : */
       switch(e.type) {
-      
+
         /* Touche clavier */
         case SDL_KEYDOWN:
 			printf("touche pressée (code = %d)\n", e.key.keysym.sym);
@@ -93,7 +93,7 @@ void CallMenuDemarrage(Menu* menu){
             	PlayGame(menu->game);
             }
           	break;
-          
+
         /* resize window */
         case SDL_VIDEORESIZE:
           windowW  = e.resize.w;
@@ -114,10 +114,10 @@ void CallMenuDemarrage(Menu* menu){
       SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
     }
   }
-  
-  /* Liberation des ressources associées à la SDL */ 
+
+  /* Liberation des ressources associées à la SDL */
   SDL_Quit();
-  
+
 }
 
 
