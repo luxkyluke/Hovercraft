@@ -1,4 +1,5 @@
 #include "../include/Menu.h"
+#include <SDL/SDL_mixer.h>
 
 unsigned int windowH= 650;
 unsigned int windowW = 1300;
@@ -52,6 +53,14 @@ void CallMenuDemarrage(Menu* menu){
 
   /* Titre de la fenêtre */
   SDL_WM_SetCaption("Bienvenue dans HoverLigue !!!!!!!", NULL);
+
+if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1){ // Initialisation de SDL_Mixer
+  printf("%s", Mix_GetError());
+}
+
+Mix_Music *musique;
+musique = Mix_LoadMUS("./musique/musique.mp3");
+Mix_PlayMusic(musique, -1);
 
   /* Boucle d'affichage */
   int loop = 1;
@@ -114,7 +123,8 @@ void CallMenuDemarrage(Menu* menu){
       SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
     }
   }
-
+  Mix_FreeMusic(musique);
+  Mix_CloseAudio();
   /* Liberation des ressources associées à la SDL */
   SDL_Quit();
 

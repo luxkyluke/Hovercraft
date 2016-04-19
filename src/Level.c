@@ -121,8 +121,8 @@ void FreeLevel(Level * l){
 
 void DessinMinimap(Ballon* ballon, Vehicule* vp1, Vehicule* vp2) {
   glPushMatrix();
-  glTranslatef(0,-50,0);
-    glScalef(0.25,0.25,1);
+  glTranslatef(85,-41,0);
+    glScalef(0.15,0.15,1);
     glPushMatrix();
       glScalef(190,100,1);
       dessinCarre(0,1,0,0);
@@ -387,6 +387,6 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
   }
 
   // Liberation des ressources associées à la SDL
-  SDL_Quit();
+  //SDL_Quit();
 
 }
