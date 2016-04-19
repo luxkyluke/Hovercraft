@@ -1,7 +1,7 @@
 #include "../include/Menu.h"
 
-unsigned int windowH= 400;
-unsigned int windowW = 600;
+unsigned int windowH= 650;
+unsigned int windowW = 1300;
 
 void MakeMenu(char* pathTexture, int width, int height, Menu* menu, Game* game){
 	if(!menu) {
@@ -22,7 +22,7 @@ void MakeMenu(char* pathTexture, int width, int height, Menu* menu, Game* game){
 	menu->game = game;
 	menu->largeur = width;
 	menu->hauteur = height;
-    menu->texture = texture;
+  menu->texture = texture;
 
 }
 
@@ -32,12 +32,12 @@ void DessinMenu(Menu* menu) {
 	    //glColor3f(255, 255, 255);
 
 	    glBindTexture(GL_TEXTURE_2D, menu->texture);
-	    //glScalef(menu->largeur, menu->hauteur, 1);
+	   // glScalef(menu->largeur, menu->hauteur, 1);
   	    glBegin(GL_QUADS);
-            glTexCoord2f(1,0); glVertex2f(100*0.5 , 100.*.5);
-            glTexCoord2f(1,1); glVertex2f(100*0.5 , -100.*.5);
-            glTexCoord2f(0,1); glVertex2f(-100*0.5, -100.*.5);
-            glTexCoord2f(0,0); glVertex2f(-100*0.5, 100.*.5);
+            glTexCoord2f(1,0); glVertex2f(200*0.5 , 100.*.5);
+            glTexCoord2f(1,1); glVertex2f(200*0.5 , -100.*.5);
+            glTexCoord2f(0,1); glVertex2f(-200*0.5, -100.*.5);
+            glTexCoord2f(0,0); glVertex2f(-200*0.5, 100.*.5);
         glEnd();
 	    glBindTexture(GL_TEXTURE_2D, 0);
 	    glDisable(GL_TEXTURE_2D);

@@ -28,9 +28,9 @@
 #include "../include/Menu.h"
 #include "../include/Bonus.h"
 
-#define DEFAULT_MENU_TEXTURE_PATH "./images/menutest.jpg"
-#define DEFAULT_MENU_WIDTH 50
-#define DEFAULT_MENU_HEIGHT 70
+#define DEFAULT_MENU_TEXTURE_PATH "./images/menu.png"
+#define DEFAULT_MENU_WIDTH 1300
+#define DEFAULT_MENU_HEIGHT 650
 
 
 int main(int argc, char** argv) {
