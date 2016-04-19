@@ -3,6 +3,18 @@
 unsigned int windowH= 400;
 unsigned int windowW = 600;
 
+/* Nombre de bits par pixel de la fenêtre */
+static const unsigned int BIT_PER_PIXEL = 32;
+
+
+
+void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
+  if(NULL == SDL_SetVideoMode(windowWidth, windowHeight, BIT_PER_PIXEL, SDL_OPENGL | SDL_GL_DOUBLEBUFFER | SDL_RESIZABLE)) {
+    fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
+    exit(EXIT_FAILURE);
+  }
+}
+
 void MakeMenu(char* pathTexture, int width, int height, Menu* menu, Game* game){
 	if(!menu) {
 		printf("Impossible de créer le menu, pointeur non alloué\n");

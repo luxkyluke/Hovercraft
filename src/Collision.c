@@ -101,33 +101,39 @@ bool CollisionBallonBut(Ballon* ballon, Terrain* terrain, Player* buteur) {
     return false;
 }
 
-void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
+bool CollissionVehiculeCheckpoints(Vehicule* v, Terrain* terrain, Bonus* b){
 	int i;
 	for (i=0; i<terrain->nbCheckpts; ++i){
-		if(IsCheckpoint(terrain->checkpts[i], vehicule->cercle)){
-            printf("collision\n");
-            vehicule->timerBonus = SDL_GetTicks();
-            vehicule->bonus = terrain->checkpts[i]->type;
+		if(IsCheckpoint(terrain->checkpts[i], v->cercle)){
+			//printf("collision\n");
+			*b = terrain->checkpts[i]->type;
+			return true;
 		}
 	}
-	if(TouchedVehiculeTerrain(vehicule, terrain) == true){
-        if(StatusCollisionTerrain(terrain) == 1){
-            vehicule->vitesse.x *= -1;
-            return;
-        }
-        if(StatusCollisionTerrain(terrain) == 2){
-            vehicule->vitesse.y *= -1;
-            return;
-        }
+	return false;
 
-        if(StatusCollisionTerrain(terrain) == 3){
-            vehicule->vitesse.y *= -1;
-            vehicule->vitesse.x *= -1;
-            return;
-        }
-    }
+}
+
+void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
+
+	if (TouchedVehiculeTerrain(vehicule, terrain) == true) {
+		if (StatusCollisionTerrain(terrain) == 1) {
+			vehicule->vitesse.x *= -1;
+			return;
+		}
+		if (StatusCollisionTerrain(terrain) == 2) {
+			vehicule->vitesse.y *= -1;
+			return;
+		}
+
+		if (StatusCollisionTerrain(terrain) == 3) {
+			vehicule->vitesse.y *= -1;
+			vehicule->vitesse.x *= -1;
+			return;
+		}
+	}
     else
-        return;
+        return ;
 }
 
 

@@ -4,12 +4,12 @@
 #include <time.h>
 #include <stdlib.h>
 
-void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt){
+void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt, Bonus b){
 	checkpt->cercle = (Cercle *) malloc(sizeof(Cercle));
 	MakeCercle(checkpt->cercle, pos, r);
 	checkpt->checked = false;
 	checkpt->interceptedTime = 1;
-	checkpt->type = rand() % 3;
+	checkpt->type = b;
 }
 
 bool IsCheckpoint(Checkpoint* checkpt, Cercle* c) {
@@ -30,7 +30,7 @@ Checkpoint* CopyCheckpt(Checkpoint* checkpt){
 	if(checkpt != NULL){
 		chpt = (Checkpoint*) malloc(sizeof(Checkpoint));
 		if(chpt != NULL){
-			MakeCheckpoint(checkpt->cercle->centre, checkpt->cercle->radius, chpt);
+			MakeCheckpoint(checkpt->cercle->centre, checkpt->cercle->radius, chpt, checkpt->type);
 		}
 	}
 	return chpt;
@@ -41,7 +41,12 @@ void DessinCheckpoint(Checkpoint* checkpt){
 		glPushMatrix();
 			glTranslatef(checkpt->cercle->centre.x, checkpt->cercle->centre.y, 0);
 			glScalef(checkpt->cercle->radius, checkpt->cercle->radius, 1);
-			dessinCercle(100, 0., 0., 1., 1);
+			if(checkpt->type == freeze)
+				dessinCercle(100, 0., 0., 1., 1);
+			else if(checkpt->type == boost)
+				dessinCercle(100, 1., 0.2, 0.2, 1);
+			else
+				dessinCercle(100, 0.2, 1., 0.5, 1);
 		glPopMatrix();
 	}
 }

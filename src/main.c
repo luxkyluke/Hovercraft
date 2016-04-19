@@ -32,7 +32,6 @@
 #define DEFAULT_MENU_WIDTH 50
 #define DEFAULT_MENU_HEIGHT 70
 
-
 int main(int argc, char** argv) {
 
   Menu* menu = (Menu *) malloc(sizeof(Menu));

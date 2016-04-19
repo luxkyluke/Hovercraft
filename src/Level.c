@@ -27,7 +27,12 @@
 #define DEFAULT_BALL_RADIUS 2.
 #define DEFAULT_BALL_TEXTURE_PATH "images/ballon.png"
 #define DEFAULT_VP1_TEXTURE_PATH "images/vp1.png"
+#define DEFAULT_VP1_TEXTBOOST_PATH "images/vp1_boost.png"
+#define DEFAULT_VP1_TEXTFREEZ_PATH "images/vp1_freeze.png"
 #define DEFAULT_VP2_TEXTURE_PATH "images/vp2.png"
+#define DEFAULT_VP2_TEXTBOOST_PATH "images/vp2_boost.png"
+#define DEFAULT_VP2_TEXTFREEZ_PATH "images/vp2_freeze.png"
+#define NB_TEXTURE 3
 
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
@@ -54,8 +59,16 @@ void MakeLevel(Level* l, char* nameFichTerrain, char* pathTextureTerrain, char* 
 	Vehicule *vp2 = (Vehicule *) malloc(sizeof(Vehicule));
     GLuint imageBallon = loadImage(DEFAULT_BALL_TEXTURE_PATH);
     GLuint textureIdTerrain = loadImage(pathTextureTerrain);
-    GLuint textureVP1 = loadImage(DEFAULT_VP1_TEXTURE_PATH);
-    GLuint textureVP2 = loadImage(DEFAULT_VP2_TEXTURE_PATH);
+    GLuint texturesVP1[]={
+    		loadImage(DEFAULT_VP1_TEXTURE_PATH),
+    		loadImage(DEFAULT_VP1_TEXTBOOST_PATH),
+			loadImage(DEFAULT_VP1_TEXTFREEZ_PATH)
+    };
+    GLuint texturesVP2[]={
+        		loadImage(DEFAULT_VP2_TEXTURE_PATH),
+        		loadImage(DEFAULT_VP2_TEXTBOOST_PATH),
+    			loadImage(DEFAULT_VP2_TEXTFREEZ_PATH)
+        };
   Camera *cam = (Camera *) malloc(sizeof(Camera));
 
 	char terrainTxt[30] = "./";
@@ -69,8 +82,12 @@ void MakeLevel(Level* l, char* nameFichTerrain, char* pathTextureTerrain, char* 
     }
 
     MakeTerrain(textureIdTerrain, fileTerrain, t);
-    MakeVehicule(PointXY(DEFAULT_VP1_POS_X, DEFAULT_VP1_POS_Y), DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, textureVP1, player1, vp1);
-    MakeVehicule(PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y), DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, textureVP2, player2, vp2);
+    MakeVehicule(PointXY(DEFAULT_VP1_POS_X, DEFAULT_VP1_POS_Y),
+    		DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W,
+			texturesVP1, player1, vp1);
+    MakeVehicule(PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y),
+    		DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W,
+			texturesVP2, player2, vp2);
     MakeBallon(imageBallon, PointXY(DEFAULT_BALL_POS_X,DEFAULT_BALL_POS_Y), ballon, DEFAULT_BALL_RADIUS);
     MakeCamera(cam);
 
@@ -90,6 +107,25 @@ bool CheckTouched(Level* l){
     CollisionVehiculeBallon(l->ballon, l->vp2);
     CollisionVehiculeTerrain(l->vp1, l->terrain);
     CollisionVehiculeTerrain(l->vp2, l->terrain);
+    Bonus bonusVp1, bonusVp2 ;
+	if(CollissionVehiculeCheckpoints(l->vp1, l->terrain, &bonusVp1)){
+		if(bonusVp1 == freeze){
+			l->vp2->timerBonus = SDL_GetTicks();
+			l->vp2->bonus = bonusVp1;
+		}else{
+			l->vp1->timerBonus = SDL_GetTicks();
+			l->vp1->bonus = bonusVp1;
+		}
+	}
+    if(CollissionVehiculeCheckpoints(l->vp2, l->terrain, &bonusVp2)){
+    	if (bonusVp2 == freeze) {
+			l->vp1->timerBonus = SDL_GetTicks();
+			l->vp1->bonus = bonusVp2;
+		} else {
+			l->vp2->timerBonus = SDL_GetTicks();
+			l->vp2->bonus = bonusVp2;
+		}
+    }
     CollisionBallonTerrain(l->ballon, l->terrain);
     Player buteur;
     if(CollisionBallonBut(l->ballon, l->terrain, &buteur)) {
@@ -203,20 +239,20 @@ void CheckBonus(Level* level) {
   CheckBoost(level->vp2);
 
   if(level->vp1->bonus == freeze) {
-    if(SDL_GetTicks() - level->vp1->timerBonus > 4000) {
+    if(!IsInBonus(level->vp1)) {
       printf("Dépassé de 4s.\n");
       level->vp1->bonus = none;
       level->vp1->timerBonus = SDL_GetTicks();
     } else {
-      FreezeVehicule(level->vp2);
+      FreezeVehicule(level->vp1);
     }
   } else if(level->vp2->bonus == freeze) {
-    if(SDL_GetTicks() - level->vp2->timerBonus > 4000) {
+    if(!IsInBonus(level->vp2)) {
       printf("Dépassé de 4s.\n");
       level->vp2->bonus = none;
       level->vp2->timerBonus = SDL_GetTicks();
     } else {
-      FreezeVehicule(level->vp1);
+      FreezeVehicule(level->vp2);
     }
   }
 }
@@ -259,23 +295,23 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
     glLoadIdentity();
     UpdateCameraLevel(level);
 
-
+    glPopMatrix();
 
 
 
 
 //ZONE DE TEST//////////
-    glBegin(GL_LINES);
-      glColor3f(0.,1.,0.);
-        glVertex2f(0,0);
-        glVertex2f(level->vp1->direction.x, level->vp1->direction.y);
-    glEnd();
-
-    glPushMatrix();
-        glTranslatef(level->ballon->cercle->centre.x, level->ballon->cercle->centre.y, 0);
-        glScalef(level->ballon->cercle->radius, level->ballon->cercle->radius, 0.);
-        dessinCercle(100, 0.8, 0.4, 0.1, 0);
-    glPopMatrix();
+//    glBegin(GL_LINES);
+//      //glColor3f(0.,1.,0.);
+//        glVertex2f(0,0);
+//        glVertex2f(level->vp1->direction.x, level->vp1->direction.y);
+//    glEnd();
+//
+//    glPushMatrix();
+//        glTranslatef(level->ballon->cercle->centre.x, level->ballon->cercle->centre.y, 0);
+//        glScalef(level->ballon->cercle->radius, level->ballon->cercle->radius, 0.);
+//        dessinCercle(100, 0.8, 0.4, 0.1, 0);
+//    glPopMatrix();
 
 ///////////////////////////
 
@@ -293,7 +329,7 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id){
     if(!camera_is_in_work)
     	CheckTouched(level);
 
-    glPopMatrix();
+
 
 
 
