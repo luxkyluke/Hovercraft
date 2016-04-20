@@ -136,5 +136,4 @@ void FreeMenu(Menu* m){
 	free(m->game);
 	m->game = NULL;
 	printf("FreeMenu OK\n");
-
 }
