@@ -3,8 +3,16 @@
 
 #define NB_MAX_LEVEL 30
 
+/* Nombre de bits par pixel de la fenêtre */
+static const unsigned int BIT_PER_PIXEL = 32;
 
 
+void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
+  if(NULL == SDL_SetVideoMode(windowWidth, windowHeight, BIT_PER_PIXEL, SDL_OPENGL | SDL_GL_DOUBLEBUFFER | SDL_RESIZABLE)) {
+    fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
+    exit(EXIT_FAILURE);
+  }
+}
 
 unsigned int windowHeight= 650;
 unsigned int windowWidth = 1300;
