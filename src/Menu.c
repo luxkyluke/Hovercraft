@@ -1,8 +1,5 @@
 #include "../include/Menu.h"
 
-unsigned int windowH= 650;
-unsigned int windowW = 1300;
-
 /* Nombre de bits par pixel de la fen�tre */
 static const unsigned int BIT_PER_PIXEL = 32;
 
@@ -24,17 +21,19 @@ void MakeMenu(char* pathTexture, int width, int height, Menu* menu){
 		return;
 	}
 
+  menu->largeur = width;
+  menu->hauteur = height;
+
 	/* Ouverture d'une fenêtre et création d'un contexte OpenGL */
-	setVideoMode(windowW, windowH);
-	reshape(windowW, windowH);
+	setVideoMode(menu->largeur, menu->hauteur);
+	reshape(menu->largeur, menu->hauteur);
 	GLuint texture = loadImage(pathTexture);
 
 
 
 	menu->game = (Game *) malloc(sizeof(Game));
   MakeGame(menu->game, 3000);
-	menu->largeur = width;
-	menu->hauteur = height;
+	
 	menu->texture = texture;
 
 }
@@ -111,15 +110,15 @@ Mix_PlayMusic(musique, -1);
 				loop = 0;
        		if(e.key.keysym.sym == SDLK_RETURN){
               AddLevel(menu->game, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
-            	PlayGame(menu->game, windowW, windowH);
+            	PlayGame(menu->game, menu->largeur, menu->hauteur);
             }
           	break;
 
         /* resize window */
         case SDL_VIDEORESIZE:
-          windowW  = e.resize.w;
-          windowH = e.resize.h;
-          reshape(windowW, windowH);
+          menu->largeur  = e.resize.w;
+          menu->hauteur = e.resize.h;
+          reshape(menu->largeur, menu->hauteur);
           break;
 
         default:
@@ -145,6 +144,7 @@ Mix_PlayMusic(musique, -1);
 
 
 void FreeMenu(Menu* m){
+  FreeGame(m->game);
 	free(m->game);
 	m->game = NULL;
 	printf("FreeMenu OK\n");
