@@ -3,27 +3,36 @@
 unsigned int windowH= 650;
 unsigned int windowW = 1300;
 
+/* Nombre de bits par pixel de la fen�tre */
+static const unsigned int BIT_PER_PIXEL = 32;
+
+void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
+  if(NULL == SDL_SetVideoMode(windowWidth, windowHeight, BIT_PER_PIXEL, SDL_OPENGL | SDL_GL_DOUBLEBUFFER | SDL_RESIZABLE)) {
+    fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
+    exit(EXIT_FAILURE);
+  }
+}
 
 void MakeMenu(char* pathTexture, int width, int height, Menu* menu, Game* game){
 	if(!menu) {
 		printf("Impossible de créer le menu, pointeur non alloué\n");
 		return;
 	}
-    /* Initialisation de la SDL */
-  if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
-    fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
-    return;
-  }
+	/* Initialisation de la SDL */
+	if (-1 == SDL_Init(SDL_INIT_VIDEO)) {
+		fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
+		return;
+	}
 
-  /* Ouverture d'une fenêtre et création d'un contexte OpenGL */
-  setVideoMode(windowW, windowH);
-  reshape(windowW, windowH);
-    GLuint texture = loadImage(pathTexture);
+	/* Ouverture d'une fenêtre et création d'un contexte OpenGL */
+	setVideoMode(windowW, windowH);
+	reshape(windowW, windowH);
+	GLuint texture = loadImage(pathTexture);
 
 	menu->game = game;
 	menu->largeur = width;
 	menu->hauteur = height;
-  menu->texture = texture;
+	menu->texture = texture;
 
 }
 
@@ -54,13 +63,13 @@ void CallMenuDemarrage(Menu* menu){
   /* Titre de la fenêtre */
   SDL_WM_SetCaption("Bienvenue dans HoverLigue !!!!!!!", NULL);
 
-if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1){ // Initialisation de SDL_Mixer
-  printf("%s", Mix_GetError());
-}
-
-Mix_Music *musique;
-musique = Mix_LoadMUS("./musiques/musique.mp3");
-Mix_PlayMusic(musique, -1);
+//if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1){ // Initialisation de SDL_Mixer
+//  printf("%s", Mix_GetError());
+//}
+//
+//Mix_Music *musique;
+//musique = Mix_LoadMUS("./musiques/musique.mp3");
+//Mix_PlayMusic(musique, -1);
 
   /* Boucle d'affichage */
   int loop = 1;
@@ -99,7 +108,7 @@ Mix_PlayMusic(musique, -1);
 				loop = 0;
        		if(e.key.keysym.sym == SDLK_RETURN){
               AddLevel(menu->game, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
-            	PlayGame(menu->game);
+            	PlayGame(menu->game, windowW, windowH);
             }
           	break;
 
@@ -123,8 +132,8 @@ Mix_PlayMusic(musique, -1);
       SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
     }
   }
-  Mix_FreeMusic(musique);
-  Mix_CloseAudio();
+//  Mix_FreeMusic(musique);
+//  Mix_CloseAudio();
   /* Liberation des ressources associées à la SDL */
   SDL_Quit();
 
