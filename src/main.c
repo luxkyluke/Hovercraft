@@ -31,15 +31,14 @@
 #define DEFAULT_MENU_TEXTURE_PATH "./images/menu.png"
 #define DEFAULT_MENU_WIDTH 1300
 #define DEFAULT_MENU_HEIGHT 650
-#define WINDOW_WIDTH
-#define WINDOW_HEIGHT
+#define WINDOW_WIDTH 1300
+#define WINDOW_HEIGHT 650
 
 int main(int argc, char** argv) {
 
   Menu* menu = (Menu *) malloc(sizeof(Menu));
   Game* game = (Game *) malloc(sizeof(Game));
 
-  MakeGame(game, 300);
   //MakeLevel(level1, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
 
   MakeMenu(DEFAULT_MENU_TEXTURE_PATH, DEFAULT_MENU_WIDTH, DEFAULT_MENU_HEIGHT, menu, game);

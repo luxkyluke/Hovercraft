@@ -30,11 +30,11 @@ void MakeMenu(char* pathTexture, int width, int height, Menu* menu, Game* game){
   setVideoMode(windowW, windowH);
   reshape(windowW, windowH);
     GLuint texture = loadImage(pathTexture);
-
+    MakeGame(game, 300);
 	menu->game = game;
 	menu->largeur = width;
 	menu->hauteur = height;
-  menu->texture = texture;
+	menu->texture = texture;
 
 }
 
@@ -102,7 +102,8 @@ void CallMenuDemarrage(Menu* menu){
 				loop = 0;
        		if(e.key.keysym.sym == SDLK_RETURN){
               AddLevel(menu->game, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
-            	PlayGame(menu->game);
+              PlayGame(menu->game);
+              printf("BIITE\n");
             }
           	break;
 

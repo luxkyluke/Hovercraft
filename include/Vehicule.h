@@ -7,7 +7,7 @@
 #include "Geometry.h"
 #include "bool.h"
 #include "Bonus.h"
-#include <Math.h>
+#include <math.h>
 #define PI 3.14
 
 /* A GARDER QUAND ON UTILISE OPENGL */
