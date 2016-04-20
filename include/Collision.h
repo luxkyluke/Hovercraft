@@ -14,7 +14,7 @@
 //fonction qui calcule les consequences des colisions
 bool CollisionCercleCercle(Cercle*c1,Cercle*c2); 						//DONE
 void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2); //DONE
-void CollisionVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP);	//
+bool CollissionVehiculeCheckpoints(Vehicule* v, Terrain* terrain, Bonus* b);
 void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule);		//DONE
 void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain);	//DONE
 void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain);			//DONE

@@ -22,10 +22,10 @@ typedef	struct {
 	Cercle* cercle;
 	bool checked;
     int interceptedTime;
-    int type;
+    Bonus type;
 }Checkpoint;
 
-void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt);
+void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt, Bonus b);
 bool IsCheckpoint(Checkpoint* checkpt, Cercle* c);
 void FreeCheckpoint(Checkpoint* checkpt);
 Checkpoint* CopyCheckpt(Checkpoint* checkpt);

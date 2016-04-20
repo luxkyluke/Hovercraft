@@ -31,7 +31,8 @@
 #define DEFAULT_MENU_TEXTURE_PATH "./images/menu.png"
 #define DEFAULT_MENU_WIDTH 1300
 #define DEFAULT_MENU_HEIGHT 650
-
+#define WINDOW_WIDTH
+#define WINDOW_HEIGHT
 
 int main(int argc, char** argv) {
 

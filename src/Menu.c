@@ -1,8 +1,8 @@
 #include "../include/Menu.h"
-#include <SDL/SDL_mixer.h>
 
 unsigned int windowH= 650;
 unsigned int windowW = 1300;
+
 
 void MakeMenu(char* pathTexture, int width, int height, Menu* menu, Game* game){
 	if(!menu) {
@@ -59,7 +59,7 @@ if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1){
 }
 
 Mix_Music *musique;
-musique = Mix_LoadMUS("./musique/musique.mp3");
+musique = Mix_LoadMUS("./musiques/musique.mp3");
 Mix_PlayMusic(musique, -1);
 
   /* Boucle d'affichage */

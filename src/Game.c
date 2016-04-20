@@ -4,17 +4,7 @@
 #define NB_MAX_LEVEL 30
 
 
-/* Nombre de bits par pixel de la fenêtre */
-static const unsigned int BIT_PER_PIXEL = 32;
 
-
-
-void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
-  if(NULL == SDL_SetVideoMode(windowWidth, windowHeight, BIT_PER_PIXEL, SDL_OPENGL | SDL_GL_DOUBLEBUFFER | SDL_RESIZABLE)) {
-    fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
-    exit(EXIT_FAILURE);
-  }
-}
 
 unsigned int windowHeight= 650;
 unsigned int windowWidth = 1300;
@@ -26,14 +16,14 @@ void MakeGame(Game* game, float duration){
 	}
 
 	 // Initialisation de la SDL 
-	if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
-	  fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
-	  return;
-	}
-
-	// Ouverture d'une fenêtre et création d'un contexte OpenGL 
-	setVideoMode(windowWidth, windowHeight);
-	reshape(windowWidth, windowHeight);
+//	if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
+//	  fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
+//	  return;
+//	}
+//
+//	// Ouverture d'une fenêtre et création d'un contexte OpenGL
+//	setVideoMode(windowWidth, windowHeight);
+//	reshape(windowWidth, windowHeight);
 
 	game->levels = (Level **) malloc(NB_MAX_LEVEL*sizeof(Level*));
 	game->nbLevels = 0;

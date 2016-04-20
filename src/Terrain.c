@@ -57,13 +57,18 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
             return;
         }
         for(j=0; j < NB_MAX_COLONNE; j++){
-            if(ligne[j] == '0'){
+            if(ligne[j] == 'F' || ligne[j]=='B'){
                 if(t->nbCheckpts >= NB_MAX_CHECKPT){
                     printf("Trop de checkpoints ! 30 Max\n");
                     return;
                 }
+                Bonus b;
+                if(ligne[j] == 'F')
+                	b=freeze;
+                else
+                	b=boost;
                 Checkpoint chp;
-                MakeCheckpoint(PointXY(getXSDL(j), getYSDL(i)), DEFAULT_RAYON_CHECKPT, &chp);
+                MakeCheckpoint(PointXY(getXSDL(j), getYSDL(i)), DEFAULT_RAYON_CHECKPT, &chp, b);
                 t->checkpts[t->nbCheckpts] = CopyCheckpt(&chp);
                 t->nbCheckpts++;
             }
