@@ -13,7 +13,7 @@ void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
   }
 }
 
-void MakeMenu(char* pathTexture, int width, int height, Menu* menu, Game* game){
+void MakeMenu(char* pathTexture, int width, int height, Menu* menu){
 	if(!menu) {
 		printf("Impossible de créer le menu, pointeur non alloué\n");
 		return;
@@ -29,7 +29,10 @@ void MakeMenu(char* pathTexture, int width, int height, Menu* menu, Game* game){
 	reshape(windowW, windowH);
 	GLuint texture = loadImage(pathTexture);
 
-	menu->game = game;
+
+
+	menu->game = (Game *) malloc(sizeof(Game));
+  MakeGame(menu->game, 3000);
 	menu->largeur = width;
 	menu->hauteur = height;
 	menu->texture = texture;
@@ -63,13 +66,13 @@ void CallMenuDemarrage(Menu* menu){
   /* Titre de la fenêtre */
   SDL_WM_SetCaption("Bienvenue dans HoverLigue !!!!!!!", NULL);
 
-//if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1){ // Initialisation de SDL_Mixer
-//  printf("%s", Mix_GetError());
-//}
-//
-//Mix_Music *musique;
-//musique = Mix_LoadMUS("./musiques/musique.mp3");
-//Mix_PlayMusic(musique, -1);
+if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1){ // Initialisation de SDL_Mixer
+ printf("%s", Mix_GetError());
+}
+
+Mix_Music *musique;
+musique = Mix_LoadMUS("./musiques/musique.mp3");
+Mix_PlayMusic(musique, -1);
 
   /* Boucle d'affichage */
   int loop = 1;
@@ -132,8 +135,8 @@ void CallMenuDemarrage(Menu* menu){
       SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
     }
   }
-//  Mix_FreeMusic(musique);
-//  Mix_CloseAudio();
+  Mix_FreeMusic(musique);
+  Mix_CloseAudio();
   /* Liberation des ressources associées à la SDL */
   SDL_Quit();
 

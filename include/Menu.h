@@ -12,7 +12,7 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-//#include <SDL/SDL_mixer.h>
+#include <SDL/SDL_mixer.h>
 
 #include "sdl_tools.h"
 #include "Level.h"
@@ -26,7 +26,7 @@ typedef	struct {
 	GLuint texture;
 }Menu;
 
-void MakeMenu(char* pathTexture, int width, int height, Menu* menu, Game* game);
+void MakeMenu(char* pathTexture, int width, int height, Menu* menu);
 void DessinMenu(Menu* menu);
 void CallMenuDemarrage(Menu* menu);
 void FreeMenu(Menu* m);

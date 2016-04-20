@@ -37,15 +37,15 @@
 int main(int argc, char** argv) {
 
   Menu* menu = (Menu *) malloc(sizeof(Menu));
-  Game* game = (Game *) malloc(sizeof(Game));
+  
 
   //MakeLevel(level1, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
 
-  MakeMenu(DEFAULT_MENU_TEXTURE_PATH, DEFAULT_MENU_WIDTH, DEFAULT_MENU_HEIGHT, menu, game);
+  MakeMenu(DEFAULT_MENU_TEXTURE_PATH, DEFAULT_MENU_WIDTH, DEFAULT_MENU_HEIGHT, menu);
 
   CallMenuDemarrage(menu);
 
-  FreeGame(game);
+  
   FreeMenu(menu);
 
   return EXIT_SUCCESS;
