@@ -18,12 +18,12 @@
 typedef struct {
 	Level** levels;
 	int nbLevels;
-	float duration; //en seconde
+	int duration; //en seconde
 }Game;
 
 void setVideoMode(unsigned int windowWidth, unsigned int windowHeight);
-void MakeGame(Game* game, float duration);
-void AddLevel(Game* game, char* nameFichTerrain,  char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2);
+bool MakeGame(Game* game, int duration);
+bool AddLevel(Game* game, char* nameFichTerrain);
 void PlayGame(Game* game, int windowWidth, int windowHeight);
 void FreeGame(Game* g);
 
