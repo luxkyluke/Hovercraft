@@ -1,6 +1,6 @@
 CC = gcc
 
-CCFLAGS = -Wall -std=c11 -g -O2 -lSDL_mixer -lglut
+CCFLAGS = -Wall -std=c11 -g -O2 -lSDL_mixer #-lglut
 LDFLAGS  = -lm 
 APP_BIN = Hovercraft
 SRC_PATH = src
@@ -17,7 +17,7 @@ OBJ_FILES = $(patsubst $(SRC_PATH)/%.c,$(OBJ_PATH)/%.o, $(SRC_FILES))
 
 ifeq ($(OS),Windows_NT)
     CCFLAGS += -D WIN32
-		LDFLAGS += -lSDL -lSDL_image -lSDL_mixer -lglut
+		LDFLAGS += -lSDL -lSDL_image  -lfreeglut 
 		W_OBJ_FILES = $(subst /,\,$(OBJ_FILES))
 		RM_CMD = for %%x in ($(W_OBJ_FILES)) do (if exist %%x (del /q %%x))
 		LDFLAGS += -lmingw32 -lSDLmain  -lSDL_image -lopengl32 -lglu32
@@ -33,7 +33,7 @@ else
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
 				LDFLAGS += -lGL -lGLU
-				LDFLAGS += -lSDL -lSDL_image
+				LDFLAGS += -lSDL -lSDL_image -lfreeglut
         CCFLAGS += -D LINUX
     endif
     ifeq ($(UNAME_S),Darwin)
