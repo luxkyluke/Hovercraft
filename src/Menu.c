@@ -1,10 +1,18 @@
 #include "../include/Menu.h"
-#define DURATION_TIME 5000
+#define DURATION_TIME 300000
 
 
 /* Nombre de bits par pixel de la fen�tre */
 static const unsigned int BIT_PER_PIXEL = 32;
 
+
+void reshape(unsigned int windowWidth, unsigned int windowHeight) {
+	glViewport(0, 0, windowWidth, windowHeight);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(-100., 100., -100. * (float) windowHeight / (float) windowWidth,
+			100. * (float) windowHeight / (float) windowWidth);
+}
 
 void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
 	if (NULL
@@ -15,13 +23,6 @@ void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
 	}
 }
 
-void reshape(unsigned int windowWidth, unsigned int windowHeight) {
-	glViewport(0, 0, windowWidth, windowHeight);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluOrtho2D(-100., 100., -100. * (float) windowHeight / (float) windowWidth,
-			100. * (float) windowHeight / (float) windowWidth);
-}
 
 bool MakeMenu(char* pathTexture, int width, int height, Menu* menu) {
 	if (!menu) {
@@ -52,7 +53,6 @@ bool MakeMenu(char* pathTexture, int width, int height, Menu* menu) {
 //	glutReshapeFunc(vReshape);
 //	glutMainLoop();
 
-	initGlut(menu->largeur, menu->hauteur);
 
 	menu->game = (Game *) malloc(sizeof(Game));
 	if(!MakeGame(menu->game, DURATION_TIME)){

@@ -47,7 +47,7 @@ void reshape(unsigned int windowWidth, unsigned int windowHeight);
 void AddScoreP1(Level* l, int score);
 void AddScoreP2(Level* l, int score);
 void FreeLevel(Level* l);
-void DessinLevel(Level* l);
+void DessinLevel(Level* l, Uint32 duration);
 void UpdateLevel(Level* l);
 void PlayLevel(Level* l, int windowWidth, int windowHeight, int i);
 void ResetLevel(Level* l);

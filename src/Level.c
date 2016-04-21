@@ -136,39 +136,67 @@ void FreeLevel(Level * l) {
 
 void DessinMinimap(Ballon* ballon, Vehicule* vp1, Vehicule* vp2) {
 	glPushMatrix();
-	glTranslatef(0, -50, 0);
-	glScalef(0.25, 0.25, 1);
-	glPushMatrix();
-	glScalef(190, 100, 1);
-	dessinCarre(0, 1, 0, 0);
-	glPopMatrix();
+		glTranslatef(0, -50, 0);
+		glScalef(0.25, 0.25, 1);
+		glPushMatrix();
+			glScalef(190, 100, 1);
+			dessinCarre(0, 1, 0, 0);
+		glPopMatrix();
 
-	glPushMatrix();
-	glTranslatef(ballon->cercle->centre.x, ballon->cercle->centre.y, 0);
-	glScalef(10, 10, 1);
-	dessinCercle(50, 1, 1, 0, 1);
-	glPopMatrix();
+		glPushMatrix();
+			glTranslatef(ballon->cercle->centre.x, ballon->cercle->centre.y, 0);
+			glScalef(10, 10, 1);
+			dessinCercle(50, 1, 1, 0, 1);
+		glPopMatrix();
 
-	glPushMatrix();
-	glTranslatef(vp1->position.x, vp1->position.y, 0);
-	glScalef(10, 10, 1);
-	dessinCercle(50, 0, 1, 1, 1);
-	glPopMatrix();
+		glPushMatrix();
+			glTranslatef(vp1->position.x, vp1->position.y, 0);
+			glScalef(10, 10, 1);
+			dessinCercle(50, 0, 1, 1, 1);
+		glPopMatrix();
 
-	glPushMatrix();
-	glTranslatef(vp2->position.x, vp2->position.y, 0);
-	glScalef(10, 10, 1);
-	dessinCercle(50, 1, 0, 1, 1);
-	glPopMatrix();
+		glPushMatrix();
+			glTranslatef(vp2->position.x, vp2->position.y, 0);
+			glScalef(10, 10, 1);
+			dessinCercle(50, 1, 0, 1, 1);
+			glPopMatrix();
 	glPopMatrix();
 }
 
-void DessinLevel(Level* l) {
+void DessinLevel(Level* l, Uint32 duration) {
+
 	DessinTerrain(l->terrain);
 	DessinVehicule(l->vp1);
 	DessinVehicule(l->vp2);
 	DessinBallon(l->ballon);
+
 	DessinMinimap(l->ballon, l->vp1, l->vp2);
+
+
+
+	int min = (int) (l->duration - duration)/60000;
+	int nbSec = (int)(l->duration - duration)/1000;
+	int sec = (int) nbSec - (min*60) ;
+
+	char time[10];
+	sprintf(time, "%d : %d", min, sec+1);
+
+	char scoreP1[2];
+	sprintf(scoreP1, "%d", l->scoreP1);
+	char scoreP2[2];
+	sprintf(scoreP2, "%d", l->scoreP2);
+
+	glPushMatrix();
+		glColor3d(1,1,1);
+		vBitmapOutput (-2, 45, time,  GLUT_BITMAP_HELVETICA_18);
+		glColor3d(1,0.2,0.2);
+		vBitmapOutput (6, 45, scoreP1,  GLUT_BITMAP_HELVETICA_18);
+		glColor3d(0.2,0.2,1);
+		vBitmapOutput (-6, 45, scoreP2,  GLUT_BITMAP_HELVETICA_18);
+		glColor3d(1,1,1);
+	glPopMatrix();
+
+
 }
 
 void UpdateLevel(Level* l) {
@@ -273,7 +301,7 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 			UpdateCameraLevel(level);
 		glPopMatrix();
 
-		glutBitmapCharacter (GLUT_STROKE_ROMAN, "biite" );
+
 
 //ZONE DE TEST//////////
 //    glBegin(GL_LINES);
@@ -292,9 +320,10 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 
 		UpdateLevel(level);
 
-		DessinLevel(level);
+		DessinLevel(level, duration);
 
 		CheckBonus(level);
+
 
 		if (!camera_is_in_work)
 			CheckTouched(level);
