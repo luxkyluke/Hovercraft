@@ -15,6 +15,52 @@
 #include <SDL/SDL.h>
 
 
+
+bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
+    if (CollisionCercleCercle(vehicule1->cercle, vehicule2->cercle) ||
+        CollisionCercleCercle(vehicule1->facticeCercle, vehicule2->cercle) ||
+        CollisionCercleCercle(vehicule1->cercle, vehicule2->facticeCercle) ||
+        CollisionCercleCercle(vehicule1->facticeCercle, vehicule2->facticeCercle)) {
+        return true;
+    }
+
+    return false;
+}
+
+
+bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
+    if(CollisionCercleCercle(vehicule->cercle, ballon->cercle)||
+       CollisionCercleCercle(vehicule->facticeCercle, ballon->cercle)) {
+        return true;
+    }
+    return false;
+}
+
+bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain){
+	if(CercleIsInWall(terrain, ballon->cercle)){
+        //printf("Ballon cest un mur BOLOSSE\n");
+        return true;
+    }
+	return false;
+}
+
+bool TouchedVehiculeCheckpooint(Vehicule* v, Checkpoint* checkpt){
+	return(!checkpt->checked && IsCheckpoint(checkpt, v->cercle));
+}
+
+bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
+	if(CercleIsInWall(terrain, vehicule->cercle) ||
+        CercleIsInWall(terrain, vehicule->facticeCercle)){
+        //printf("xT = %3.f, yT = %3.f\n", vehicule->cercle->centre.x, vehicule->cercle->centre.y);
+        //printf("xptCol =%f     yptCol=%f\n", terrain->pointCollision.x,  terrain->pointCollision.y);
+        //printf("Vehicule player %d dans le mur pos x %3.f, y %3.f\n",
+        		//vehicule->player, vehicule->cercle->centre.x, vehicule->cercle->centre.y);
+        return true;
+    }
+    return false;
+}
+
+
 /*fonction qui calcule les consequences des colisions*/
 
 void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
@@ -104,7 +150,7 @@ bool CollisionBallonBut(Ballon* ballon, Terrain* terrain, Player* buteur) {
 bool CollissionVehiculeCheckpoints(Vehicule* v, Terrain* terrain, Bonus* b){
 	int i;
 	for (i=0; i<terrain->nbCheckpts; ++i){
-		if(IsCheckpoint(terrain->checkpts[i], v->cercle)){
+		if(TouchedVehiculeCheckpooint(v, terrain->checkpts[i])){
 			//printf("collision\n");
 			*b = terrain->checkpts[i]->type;
 			return true;
@@ -151,47 +197,6 @@ bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
     return false;
 
 }
-
-bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
-    if (CollisionCercleCercle(vehicule1->cercle, vehicule2->cercle) ||
-        CollisionCercleCercle(vehicule1->facticeCercle, vehicule2->cercle) ||
-        CollisionCercleCercle(vehicule1->cercle, vehicule2->facticeCercle) ||
-        CollisionCercleCercle(vehicule1->facticeCercle, vehicule2->facticeCercle)) {
-        return true;
-    }
-
-    return false;
-}
-
-
-bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
-    if(CollisionCercleCercle(vehicule->cercle, ballon->cercle)||
-       CollisionCercleCercle(vehicule->facticeCercle, ballon->cercle)) {
-        return true;
-    }
-    return false;
-}
-
-bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain){
-	if(CercleIsInWall(terrain, ballon->cercle)){
-        //printf("Ballon cest un mur BOLOSSE\n");
-        return true;
-    }
-	return false;
-}
-
-bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
-	if(CercleIsInWall(terrain, vehicule->cercle) ||
-        CercleIsInWall(terrain, vehicule->facticeCercle)){
-        //printf("xT = %3.f, yT = %3.f\n", vehicule->cercle->centre.x, vehicule->cercle->centre.y);
-        //printf("xptCol =%f     yptCol=%f\n", terrain->pointCollision.x,  terrain->pointCollision.y);
-        //printf("Vehicule player %d dans le mur pos x %3.f, y %3.f\n",
-        		//vehicule->player, vehicule->cercle->centre.x, vehicule->cercle->centre.y);
-        return true;
-    }
-    return false;
-}
-
 
 
 int StatusCollisionTerrain(Terrain* t){

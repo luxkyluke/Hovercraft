@@ -39,7 +39,8 @@ int main(int argc, char** argv) {
 
   //MakeLevel(level1, "fond", "./images/terrain1.jpg", "./images/vp1.png", "./images/vp2.png");
 
-  MakeMenu(DEFAULT_MENU_TEXTURE_PATH, WINDOW_WIDTH, WINDOW_HEIGHT, menu);
+  if(!MakeMenu(DEFAULT_MENU_TEXTURE_PATH, WINDOW_WIDTH, WINDOW_HEIGHT, menu))
+	  return EXIT_FAILURE;
 
   CallMenuDemarrage(menu);
 

@@ -1,7 +1,10 @@
 #include "../include/Menu.h"
+#define DURATION_TIME 5000
+
 
 /* Nombre de bits par pixel de la fen�tre */
 static const unsigned int BIT_PER_PIXEL = 32;
+
 
 void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
 	if (NULL
@@ -12,15 +15,23 @@ void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
 	}
 }
 
-void MakeMenu(char* pathTexture, int width, int height, Menu* menu) {
+void reshape(unsigned int windowWidth, unsigned int windowHeight) {
+	glViewport(0, 0, windowWidth, windowHeight);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluOrtho2D(-100., 100., -100. * (float) windowHeight / (float) windowWidth,
+			100. * (float) windowHeight / (float) windowWidth);
+}
+
+bool MakeMenu(char* pathTexture, int width, int height, Menu* menu) {
 	if (!menu) {
 		printf("Impossible de créer le menu, pointeur non alloué\n");
-		return;
+		return false;
 	}
 	/* Initialisation de la SDL */
 	if (-1 == SDL_Init(SDL_INIT_VIDEO)) {
 		fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
-		return;
+		return false;
 	}
 
 	menu->largeur = width;
@@ -31,11 +42,26 @@ void MakeMenu(char* pathTexture, int width, int height, Menu* menu) {
 	reshape(menu->largeur, menu->hauteur);
 	GLuint texture = loadImage(pathTexture);
 
+	// Initialisation de GLUT
+//	glutInit(); // initialisation de GLUT
+//	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
+//	glutInitWindowSize(WIDTH,HEIGHT);
+//	glutInitWindowPosition(50,50);
+//	glutCreateWindow("Texte");
+//	glutDisplayFunc(vDisplay);
+//	glutReshapeFunc(vReshape);
+//	glutMainLoop();
+
+	initGlut(menu->largeur, menu->hauteur);
+
 	menu->game = (Game *) malloc(sizeof(Game));
-	MakeGame(menu->game, 3000);
+	if(!MakeGame(menu->game, DURATION_TIME)){
+		printf("Erreur MakeGame !!");
+		return false;
+	}
 
 	menu->texture = texture;
-
+	return true;
 }
 
 void DessinMenu(Menu* menu) {
@@ -77,6 +103,7 @@ void CallMenuDemarrage(Menu* menu) {
 	musique = Mix_LoadMUS("./musiques/musique.mp3");
 	Mix_PlayMusic(musique, -1);
 
+	Mix_VolumeMusic(0);
 	/* Boucle d'affichage */
 	int loop = 1;
 	while (loop) {
@@ -113,8 +140,6 @@ void CallMenuDemarrage(Menu* menu) {
 				if (e.key.keysym.sym == SDLK_ESCAPE)
 					loop = 0;
 				if (e.key.keysym.sym == SDLK_RETURN) {
-					AddLevel(menu->game, "fond", "./images/terrain1.jpg",
-							"./images/vp1.png", "./images/vp2.png");
 					PlayGame(menu->game, menu->largeur, menu->hauteur);
 				}
 				break;
