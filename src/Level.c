@@ -397,8 +397,7 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 					RalentiLevel(level);
 				if (e.key.keysym.sym == SDLK_p) {
 					level->terrain->checkpts[0]->checked = true;
-					level->terrain->checkpts[0]->interceptedTime =
-							SDL_GetTicks();
+					level->terrain->checkpts[0]->interceptedTime = SDL_GetTicks();
 				}
 				break;
 

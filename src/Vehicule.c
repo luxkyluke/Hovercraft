@@ -78,7 +78,7 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint* texts,
 
 // PARTIE PHYSIQUE
 void UpdateAcceleration(Vehicule* h) {
-	if (h->avance == 1) {
+	if (h->avance == 1	) {
 		h->acceleration = MultVector(h->direction, 0.015);
 	} else
 		h->acceleration = VectorXY(0, 0.);
@@ -162,13 +162,13 @@ void UpdateCercle(Vehicule*v) {
 }
 
 void BoostVehicule(Vehicule* v) {
-	v->direction = MultVector(v->direction, 1.03);
-
+	v->direction = MultVector(v->direction, 1.02);
 }
 
 void FreezeVehicule(Vehicule* v) {
+	v->avance=0;
 	v->acceleration = VectorXY(0, 0);
-	v->vitesse = VectorXY(0, 0);
+	v->tourne = 0;
 }
 
 void CheckBoost(Vehicule* v) {
