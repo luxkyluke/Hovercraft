@@ -66,10 +66,10 @@ void DessinBut(But* b, int largeur){
         glScalef(largeur, hauteur, 1);
         dessinCarre(1, 255, 0, 0);
         glBegin(GL_QUADS);
-			glTexCoord2f(1,0); glVertex2f(top_x , top_y);
-			glTexCoord2f(1,1); glVertex2f(bottom_x , bottom_y);
-			glTexCoord2f(0,1); glVertex2f(bottom_manquant.x, bottom_manquant.y);
-			glTexCoord2f(0,0); glVertex2f(top_manquant.x, top_manquant.y);
+			glTexCoord2f(1,0); glVertex2f(top_x*0.5 , top_y*0.5);
+			glTexCoord2f(1,1); glVertex2f(bottom_x*0.5 , bottom_y*0.5);
+			glTexCoord2f(0,1); glVertex2f(bottom_manquant.x*0.5, bottom_manquant.y*0.5);
+			glTexCoord2f(0,0); glVertex2f(top_manquant.x*0.5, top_manquant.y*0.5);
 		glEnd();
 
         glBindTexture(GL_TEXTURE_2D, 0);

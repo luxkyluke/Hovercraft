@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
+#include "sdl_tools.h"
 
 char *str_dup(char const *s){
     char *pc = NULL;
