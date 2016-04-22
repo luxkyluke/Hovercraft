@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
+#include "sdl_tools.h"
 
 char *str_dup(char const *s){
     char *pc = NULL;
@@ -21,8 +22,11 @@ char *str_dup(char const *s){
 #define NB_MAX_COLONNE 202
 #define NB_MAX_CHECKPT 30
 #define DEFAULT_RAYON_CHECKPT 5.
-#define DEFAULT_BUTG_POS_X 194.
-#define DEFAULT_BUTD_POS_X 5.
+#define DEFAULT_BUTG_POS_X 189.
+#define DEFAULT_BUTD_POS_X 10.
+#define DEFAULT_LARGEUR_BUT 10
+#define DEFAULT_BUTP2_TEXTURE_PATH "images/butD.png"
+#define DEFAULT_BUTP1_TEXTURE_PATH "images/butG.png"
 
 void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     if(!t) {
@@ -48,6 +52,8 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     float butG_pos_y= -1., butD_pos_y=-1.;
     t->butP1 = (But*) malloc(sizeof(But));
     t->butP2 = (But*) malloc(sizeof(But));
+    GLuint textureButP1 = loadImage(DEFAULT_BUTP1_TEXTURE_PATH);
+    GLuint textureButP2 = loadImage(DEFAULT_BUTP2_TEXTURE_PATH);
 
     char ligne[NB_MAX_COLONNE];
 
@@ -94,10 +100,10 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
 
     MakeBut(PointXY(DEFAULT_BUTG_POS_X,butG_pos_y),
     		PointXY(DEFAULT_BUTG_POS_X, butG_pos_y+hauteurButG),
-			t->butP2, player2);
+			t->butP2, player2, textureButP2);
     MakeBut(PointXY(DEFAULT_BUTD_POS_X,butD_pos_y),
     		PointXY(DEFAULT_BUTD_POS_X, butD_pos_y+hauteurButD),
-			t->butP1, player1);
+			t->butP1, player1, textureButP1);
  }
 
 bool EstDansTerrain(Terrain* t, Point2D pos){
@@ -173,8 +179,9 @@ void DessinTerrain(Terrain* t) {
         glDisable(GL_TEXTURE_2D);
     glPopMatrix();
 
-    DessinBut(t->butP1);
-    DessinBut(t->butP2);
+	DessinBut(t->butP1, DEFAULT_LARGEUR_BUT);
+	DessinBut(t->butP2, DEFAULT_LARGEUR_BUT);
+
     int i;
     for(i=0; i<t->nbCheckpts; i++){
         DessinCheckpoint(t->checkpts[i]);

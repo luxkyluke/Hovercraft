@@ -9,7 +9,7 @@
 #define DEFAULT_BALL_POS_X 0.
 #define DEFAULT_BALL_POS_Y 0.
 #define DEFAULT_BALL_RADIUS 2.
-#define DEFAULT_TERRAIN_TEXTURE_PATH "images/terrain1.jpg"
+#define DEFAULT_TERRAIN_TEXTURE_PATH "images/terrain1.png"
 #define DEFAULT_BALL_TEXTURE_PATH "images/ballon.png"
 #define DEFAULT_VP1_TEXTURE_PATH "images/vp1.png"
 #define DEFAULT_VP1_TEXTBOOST_PATH "images/vp1_boost.png"
@@ -143,8 +143,8 @@ void FreeLevel(Level * l) {
 
 void DessinMinimap(Ballon* ballon, Vehicule* vp1, Vehicule* vp2) {
 	glPushMatrix();
-		glTranslatef(0, -50, 0);
-		glScalef(0.25, 0.25, 1);
+		glTranslatef(0, -42, 0);
+		glScalef(0.15, 0.15, 1);
 		glPushMatrix();
 			glScalef(190, 100, 1);
 			dessinCarre(0, 1, 0, 0);
