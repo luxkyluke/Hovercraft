@@ -102,8 +102,14 @@ void CallMenuDemarrage(Menu* menu) {
 	Mix_Music *musique;
 	musique = Mix_LoadMUS("./musiques/musique.mp3");
 	Mix_PlayMusic(musique, -1);
-
 	Mix_VolumeMusic(0);
+
+  	GLuint texturePlay = loadImage("./images/menuPlay.png");
+    GLuint textureExit = loadImage("./images/menuEXIT.png");
+    GLuint texture = loadImage("./images/menu.png");
+
+	int souris_x = 0;
+	int souris_y = 0;
 	/* Boucle d'affichage */
 	int loop = 1;
 	while (loop) {
@@ -111,13 +117,15 @@ void CallMenuDemarrage(Menu* menu) {
 		Uint32 startTime = SDL_GetTicks();
 
 		DessinMenu(menu);
-		/*
-		 glBegin(GL_LINES);
-		 glColor3f(0.,1.,0.);
-		 glVertex2f(0,0);
-		 glVertex2f(2,2);
-		 glEnd();
-		 */
+		
+		/* glBegin(GL_QUADS);
+			 glColor3f(0.,1.,0.);
+			 glVertex2f(-30,40);
+			 glVertex2f(25,40);
+			 glVertex2f(25,35);
+			 glVertex2f(-30,35);
+		 glEnd();*/
+		 
 
 		/* Echange du front et du back buffer : mise à jour de la fenêtre */
 		SDL_GL_SwapBuffers();
@@ -132,17 +140,57 @@ void CallMenuDemarrage(Menu* menu) {
 			}
 
 			/* Quelques exemples de traitement d'evenements : */
+
 			switch (e.type) {
 
+			case SDL_MOUSEMOTION:
+                souris_x = e.button.x;
+                souris_y = e.button.y;
+                if(souris_x >= 452 && souris_x <= 814 && souris_y >= 148 && souris_y <= 175){
+					menu->texture = textureExit;
+					DessinMenu(menu);
+                	//printf("EXIT\n");
+                }
+                else if(souris_x >= 455 && souris_x <= 815 && souris_y>= 71 && souris_y<= 96 ){
+					menu->texture = texturePlay;
+					DessinMenu(menu);
+					//printf("PLAY\n");
+				}
+               
+                else{
+                	menu->texture = texture;
+					DessinMenu(menu);
+				}
+         		break;
+
+                
 			/* Touche clavier */
 			case SDL_KEYDOWN:
-				printf("touche pressée (code = %d)\n", e.key.keysym.sym);
+				//printf("touche pressée (code = %d)\n", e.key.keysym.sym);
 				if (e.key.keysym.sym == SDLK_ESCAPE)
 					loop = 0;
-				if (e.key.keysym.sym == SDLK_RETURN) {
-					PlayGame(menu->game, menu->largeur, menu->hauteur);
-				}
+				/*if (e.key.keysym.sym == SDLK_RETURN) {
+					PlayGame(menu->game, menu->largeur, menu->hauteur);*/
+				
 				break;
+
+			
+			case SDL_MOUSEBUTTONDOWN:
+				//printf("souris-x en %d     souris_y en %d\n", souris_x, souris_y);
+				if(souris_x >= 455 && souris_x <= 815 && souris_y>= 71 && souris_y<= 96 ){
+					menu->texture = texturePlay;
+					DessinMenu(menu);
+					PlayGame(menu->game, menu->largeur, menu->hauteur);
+					//printf("PLAY\n");
+				}
+                if(souris_x >= 452 && souris_x <= 814 && souris_y >= 148 && souris_y <= 175){
+					menu->texture = textureExit;
+					DessinMenu(menu);
+					loop = 0;
+                	//printf("EXIT\n");
+                }
+                break;
+
 
 				/* resize window */
 			case SDL_VIDEORESIZE:

@@ -1,10 +1,5 @@
 Finir les collisions
 Finir le zoom
-Affichage du score
 Affichage des checkpoints OK
-Bonus (Freeze ect)
-Finir But OK 
-Menu
-Minimap
+Bonus (Freeze ect) 
 Graphisme
-Ajout de son (SDL-sound)
