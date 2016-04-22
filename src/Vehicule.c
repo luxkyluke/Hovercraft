@@ -78,8 +78,12 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint* texts,
 
 // PARTIE PHYSIQUE
 void UpdateAcceleration(Vehicule* h) {
-	if (h->avance == 1	) {
-		h->acceleration = MultVector(h->direction, 0.015);
+	if (h->avance == 1) {
+		if (h->bonus == boost && SDL_GetTicks() - h->timerBonus <= 4000) {
+			h->acceleration = MultVector(h->direction, 0.025);
+		} else {
+			h->acceleration = MultVector(h->direction, 0.015);
+		}
 	} else
 		h->acceleration = VectorXY(0, 0.);
 	return;
@@ -162,7 +166,7 @@ void UpdateCercle(Vehicule*v) {
 }
 
 void BoostVehicule(Vehicule* v) {
-	v->direction = MultVector(v->direction, 1.02);
+	v->acceleration = MultVector(v->direction, 0.015);
 }
 
 void FreezeVehicule(Vehicule* v) {
@@ -177,8 +181,6 @@ void CheckBoost(Vehicule* v) {
 			printf("Dépassé de 4s.\n");
 			v->bonus = none;
 			v->timerBonus = SDL_GetTicks();
-		} else {
-			BoostVehicule(v);
 		}
 	}
 }

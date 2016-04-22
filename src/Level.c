@@ -355,8 +355,9 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 
 				//printf("touche pressée (code = %d)\n", e.key.keysym.sym);
 				//printf("touche pressée (code = %d)\n", e.key.keysym.unicode);
-				if (e.key.keysym.sym == SDLK_z)
+				if (e.key.keysym.sym == SDLK_z){
 					VP2->avance = 1;
+				}
 				if (e.key.keysym.sym == SDLK_UP)
 					VP1->avance = 1;
 
@@ -388,16 +389,6 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 				if (e.key.keysym.sym == SDLK_ESCAPE) {
 					loop = 0;
 					break;
-				}
-				if (e.key.keysym.sym == SDLK_r)
-					ResetLevel(level);
-				if (e.key.keysym.sym == SDLK_t)
-					level->camera->start = 1;
-				if (e.key.keysym.sym == SDLK_y)
-					RalentiLevel(level);
-				if (e.key.keysym.sym == SDLK_p) {
-					level->terrain->checkpts[0]->checked = true;
-					level->terrain->checkpts[0]->interceptedTime = SDL_GetTicks();
 				}
 				break;
 
