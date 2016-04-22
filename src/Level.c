@@ -9,7 +9,7 @@
 #define DEFAULT_BALL_POS_X 0.
 #define DEFAULT_BALL_POS_Y 0.
 #define DEFAULT_BALL_RADIUS 2.
-#define DEFAULT_TERRAIN_TEXTURE_PATH "images/terrain1.jpg"
+#define DEFAULT_TERRAIN_TEXTURE_PATH "images/terrain1.png"
 #define DEFAULT_BALL_TEXTURE_PATH "images/ballon.png"
 #define DEFAULT_VP1_TEXTURE_PATH "images/vp1.png"
 #define DEFAULT_VP1_TEXTBOOST_PATH "images/vp1_boost.png"
