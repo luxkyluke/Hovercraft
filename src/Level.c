@@ -88,24 +88,31 @@ bool CheckTouched(Level* l) {
 	CollisionVehiculeTerrain(l->vp1, l->terrain);
 	CollisionVehiculeTerrain(l->vp2, l->terrain);
 	Bonus bonusVp1, bonusVp2;
-	if (CollissionVehiculeCheckpoints(l->vp1, l->terrain, &bonusVp1)) {
-		if (bonusVp1 == freeze) {
-			l->vp2->timerBonus = SDL_GetTicks();
-			l->vp2->bonus = bonusVp1;
-		} else {
-			l->vp1->timerBonus = SDL_GetTicks();
-			l->vp1->bonus = bonusVp1;
+
+	if (SDL_GetTicks()-l->vp1->timerBonus>4000) {
+		if (CollissionVehiculeCheckpoints(l->vp1, l->terrain, &bonusVp1)) {
+			if (bonusVp1 == freeze) {
+				l->vp2->timerBonus = SDL_GetTicks();
+				l->vp2->bonus = bonusVp1;
+			} else {
+				l->vp1->timerBonus = SDL_GetTicks();
+				l->vp1->bonus = bonusVp1;
+			}
 		}
 	}
-	if (CollissionVehiculeCheckpoints(l->vp2, l->terrain, &bonusVp2)) {
-		if (bonusVp2 == freeze) {
-			l->vp1->timerBonus = SDL_GetTicks();
-			l->vp1->bonus = bonusVp2;
-		} else {
-			l->vp2->timerBonus = SDL_GetTicks();
-			l->vp2->bonus = bonusVp2;
+
+	if (SDL_GetTicks()-l->vp2->timerBonus>4000) {
+		if (CollissionVehiculeCheckpoints(l->vp2, l->terrain, &bonusVp2)) {
+			if (bonusVp2 == freeze) {
+				l->vp1->timerBonus = SDL_GetTicks();
+				l->vp1->bonus = bonusVp2;
+			} else {
+				l->vp2->timerBonus = SDL_GetTicks();
+				l->vp2->bonus = bonusVp2;
+			}
 		}
 	}
+
 	CollisionBallonTerrain(l->ballon, l->terrain);
 	Player buteur;
 	if (CollisionBallonBut(l->ballon, l->terrain, &buteur)) {
