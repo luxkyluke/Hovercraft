@@ -20,13 +20,13 @@ void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain);	//DONE
 void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain);			//DONE
 bool CollisionBallonBut(Ballon* ballon, Terrain* terrain, Player* buteur);              //DONE
 
-//fonctions qui indiques si 2 élément sont entrer en contact ou non
-bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2); //DONE
-bool TouchedBallonBut(Ballon *ballon, But* but);						//
-bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP); 	//AR
-bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule); 		//DONE
-bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain); 		//DONE
-bool TouchedBallonTerrain(Ballon *ballon, Terrain * terrain); 			//DONE
+////fonctions qui indiques si 2 élément sont entrer en contact ou non
+//bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2); //DONE
+//bool TouchedBallonBut(Ballon *ballon, But* but);						//
+//bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP); 	//AR
+//bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule); 		//DONE
+//bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain); 		//DONE
+//bool TouchedBallonTerrain(Ballon *ballon, Terrain * terrain); 			//DONE
 int StatusCollisionTerrain(Terrain* t);
 
 

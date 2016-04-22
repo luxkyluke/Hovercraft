@@ -2,45 +2,48 @@
 #include "sdl_tools.h"
 
 #define NB_MAX_LEVEL 30
+#define NB_LEVEL 1
 
 
-void MakeGame(Game* game, float duration){
+bool MakeGame(Game* game, int duration){
 	if(game == NULL) {	
 		printf("Impossible de créer le game, pointeur non alloué\n"); 
-		return;
+		return false;
 	}
 
-	 // Initialisation de la SDL 
-//	if(-1 == SDL_Init(SDL_INIT_VIDEO)) {
-//	  fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
-//	  return;
-//	}
-//
-//	// Ouverture d'une fenêtre et création d'un contexte OpenGL
-//	setVideoMode(windowWidth, windowHeight);
-//	reshape(windowWidth, windowHeight);
+
 
 	game->levels = (Level **) malloc(NB_MAX_LEVEL*sizeof(Level*));
 	game->nbLevels = 0;
 	game->duration = duration;
+
+	int i;
+	for (i=1; i<NB_LEVEL+1; i++){
+		char levelTxt[10];
+		sprintf(levelTxt, "level%d", i);
+		if(!AddLevel(game, levelTxt))
+			return false;
+	}
+	return true;
+
 }
 
-void AddLevel(Game* game, char* nameFichTerrain,  char* pathTextureTerrain, char* pathTextureVp1, char* pathTextureVp2){
-	if(!game || !nameFichTerrain || !pathTextureTerrain || !pathTextureVp2 || !pathTextureVp1)
-        return ;
+bool AddLevel(Game* game, char* nameFichTerrain){
+	if(!game || !nameFichTerrain)
+        return false;
 	if(game->nbLevels == NB_MAX_LEVEL){
 		printf("Echec de l'ajout - Nombre de level max depasse \n");
-        return ;
+        return false;
 	}
     int id = game->nbLevels;
 	game->levels[id] = (Level *) malloc(sizeof(Level));
-	MakeLevel(game->levels[id], nameFichTerrain, pathTextureTerrain, pathTextureVp1, pathTextureVp2);
-	if(game->levels[id]  == NULL){
+
+	if(!MakeLevel(game->levels[id], nameFichTerrain, game->duration)){
 		printf("Probleme makeLevel dans AddLevel\n");
-        return ;
+        return false ;
 	}
 	game->nbLevels += 1;
-
+	return true;
 }
 
 void PlayGame(Game* game, int windowWidth, int windowHeight){
