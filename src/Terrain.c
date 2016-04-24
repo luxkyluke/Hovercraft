@@ -179,7 +179,9 @@ void DessinTerrain(Terrain* t) {
         glDisable(GL_TEXTURE_2D);
     glPopMatrix();
 
+    glColor3f(255,255,255);
 	DessinBut(t->butP1, DEFAULT_LARGEUR_BUT);
+    glColor3f(255,255,255);
 	DessinBut(t->butP2, DEFAULT_LARGEUR_BUT);
 
     int i;

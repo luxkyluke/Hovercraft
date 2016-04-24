@@ -194,13 +194,20 @@ void DessinLevel(Level* l, Uint32 duration) {
 	sprintf(scoreP2, "%d", l->scoreP2);
 
 	glPushMatrix();
+		glTranslatef(-2,0,0);
 		glColor3d(1,1,1);
 		vBitmapOutput (-2, 45, time,  GLUT_BITMAP_HELVETICA_18);
-		glColor3d(1,0.2,0.2);
-		vBitmapOutput (6, 45, scoreP1,  GLUT_BITMAP_HELVETICA_18);
-		glColor3d(0.2,0.2,1);
-		vBitmapOutput (-6, 45, scoreP2,  GLUT_BITMAP_HELVETICA_18);
-		glColor3d(1,1,1);
+		glPushMatrix();
+			glColor3d(1,0.2,0.2);
+			glTranslatef(7,-1,0);
+			vBitmapOutput (6, 45, scoreP1,  GLUT_BITMAP_HELVETICA_18);
+		glPopMatrix();
+		glPushMatrix();
+			glColor3d(0.2,0.2,1);
+			glTranslatef(-5,-1,0);
+			vBitmapOutput (-6, 45, scoreP2,  GLUT_BITMAP_HELVETICA_18);
+			glColor3d(1,1,1);
+		glPopMatrix();
 	glPopMatrix();
 
 
@@ -240,8 +247,7 @@ void UpdateCameraLevel(Level* level) {
 //  }
 	if (level->camera->zoomLevel < 4 && level->camera->start == 1) {
 		camera_is_in_work = true;
-		LookAt(level->camera, level->ballon->cercle->centre,
-				level->camera->zoomLevel);
+		LookAt(level->camera, level->ballon->cercle->centre,level->camera->zoomLevel);
 		level->camera->zoomLevel += 0.01;
 		RalentiLevel(level);
 	} else if (level->camera->zoomLevel >= 4) {
@@ -306,7 +312,6 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 		glPushMatrix();
 			glLoadIdentity();
 			UpdateCameraLevel(level);
-		glPopMatrix();
 
 
 
@@ -330,6 +335,7 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 		DessinLevel(level, duration);
 
 		CheckBonus(level);
+		glPopMatrix();
 
 
 		if (!camera_is_in_work)
