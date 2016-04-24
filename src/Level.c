@@ -292,7 +292,7 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 	char windowname[30];
 	sprintf(windowname, "HoverLigue Niveau %d !", id + 1);
 	SDL_WM_SetCaption(windowname, NULL);
-
+	ResetLevel(level);
 	// Boucle d'affichage
 	int loop = 1;
 	Uint32 timeStartLevel = SDL_GetTicks();
