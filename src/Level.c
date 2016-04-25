@@ -123,8 +123,16 @@ bool CheckTouched(Level* l) {
 			l->scoreP2 += 1;
 			printf("score P2 : %d\n", l->scoreP2);
 		}
+   
+	/*Mix_AllocateChannels(1); //Alloue 1 canal
+    Mix_Volume(1, MIX_MAX_VOLUME);
+	Mix_Chunk *goal; // Cr�e un pointeur pour stocker un .WAV
+    goal = Mix_LoadWAV("./musiques/GOAL.wav"); // Charge un .WAV dans un pointeur
+ 	Mix_VolumeChunk(goal, MIX_MAX_VOLUME);
+	Mix_PlayChannel(1, goal, 0);*/
 		l->camera->start = 1;
 	}
+	//Mix_FreeChunk(goal);
 	return true;
 }
 
@@ -291,8 +299,11 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 	// Titre de la fenêtre
 	char windowname[30];
 	sprintf(windowname, "HoverLigue Niveau %d !", id + 1);
+
+
 	SDL_WM_SetCaption(windowname, NULL);
 	ResetLevel(level);
+
 	// Boucle d'affichage
 	int loop = 1;
 	Uint32 timeStartLevel = SDL_GetTicks();
@@ -419,6 +430,7 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 		}
 		duration = SDL_GetTicks() - timeStartLevel;
 	}
+	
 
 	// Liberation des ressources associées à la SDL
 	//SDL_Quit();

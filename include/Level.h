@@ -24,6 +24,8 @@
 #include "Checkpoint.h"
 #include "Vehicule.h"
 #include "glut_tools.h"
+#include <SDL/SDL_mixer.h>
+
 
 
 typedef struct {

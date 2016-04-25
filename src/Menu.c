@@ -102,7 +102,9 @@ void CallMenuDemarrage(Menu* menu) {
 	Mix_Music *musique;
 	musique = Mix_LoadMUS("./musiques/musique.mp3");
 	Mix_PlayMusic(musique, -1);
-	Mix_VolumeMusic(0);
+	Mix_VolumeMusic(30);
+
+	
 
   	GLuint texturePlay = loadImage("./images/menuPlay.png");
     GLuint textureExit = loadImage("./images/menuEXIT.png");
