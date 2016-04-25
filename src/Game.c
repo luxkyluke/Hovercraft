@@ -1,5 +1,7 @@
 #include "Game.h"
 #include "sdl_tools.h"
+#include "TypeMenu.h"
+#include "Menu.h"
 
 #define NB_MAX_LEVEL 30
 #define NB_LEVEL 1
@@ -52,8 +54,14 @@ void PlayGame(Game* game, int windowWidth, int windowHeight){
 		return;
 
     int i;
+
     for(i=0 ;i<game->nbLevels; ++i){
-        PlayLevel(game->levels[i], windowWidth, windowHeight, i);
+        if(PlayLevel(game->levels[i], windowWidth, windowHeight, i)){
+			Menu menuFin;
+			MakeMenu(windowWidth, windowHeight, &menuFin, fin);
+			if(!CallMenuFin(&menuFin))
+				break;
+        }
     }
 
 }

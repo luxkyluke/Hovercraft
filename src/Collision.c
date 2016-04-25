@@ -29,8 +29,9 @@ bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 
 
 bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
-    if(CollisionCercleCercle(vehicule->cercle, ballon->cercle)||
-       CollisionCercleCercle(vehicule->facticeCercle, ballon->cercle)) {
+    if(Point2DIsEgual(ballon->cercle->centre, vehicule->position)
+    		|| CollisionCercleCercle(vehicule->cercle, ballon->cercle)
+				|| CollisionCercleCercle(vehicule->facticeCercle, ballon->cercle)) {
         return true;
     }
     return false;
@@ -111,7 +112,7 @@ void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
     }
     else
         ballon-> acceleration = VectorXY(0,0.);
-    UpdateBallon(ballon);
+	UpdateBallon(ballon);
 }
 
 void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){

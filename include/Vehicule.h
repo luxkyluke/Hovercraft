@@ -20,7 +20,6 @@
 /* FIN DU A GARDER */
 
 typedef struct {
-	GLuint* textures;
 	float hauteur;
 	float largeur;
 	Cercle* cercle;
@@ -37,7 +36,7 @@ typedef struct {
 }Vehicule;
 
 
-void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint* texts, Player p, Vehicule* v);
+void MakeVehicule(Point2D pos, float hauteur, float largeur, Player p, Vehicule* v);
 void DessinVehicule(Vehicule * v);
 void UpdateAcceleration(Vehicule* h);
 void UpdateVitesse(Vehicule* h);

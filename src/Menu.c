@@ -1,10 +1,24 @@
-#include "../include/Menu.h"
+#include "Menu.h"
 #define DURATION_TIME 300000
 
+#define PATH_TEXTURE_DEBUT "./images/menu_deb.png"
+#define PATH_TEXTURE_FIN "./images/menu_fin.png"
+#define PATH_TEXTURE_PAUSE "./images/menu_pause.png"
+#define PATH_TEXTURE_DEBUT_BTN_1 "./images/menu_deb_button1.png"
+#define PATH_TEXTURE_FIN_BTN_1 "./images/menu_fin_button1.png"
+#define PATH_TEXTURE_PAUSE_BTN_1 "./images/menu_pause_button1.png"
+#define PATH_TEXTURE_DEBUT_BTN_2 "./images/menu_deb_button2.png"
+#define PATH_TEXTURE_FIN_BTN_2 "./images/menu_fin_button2.png"
+#define PATH_TEXTURE_PAUSE_BTN_2 "./images/menu_pause_button2.png"
+#define POS_BTN1_TOP 71
+#define POS_BTN1_BOTTOM 96
+#define POS_BTN2_TOP 148
+#define POS_BTN2_BOTTOM 175
+#define POS_BTN_RIGHT 815
+#define POS_BTN_LEFT 455
 
 /* Nombre de bits par pixel de la fen�tre */
 static const unsigned int BIT_PER_PIXEL = 32;
-
 
 void reshape(unsigned int windowWidth, unsigned int windowHeight) {
 	glViewport(0, 0, windowWidth, windowHeight);
@@ -15,61 +29,83 @@ void reshape(unsigned int windowWidth, unsigned int windowHeight) {
 }
 
 void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
-	if (NULL
-			== SDL_SetVideoMode(windowWidth, windowHeight, BIT_PER_PIXEL,
-					SDL_OPENGL | SDL_GL_DOUBLEBUFFER | SDL_RESIZABLE)) {
+	if (NULL == SDL_SetVideoMode(windowWidth, windowHeight, BIT_PER_PIXEL,
+	SDL_OPENGL | SDL_GL_DOUBLEBUFFER | SDL_RESIZABLE)) {
 		fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
 		exit(EXIT_FAILURE);
 	}
 }
 
-
-bool MakeMenu(char* pathTexture, int width, int height, Menu* menu) {
+bool MakeMenu(int width, int height, Menu* menu, TypeMenu type) {
 	if (!menu) {
 		printf("Impossible de créer le menu, pointeur non alloué\n");
-		return false;
-	}
-	/* Initialisation de la SDL */
-	if (-1 == SDL_Init(SDL_INIT_VIDEO)) {
-		fprintf(stderr, "Impossible d'initialiser la SDL. Fin du programme.\n");
 		return false;
 	}
 
 	menu->largeur = width;
 	menu->hauteur = height;
 
-	/* Ouverture d'une fenêtre et création d'un contexte OpenGL */
-	setVideoMode(menu->largeur, menu->hauteur);
-	reshape(menu->largeur, menu->hauteur);
-	GLuint texture = loadImage(pathTexture);
+	menu->type = type;
+	switch (type) {
+	case debut:
+		/* Initialisation de la SDL */
+		if (-1 == SDL_Init(SDL_INIT_VIDEO)) {
+			fprintf(stderr,
+					"Impossible d'initialiser la SDL. Fin du programme.\n");
+			return false;
+		}
+		/* Ouverture d'une fenêtre et création d'un contexte OpenGL */
+		setVideoMode(menu->largeur, menu->hauteur);
+		reshape(menu->largeur, menu->hauteur);
+		InitGameMenu(menu, DURATION_TIME);
+		menu->texture = loadImage(PATH_TEXTURE_DEBUT);
+		menu->texture_btn1 = loadImage(PATH_TEXTURE_DEBUT_BTN_1);
+		menu->texture_btn2 = loadImage(PATH_TEXTURE_DEBUT_BTN_2);
+		break;
 
-	// Initialisation de GLUT
-//	glutInit(); // initialisation de GLUT
-//	glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
-//	glutInitWindowSize(WIDTH,HEIGHT);
-//	glutInitWindowPosition(50,50);
-//	glutCreateWindow("Texte");
-//	glutDisplayFunc(vDisplay);
-//	glutReshapeFunc(vReshape);
-//	glutMainLoop();
+	case pause:
+		menu->texture = loadImage(PATH_TEXTURE_PAUSE);
+		menu->texture_btn1 = loadImage(PATH_TEXTURE_PAUSE_BTN_1);
+		menu->texture_btn2 = loadImage(PATH_TEXTURE_PAUSE_BTN_2);
+		break;
 
+	case fin:
+		menu->texture = loadImage(PATH_TEXTURE_FIN);
+		menu->texture_btn1 = loadImage(PATH_TEXTURE_FIN_BTN_1);
+		menu->texture_btn2 = loadImage(PATH_TEXTURE_FIN_BTN_2);
+		break;
 
-	menu->game = (Game *) malloc(sizeof(Game));
-	if(!MakeGame(menu->game, DURATION_TIME)){
+	default:
+		break; //InitGameMenu(menu, DURATION_TIME);
+	}
+
+	//InitGameMenu(menu, DURATION_TIME);
+//	menu->game = (Game *) malloc(sizeof(Game));
+//	if(!MakeGame(menu->game, DURATION_TIME)){
+//		printf("Erreur MakeGame !!");
+//		return false;
+//	}
+
+	return true;
+
+	//return true;
+}
+
+bool InitGameMenu(Menu* m, int duration) {
+	m->game = (Game *) malloc(sizeof(Game));
+	if (!MakeGame(m->game, duration)) {
 		printf("Erreur MakeGame !!");
 		return false;
 	}
-
-	menu->texture = texture;
 	return true;
 }
 
-void DessinMenu(Menu* menu) {
+void DessinMenu(Menu* menu, GLuint texture) {
 	glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
 	//glColor3f(255, 255, 255);
 
-	glBindTexture(GL_TEXTURE_2D, menu->texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
 	// glScalef(menu->largeur, menu->hauteur, 1);
 	glBegin(GL_QUADS);
 	glTexCoord2f(1, 0);
@@ -89,27 +125,21 @@ void DessinMenu(Menu* menu) {
 
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
-void CallMenuDemarrage(Menu* menu) {
+bool IsOnButton2(int x, int y) {
+	return (x >= POS_BTN_LEFT && x <= POS_BTN_RIGHT && y >= POS_BTN2_TOP
+			&& y <= POS_BTN2_BOTTOM);
+}
 
-	/* Titre de la fenêtre */
-	SDL_WM_SetCaption("Bienvenue dans HoverLigue !!!!!!!", NULL);
+bool IsOnButton1(int x, int y) {
+	return (x >= POS_BTN_LEFT && x <= POS_BTN_RIGHT && y >= POS_BTN1_TOP
+			&& y <= POS_BTN1_BOTTOM);
+}
 
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024)
-			== -1) { // Initialisation de SDL_Mixer
-		printf("%s", Mix_GetError());
-	}
+bool LoopMenu(Menu* menu){
 
-	Mix_Music *musique;
-	musique = Mix_LoadMUS("./musiques/musique.mp3");
-	Mix_PlayMusic(musique, -1);
-	Mix_VolumeMusic(30);
+	GLuint texture = menu->texture;
 
-	
-
-  	GLuint texturePlay = loadImage("./images/menuPlay.png");
-    GLuint textureExit = loadImage("./images/menuEXIT.png");
-    GLuint texture = loadImage("./images/menu.png");
-
+	bool ret = false;
 	int souris_x = 0;
 	int souris_y = 0;
 	/* Boucle d'affichage */
@@ -118,16 +148,15 @@ void CallMenuDemarrage(Menu* menu) {
 		/* Récupération du temps au début de la boucle */
 		Uint32 startTime = SDL_GetTicks();
 
-		DessinMenu(menu);
-		
+		DessinMenu(menu, texture);
+
 		/* glBegin(GL_QUADS);
-			 glColor3f(0.,1.,0.);
-			 glVertex2f(-30,40);
-			 glVertex2f(25,40);
-			 glVertex2f(25,35);
-			 glVertex2f(-30,35);
+		 glColor3f(0.,1.,0.);
+		 glVertex2f(-30,40);
+		 glVertex2f(25,40);
+		 glVertex2f(25,35);
+		 glVertex2f(-30,35);
 		 glEnd();*/
-		 
 
 		/* Echange du front et du back buffer : mise à jour de la fenêtre */
 		SDL_GL_SwapBuffers();
@@ -146,53 +175,52 @@ void CallMenuDemarrage(Menu* menu) {
 			switch (e.type) {
 
 			case SDL_MOUSEMOTION:
-                souris_x = e.button.x;
-                souris_y = e.button.y;
-                if(souris_x >= 452 && souris_x <= 814 && souris_y >= 148 && souris_y <= 175){
-					menu->texture = textureExit;
-					DessinMenu(menu);
-                	//printf("EXIT\n");
-                }
-                else if(souris_x >= 455 && souris_x <= 815 && souris_y>= 71 && souris_y<= 96 ){
-					menu->texture = texturePlay;
-					DessinMenu(menu);
+				souris_x = e.button.x;
+				souris_y = e.button.y;
+				if (IsOnButton2(souris_x, souris_y)) {
+					texture = menu->texture_btn2;
+					//printf("EXIT\n");
+				} else if (IsOnButton1(souris_x, souris_y)) {
+					texture = menu->texture_btn1;
 					//printf("PLAY\n");
 				}
-               
-                else{
-                	menu->texture = texture;
-					DessinMenu(menu);
-				}
-         		break;
 
-                
-			/* Touche clavier */
+				else {
+					texture = menu->texture;
+				}
+				break;
+
+				/* Touche clavier */
 			case SDL_KEYDOWN:
 				//printf("touche pressée (code = %d)\n", e.key.keysym.sym);
 				if (e.key.keysym.sym == SDLK_ESCAPE)
 					loop = 0;
 				/*if (e.key.keysym.sym == SDLK_RETURN) {
-					PlayGame(menu->game, menu->largeur, menu->hauteur);*/
-				
+				 PlayGame(menu->game, menu->largeur, menu->hauteur);*/
+
 				break;
 
-			
 			case SDL_MOUSEBUTTONDOWN:
 				//printf("souris-x en %d     souris_y en %d\n", souris_x, souris_y);
-				if(souris_x >= 455 && souris_x <= 815 && souris_y>= 71 && souris_y<= 96 ){
-					menu->texture = texturePlay;
-					DessinMenu(menu);
-					PlayGame(menu->game, menu->largeur, menu->hauteur);
-					//printf("PLAY\n");
+				if (IsOnButton1(souris_x, souris_y) && menu->game != NULL) {
+					switch (menu->type){
+						case debut :
+							PlayGame(menu->game, menu->largeur, menu->hauteur);
+							break;
+						case fin :
+							ret = true;
+							loop = 0;
+						case pause :
+							//ContinueGame(menu->game);
+							break;
+					}
 				}
-                if(souris_x >= 452 && souris_x <= 814 && souris_y >= 148 && souris_y <= 175){
-					menu->texture = textureExit;
-					DessinMenu(menu);
+				if (IsOnButton2(souris_x, souris_y)) {
+					ret = false;
 					loop = 0;
-                	//printf("EXIT\n");
-                }
-                break;
-
+					//printf("EXIT\n");
+				}
+				break;
 
 				/* resize window */
 			case SDL_VIDEORESIZE:
@@ -214,11 +242,37 @@ void CallMenuDemarrage(Menu* menu) {
 			SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
 		}
 	}
+	return ret;
+}
+
+void CallMenuDemarrage(Menu* menu) {
+
+	/* Titre de la fenêtre */
+	SDL_WM_SetCaption("Bienvenue dans HoverLigue !!!!!!!", NULL);
+
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024)
+			== -1) { // Initialisation de SDL_Mixer
+		printf("%s", Mix_GetError());
+	}
+
+	Mix_Music *musique;
+	musique = Mix_LoadMUS("./musiques/musique.mp3");
+	Mix_PlayMusic(musique, -1);
+	Mix_VolumeMusic(0);
+
+
+	LoopMenu(menu);
+
 	Mix_FreeMusic(musique);
 	Mix_CloseAudio();
 	/* Liberation des ressources associées à la SDL */
 	SDL_Quit();
 
+}
+
+
+bool CallMenuFin(Menu* menu) {
+	return LoopMenu(menu);
 }
 
 void FreeMenu(Menu* m) {
