@@ -1,5 +1,3 @@
-Finir les collisions
-Finir le zoom
-Affichage des checkpoints OK
-Bonus (Freeze ect) 
 Graphisme
+Son goal
+Ajouter des checkpoouints ? (Réduire leur taille)
