@@ -9,7 +9,7 @@
 #define DEFAULT_BALL_POS_X 0.
 #define DEFAULT_BALL_POS_Y 0.
 #define DEFAULT_BALL_RADIUS 2.
-#define DEFAULT_TERRAIN_TEXTURE_PATH "images/terrain1.png"
+#define DEFAULT_TERRAIN_TEXTURE_PATH "images/terrain2.jpg"
 #define DEFAULT_BALL_TEXTURE_PATH "images/ballon.png"
 #define DEFAULT_VP1_TEXTURE_PATH "images/vp1.png"
 #define DEFAULT_VP1_TEXTBOOST_PATH "images/vp1_boost.png"
@@ -123,7 +123,7 @@ bool CheckTouched(Level* l) {
 			l->scoreP2 += 1;
 			printf("score P2 : %d\n", l->scoreP2);
 		}
-   
+
 	/*Mix_AllocateChannels(1); //Alloue 1 canal
     Mix_Volume(1, MIX_MAX_VOLUME);
 	Mix_Chunk *goal; // Cr�e un pointeur pour stocker un .WAV
@@ -430,7 +430,7 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 		}
 		duration = SDL_GetTicks() - timeStartLevel;
 	}
-	
+
 
 	// Liberation des ressources associées à la SDL
 	//SDL_Quit();
