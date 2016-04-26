@@ -18,19 +18,26 @@
 #include "sdl_tools.h"
 #include "Level.h"
 #include "Game.h"
-#include "../include/glut_tools.h"
+#include "glut_tools.h"
+#include "TypeMenu.h"
+
 
 typedef	struct {
 	Game* game;
 	int largeur;
 	int hauteur;
+	TypeMenu type;
 	GLuint texture;
+	GLuint texture_btn1;
+	GLuint texture_btn2;
 }Menu;
 
-bool MakeMenu(char* pathTexture, int width, int height, Menu* menu);
-void DessinMenu(Menu* menu);
+bool MakeMenu(int width, int height, Menu* menu, TypeMenu type);
+void DessinMenu(Menu* menu, GLuint text);
 void CallMenuDemarrage(Menu* menu);
+bool CallMenuFin(Menu* menu);
 void FreeMenu(Menu* m);
+bool InitGameMenu(Menu* m, int duration);
 
 
 #endif

@@ -17,9 +17,10 @@
 
 #include "../include/Menu.h"
 
-#define DEFAULT_MENU_TEXTURE_PATH "./images/menu.png"
 #define WINDOW_WIDTH 1300
 #define WINDOW_HEIGHT 650
+
+
 
 int main(int argc, char** argv) {
 
@@ -27,8 +28,10 @@ int main(int argc, char** argv) {
 
 	Menu* menu = (Menu *) malloc(sizeof(Menu));
 
-	if (!MakeMenu(DEFAULT_MENU_TEXTURE_PATH, WINDOW_WIDTH, WINDOW_HEIGHT, menu))
+
+	if (!MakeMenu(WINDOW_WIDTH, WINDOW_HEIGHT, menu, debut))
 		return EXIT_FAILURE;
+
 
 	CallMenuDemarrage(menu);
 

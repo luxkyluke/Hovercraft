@@ -36,7 +36,6 @@ typedef struct {
 	int scoreP1;
 	int scoreP2;
 	Camera* camera;
-	int nbLevel;
 	int duration;
 } Level;
 
@@ -51,7 +50,7 @@ void AddScoreP2(Level* l, int score);
 void FreeLevel(Level* l);
 void DessinLevel(Level* l, Uint32 duration);
 void UpdateLevel(Level* l);
-void PlayLevel(Level* l, int windowWidth, int windowHeight, int i);
+bool PlayLevel(Level* l, int windowWidth, int windowHeight, int i);
 void ResetLevel(Level* l);
 void UpdateCameraLevel(Level* level);
 void DessinMinimap(Ballon* ballon, Vehicule* vp1, Vehicule* vp2);

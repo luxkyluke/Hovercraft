@@ -1,13 +1,15 @@
 #include "Game.h"
 #include "sdl_tools.h"
+#include "TypeMenu.h"
+#include "../include/Menu.h"
 
 #define NB_MAX_LEVEL 30
 #define NB_LEVEL 1
 
 
 bool MakeGame(Game* game, int duration){
-	if(game == NULL) {	
-		printf("Impossible de créer le game, pointeur non alloué\n"); 
+	if(game == NULL) {
+		printf("Impossible de créer le game, pointeur non alloué\n");
 		return false;
 	}
 
@@ -47,13 +49,19 @@ bool AddLevel(Game* game, char* nameFichTerrain){
 }
 
 void PlayGame(Game* game, int windowWidth, int windowHeight){
-	
+
     if(!game)
 		return;
 
     int i;
+
     for(i=0 ;i<game->nbLevels; ++i){
-        PlayLevel(game->levels[i], windowWidth, windowHeight, i);
+        if(PlayLevel(game->levels[i], windowWidth, windowHeight, i)){
+			Menu menuFin;
+			MakeMenu(windowWidth, windowHeight, &menuFin, fin);
+			if(!CallMenuFin(&menuFin))
+				break;
+        }
     }
 
 }

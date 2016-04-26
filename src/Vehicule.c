@@ -18,10 +18,6 @@
 //Dessin de l'hovercraft
 void DessinVehicule(Vehicule* v) {
 	glPushMatrix();
-		glEnable(GL_TEXTURE_2D);
-		//float test = (float)windowWidth - (float)windowWidth/2;
-		glColor3f(255, 255, 255);
-		    glBindTexture(GL_TEXTURE_2D, v->textures[v->bonus]);
 		glTranslatef(v->position.x, v->position.y, 0);
 		glRotatef(v->angle, 0., 0., 1.);
 		glScalef(v->largeur, v->hauteur, 0.);
@@ -41,9 +37,6 @@ void DessinVehicule(Vehicule* v) {
 				dessinCercle(100, 1, 1, 0.2, 1);
 
 		glPopMatrix();
-
-//		glBindTexture(GL_TEXTURE_2D, 0);
-//	    glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
 
 	glPushMatrix();
@@ -55,8 +48,7 @@ void DessinVehicule(Vehicule* v) {
 	glPopMatrix();
 }
 
-void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint* texts,
-		Player p, Vehicule *h) {
+void MakeVehicule(Point2D pos, float hauteur, float largeur, Player p, Vehicule *h) {
 	if (!h) {
 		printf("Impossible de créer le véhicule, pointeur non alloué\n");
 		return;
@@ -70,7 +62,6 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint* texts,
 	h->facticeCercle = (Cercle*) malloc(sizeof(Cercle));
 	MakeCercle(h->facticeCercle, h->position, 0.5 * largeur);
 	h->player = p;
-	h->textures = texts;
 	h->tourne = 0;
 	h->bonus = none;
 	h->timerBonus = 0;
@@ -79,7 +70,7 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, GLuint* texts,
 // PARTIE PHYSIQUE
 void UpdateAcceleration(Vehicule* h) {
 	if (h->avance == 1) {
-		if (h->bonus == boost && SDL_GetTicks() - h->timerBonus <= 4000) {
+		if (h->bonus == boost){
 			h->acceleration = MultVector(h->direction, 0.025);
 		} else {
 			h->acceleration = MultVector(h->direction, 0.015);

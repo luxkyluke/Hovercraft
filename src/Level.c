@@ -11,12 +11,6 @@
 #define DEFAULT_BALL_RADIUS 2.
 #define DEFAULT_TERRAIN_TEXTURE_PATH "images/terrain2.jpg"
 #define DEFAULT_BALL_TEXTURE_PATH "images/ballon.png"
-#define DEFAULT_VP1_TEXTURE_PATH "images/vp1.png"
-#define DEFAULT_VP1_TEXTBOOST_PATH "images/vp1_boost.png"
-#define DEFAULT_VP1_TEXTFREEZ_PATH "images/vp1_freeze.png"
-#define DEFAULT_VP2_TEXTURE_PATH "images/vp2.png"
-#define DEFAULT_VP2_TEXTBOOST_PATH "images/vp2_boost.png"
-#define DEFAULT_VP2_TEXTFREEZ_PATH "images/vp2_freeze.png"
 #define NB_TEXTURE 3
 
 /* Nombre minimal de millisecondes separant le rendu de deux images */
@@ -39,14 +33,6 @@ bool MakeLevel(Level* l, char* nameFichTerrain, int duration) {
 	Vehicule *vp2 = (Vehicule *) malloc(sizeof(Vehicule));
 	GLuint imageBallon = loadImage(DEFAULT_BALL_TEXTURE_PATH);
 	GLuint textureIdTerrain = loadImage(DEFAULT_TERRAIN_TEXTURE_PATH);
-	GLuint texturesVP1[] = {
-			loadImage(DEFAULT_VP1_TEXTURE_PATH),
-			loadImage(DEFAULT_VP1_TEXTBOOST_PATH),
-			loadImage(DEFAULT_VP1_TEXTFREEZ_PATH) };
-	GLuint texturesVP2[] = {
-			loadImage(DEFAULT_VP2_TEXTURE_PATH),
-			loadImage(DEFAULT_VP2_TEXTBOOST_PATH),
-			loadImage(DEFAULT_VP2_TEXTFREEZ_PATH) };
 	Camera *cam = (Camera *) malloc(sizeof(Camera));
 
 	char terrainTxt[30] = "./levels/";
@@ -61,10 +47,10 @@ bool MakeLevel(Level* l, char* nameFichTerrain, int duration) {
 
 	MakeTerrain(textureIdTerrain, fileTerrain, t);
 	MakeVehicule(PointXY(DEFAULT_VP1_POS_X, DEFAULT_VP1_POS_Y),
-				DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, texturesVP1, player1, vp1);
+				DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player1, vp1);
 
 	MakeVehicule(PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y),
-				DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, texturesVP2, player2, vp2);
+				DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player2, vp2);
 
 	MakeBallon(imageBallon, PointXY(DEFAULT_BALL_POS_X, DEFAULT_BALL_POS_Y),
 				ballon, DEFAULT_BALL_RADIUS);
@@ -206,15 +192,12 @@ void DessinLevel(Level* l, Uint32 duration) {
 		glColor3d(1,1,1);
 		vBitmapOutput (-2, 45, time,  GLUT_BITMAP_HELVETICA_18);
 		glPushMatrix();
-			glColor3d(1,0.2,0.2);
 			glTranslatef(7,-1,0);
 			vBitmapOutput (6, 45, scoreP1,  GLUT_BITMAP_HELVETICA_18);
 		glPopMatrix();
 		glPushMatrix();
-			glColor3d(0.2,0.2,1);
 			glTranslatef(-5,-1,0);
 			vBitmapOutput (-6, 45, scoreP2,  GLUT_BITMAP_HELVETICA_18);
-			glColor3d(1,1,1);
 		glPopMatrix();
 	glPopMatrix();
 
@@ -234,7 +217,8 @@ void ResetLevel(Level* l) {
 	// Reset second vehicule.
 	ResetVehicule(l->vp2, PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y),
 			player2);
-
+	l->scoreP1 = 0;
+	l->scoreP2 = 0;
 	// Reset ball.
 	ResetBallon(l->ballon);
 	// Reset Camera
@@ -287,10 +271,10 @@ void CheckBonus(Level* level) {
 	}
 }
 
-void PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
+bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 
 	if (!level)
-		return;
+		return false;
 
 	Vehicule* VP1 = level->vp1;
 	Vehicule* VP2 = level->vp2;
@@ -430,9 +414,6 @@ void PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 		}
 		duration = SDL_GetTicks() - timeStartLevel;
 	}
-
-
-	// Liberation des ressources associées à la SDL
-	//SDL_Quit();
+	return (loop);
 
 }
