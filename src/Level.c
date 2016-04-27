@@ -9,7 +9,8 @@
 #define DEFAULT_BALL_POS_X 0.
 #define DEFAULT_BALL_POS_Y 0.
 #define DEFAULT_BALL_RADIUS 2.
-#define DEFAULT_TERRAIN_TEXTURE_PATH "images/terrain2.jpg"
+#define DEFAULT_TERRAIN_TEXTURE_PATH "images/terrain1.png"
+#define DEFAULT_TERRAIN_TEXTURE2_PATH "images/terrain2.png"
 #define DEFAULT_BALL_TEXTURE_PATH "images/ballon.png"
 #define NB_TEXTURE 3
 
@@ -21,7 +22,7 @@ bool camera_is_in_work = false;
 
 
 
-bool MakeLevel(Level* l, char* nameFichTerrain, int duration) {
+bool MakeLevel(Level* l, char* nameFichTerrain, int duration, int numLevel) {
 	if (l == NULL) {
 		printf("Impossible de créer le level, pointeur non alloué\n");
 		return false;
@@ -33,6 +34,11 @@ bool MakeLevel(Level* l, char* nameFichTerrain, int duration) {
 	Vehicule *vp2 = (Vehicule *) malloc(sizeof(Vehicule));
 	GLuint imageBallon = loadImage(DEFAULT_BALL_TEXTURE_PATH);
 	GLuint textureIdTerrain = loadImage(DEFAULT_TERRAIN_TEXTURE_PATH);
+
+	if(numLevel==1) {
+		textureIdTerrain = loadImage(DEFAULT_TERRAIN_TEXTURE2_PATH);
+	}
+
 	Camera *cam = (Camera *) malloc(sizeof(Camera));
 
 	char terrainTxt[30] = "./levels/";

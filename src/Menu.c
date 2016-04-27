@@ -1,10 +1,12 @@
 #include "../include/Menu.h"
-#define DURATION_TIME 300000
+#define DURATION_TIME 180000
 
 #define PATH_TEXTURE_DEBUT "./images/menu_deb.png"
 #define PATH_TEXTURE_FIN "./images/menu_fin.png"
 #define PATH_TEXTURE_PAUSE "./images/menu_pause.png"
 #define PATH_TEXTURE_DEBUT_BTN_1 "./images/menu_deb_button1.png"
+// #define PATH_TEXTURE_DEBUT_TER_1 "./images/menu_deb_terrain1.png"
+// #define PATH_TEXTURE_DEBUT_TER_2 "./images/menu_deb_terrain2.png"
 #define PATH_TEXTURE_FIN_BTN_1 "./images/menu_fin_button1.png"
 #define PATH_TEXTURE_PAUSE_BTN_1 "./images/menu_pause_button1.png"
 #define PATH_TEXTURE_DEBUT_BTN_2 "./images/menu_deb_button2.png"
@@ -61,6 +63,8 @@ bool MakeMenu(int width, int height, Menu* menu, TypeMenu type) {
 		menu->texture = loadImage(PATH_TEXTURE_DEBUT);
 		menu->texture_btn1 = loadImage(PATH_TEXTURE_DEBUT_BTN_1);
 		menu->texture_btn2 = loadImage(PATH_TEXTURE_DEBUT_BTN_2);
+		// menu->texture_ter1 = loadImage(PATH_TEXTURE_DEBUT_TER_1);
+		// menu->texture_ter2 = loadImage(PATH_TEXTURE_DEBUT_TER_2);
 		break;
 
 	case pause:
@@ -135,6 +139,16 @@ bool IsOnButton1(int x, int y) {
 			&& y <= POS_BTN1_BOTTOM);
 }
 
+// bool IsOnTerrain1(int x, int y) {
+// 	return (x >= 255 && x <= 567 && y >= 291
+// 			&& y <= 409);
+// }
+
+// bool IsOnTerrain2(int x, int y) {
+// 	return (x >= 677 && x <= 903 && y >= 291
+// 			&& y <= 409);
+// }
+
 bool LoopMenu(Menu* menu){
 
 	GLuint texture = menu->texture;
@@ -184,6 +198,11 @@ bool LoopMenu(Menu* menu){
 					texture = menu->texture_btn1;
 					//printf("PLAY\n");
 				}
+				// else if (IsOnTerrain1(souris_x,souris_y)) {
+				// 	texture = menu->texture_ter1;
+				// } else if (IsOnTerrain2(souris_x,souris_y)) {
+				// 	texture = menu->texture_ter2;
+				// }
 
 				else {
 					texture = menu->texture;
@@ -202,6 +221,7 @@ bool LoopMenu(Menu* menu){
 
 			case SDL_MOUSEBUTTONDOWN:
 				//printf("souris-x en %d     souris_y en %d\n", souris_x, souris_y);
+				// if ((IsOnButton1(souris_x, souris_y) || IsOnTerrain1(souris_x,souris_y) || IsOnTerrain2(souris_x,souris_y)) && menu->game != NULL) {
 				if (IsOnButton1(souris_x, souris_y) && menu->game != NULL) {
 					switch (menu->type){
 						case debut :
