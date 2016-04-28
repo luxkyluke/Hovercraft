@@ -49,6 +49,7 @@ void ResetVehicule(Vehicule* v, Point2D pos, Player p);
 void BoostVehicule(Vehicule* v);
 void FreezeVehicule(Vehicule* v);
 void CheckBoost(Vehicule* v);
+void CheckFreeze(Vehicule* v);
 bool IsInBonus(Vehicule* v);
 //bool IsTouchingVehicule(Vehicule *v, Point2D pos);
 

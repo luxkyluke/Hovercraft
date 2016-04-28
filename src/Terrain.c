@@ -5,17 +5,6 @@
 #include <stdlib.h>
 #include "sdl_tools.h"
 
-char *str_dup(char const *s){
-    char *pc = NULL;
-
-    if (s != NULL){
-        pc = malloc((strlen(s) + 1) * sizeof *pc);
-        if (pc != NULL) {
-            strcpy(pc, s);
-        }
-    }
-    return pc;
-}
 
 
 #define NB_MAX_LIGNE 102
@@ -27,6 +16,18 @@ char *str_dup(char const *s){
 #define DEFAULT_LARGEUR_BUT 10
 #define DEFAULT_BUTP2_TEXTURE_PATH "images/butD.png"
 #define DEFAULT_BUTP1_TEXTURE_PATH "images/butG.png"
+
+char *str_dup(char const *s){
+    char *pc = NULL;
+
+    if (s != NULL){
+        pc = malloc((strlen(s) + 1) * sizeof *pc);
+        if (pc != NULL) {
+            strcpy(pc, s);
+        }
+    }
+    return pc;
+}
 
 void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
     if(!t) {
@@ -194,4 +195,11 @@ char getCaraTerrain(Terrain *t, Point2D pos){
 	int x = (int) getXTerrain(pos.x);
 	int y = (int) getYTerrain(pos.y);
 	return t->terrain[y][x];
+}
+
+void ResetTerrain(Terrain* t){
+	int i;
+	for(i=0; i<t->nbCheckpts; i++){
+		ResetCheckpoint(t->checkpts[i]);
+	}
 }
