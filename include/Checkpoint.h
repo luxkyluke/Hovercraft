@@ -23,6 +23,7 @@ typedef	struct {
 	bool checked;
     int interceptedTime;
     Bonus type;
+    int timerReset;
 }Checkpoint;
 
 void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt, Bonus b);
@@ -30,5 +31,6 @@ bool IsCheckpoint(Checkpoint* checkpt, Cercle* c);
 void FreeCheckpoint(Checkpoint* checkpt);
 Checkpoint* CopyCheckpt(Checkpoint* checkpt);
 void DessinCheckpoint(Checkpoint* checkpt);
+void ResetCheckpoint(Checkpoint* checkpt);
 
 #endif

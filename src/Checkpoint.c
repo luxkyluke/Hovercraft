@@ -4,6 +4,8 @@
 #include <time.h>
 #include <stdlib.h>
 
+#define RESET_DELAY 4000
+
 void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt, Bonus b){
 	checkpt->cercle = (Cercle *) malloc(sizeof(Cercle));
 	MakeCercle(checkpt->cercle, pos, r);
@@ -36,6 +38,13 @@ Checkpoint* CopyCheckpt(Checkpoint* checkpt){
 	return chpt;
 }
 
+bool IsTimeToReset(Checkpoint* c){
+	return SDL_GetTicks() - c->timerReset > RESET_DELAY;
+}
+
+void CheckResetCheckpoint(Checkpoint* c){
+}
+
 void DessinCheckpoint(Checkpoint* checkpt){
 	if(!checkpt->checked){
 		glPushMatrix();
@@ -49,4 +58,8 @@ void DessinCheckpoint(Checkpoint* checkpt){
 				dessinCercle(100, 0.2, 1., 0.5, 1);
 		glPopMatrix();
 	}
+}
+
+void ResetCheckpoint(Checkpoint* checkpt){
+	checkpt->checked = false;
 }

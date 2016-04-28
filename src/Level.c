@@ -16,14 +16,14 @@
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
-//boolean pour pr�ciser quand la camera est en action
+//boolean pour préciser quand la camera est en action
 bool camera_is_in_work = false;
 
 
 
 bool MakeLevel(Level* l, char* nameFichTerrain, int duration) {
 	if (l == NULL) {
-		printf("Impossible de créer le level, pointeur non alloué\n");
+		printf("Impossible de crÃ©er le level, pointeur non allouÃ©\n");
 		return false;
 	}
 	FILE *fileTerrain;
@@ -74,8 +74,7 @@ bool CheckTouched(Level* l) {
 	CollisionVehiculeTerrain(l->vp1, l->terrain);
 	CollisionVehiculeTerrain(l->vp2, l->terrain);
 	Bonus bonusVp1, bonusVp2;
-
-	if (SDL_GetTicks()-l->vp1->timerBonus>4000) {
+	if (!IsInBonus(l->vp1)) {
 		if (CollissionVehiculeCheckpoints(l->vp1, l->terrain, &bonusVp1)) {
 			if (bonusVp1 == freeze) {
 				l->vp2->timerBonus = SDL_GetTicks();
@@ -87,7 +86,7 @@ bool CheckTouched(Level* l) {
 		}
 	}
 
-	if (SDL_GetTicks()-l->vp2->timerBonus>4000) {
+	if (!IsInBonus(l->vp2)) {
 		if (CollissionVehiculeCheckpoints(l->vp2, l->terrain, &bonusVp2)) {
 			if (bonusVp2 == freeze) {
 				l->vp1->timerBonus = SDL_GetTicks();
@@ -112,7 +111,7 @@ bool CheckTouched(Level* l) {
 
 	/*Mix_AllocateChannels(1); //Alloue 1 canal
     Mix_Volume(1, MIX_MAX_VOLUME);
-	Mix_Chunk *goal; // Cr�e un pointeur pour stocker un .WAV
+	Mix_Chunk *goal; // Crée un pointeur pour stocker un .WAV
     goal = Mix_LoadWAV("./musiques/GOAL.wav"); // Charge un .WAV dans un pointeur
  	Mix_VolumeChunk(goal, MIX_MAX_VOLUME);
 	Mix_PlayChannel(1, goal, 0);*/
@@ -217,6 +216,8 @@ void ResetLevel(Level* l) {
 	// Reset second vehicule.
 	ResetVehicule(l->vp2, PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y),
 			player2);
+
+	ResetTerrain(l->terrain);
 	l->scoreP1 = 0;
 	l->scoreP2 = 0;
 	// Reset ball.
@@ -251,24 +252,8 @@ void UpdateCameraLevel(Level* level) {
 void CheckBonus(Level* level) {
 	CheckBoost(level->vp1);
 	CheckBoost(level->vp2);
-
-	if (level->vp1->bonus == freeze) {
-		if (!IsInBonus(level->vp1)) {
-			printf("D�pass� de 4s.\n");
-			level->vp1->bonus = none;
-			level->vp1->timerBonus = SDL_GetTicks();
-		} else {
-			FreezeVehicule(level->vp1);
-		}
-	} else if (level->vp2->bonus == freeze) {
-		if (!IsInBonus(level->vp2)) {
-			printf("D�pass� de 4s.\n");
-			level->vp2->bonus = none;
-			level->vp2->timerBonus = SDL_GetTicks();
-		} else {
-			FreezeVehicule(level->vp2);
-		}
-	}
+	CheckFreeze(level->vp1);
+	CheckFreeze(level->vp2);
 }
 
 bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
@@ -280,7 +265,7 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 	Vehicule* VP2 = level->vp2;
 	srand(time(NULL));
 
-	// Titre de la fenêtre
+	// Titre de la fenÃªtre
 	char windowname[30];
 	sprintf(windowname, "HoverLigue Niveau %d !", id + 1);
 
@@ -293,7 +278,7 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 	Uint32 timeStartLevel = SDL_GetTicks();
 	Uint32 duration = SDL_GetTicks() - timeStartLevel;
 	while (loop &&  duration < level->duration) {
-		// Récupération du temps au début de la boucle
+		// RÃ©cupÃ©ration du temps au dÃ©but de la boucle
 		Uint32 startTime = SDL_GetTicks();
 
 		// Placer ici le code de dessin
@@ -336,13 +321,13 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 		if (!camera_is_in_work)
 			CheckTouched(level);
 
-		// Echange du front et du back buffer : mise à jour de la fenêtre
+		// Echange du front et du back buffer : mise Ã  jour de la fenÃªtre
 		SDL_GL_SwapBuffers();
 
 		// Boucle traitant les evenements
 		SDL_Event e;
 		while (SDL_PollEvent(&e)) {
-			// L'utilisateur ferme la fenêtre :
+			// L'utilisateur ferme la fenÃªtre :
 			if (e.type == SDL_QUIT) {
 				loop = 0;
 				break;
@@ -354,8 +339,8 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 			// Touche clavier
 			case SDL_KEYDOWN:
 
-				//printf("touche pressée (code = %d)\n", e.key.keysym.sym);
-				//printf("touche pressée (code = %d)\n", e.key.keysym.unicode);
+				//printf("touche pressÃ©e (code = %d)\n", e.key.keysym.sym);
+				//printf("touche pressÃ©e (code = %d)\n", e.key.keysym.unicode);
 				if (e.key.keysym.sym == SDLK_z){
 					VP2->avance = 1;
 				}
@@ -373,7 +358,7 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 				break;
 
 			case SDL_KEYUP:
-				//printf("touche lachée (code = %d)\n", e.key.keysym.unicode);
+				//printf("touche lachÃ©e (code = %d)\n", e.key.keysym.unicode);
 				if (e.key.keysym.sym == SDLK_z)
 					VP2->avance = 0;
 				if (e.key.keysym.sym == SDLK_UP)
@@ -405,10 +390,10 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 			}
 		}
 
-		// Calcul du temps écoulé
+		// Calcul du temps Ã©coulÃ©
 		Uint32 elapsedTime = SDL_GetTicks() - startTime;
 
-		// Si trop peu de temps s'est écoulé, on met en pause le programme
+		// Si trop peu de temps s'est Ã©coulÃ©, on met en pause le programme
 		if (elapsedTime < FRAMERATE_MILLISECONDS) {
 			SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
 		}

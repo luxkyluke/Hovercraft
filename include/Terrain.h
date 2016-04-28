@@ -35,6 +35,7 @@ bool IsWall(Terrain* t, Point2D pos);
 bool CercleIsInWall(Terrain* t, Cercle* c);
 void FreeTerrain(Terrain* t);
 char getCaraTerrain(Terrain *t, Point2D pos);
+void ResetTerrain(Terrain* t);
 
 
 #endif

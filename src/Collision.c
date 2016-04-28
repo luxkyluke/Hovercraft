@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <SDL/SDL.h>
 
-
+#define BONUS_RESET 15000
 
 bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
     if (CollisionCercleCercle(vehicule1->cercle, vehicule2->cercle) ||
@@ -46,6 +46,10 @@ bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain){
 }
 
 bool TouchedVehiculeCheckpooint(Vehicule* v, Checkpoint* checkpt){
+	//if(v->player == player1)
+//		printf("posCheckPt x %3.f, y %3.f / posVeh x %3.f, y %3.f\n",
+//				checkpt->cercle->centre.x, checkpt->cercle->centre.y,
+//				v->cercle->centre.x, v->cercle->centre.y);
 	return(!checkpt->checked && IsCheckpoint(checkpt, v->cercle));
 }
 

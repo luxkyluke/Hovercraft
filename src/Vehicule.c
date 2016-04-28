@@ -13,7 +13,8 @@
 #include <stdlib.h>
 #include <SDL/SDL.h>
 
-#define BONUS_DURATION 4000
+#define BONUS_DURATION 5000
+
 
 //Dessin de l'hovercraft
 void DessinVehicule(Vehicule* v) {
@@ -53,18 +54,17 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, Player p, Vehicule 
 		printf("Impossible de créer le véhicule, pointeur non alloué\n");
 		return;
 	}
-	ResetVehicule(h, pos, p);
-	Point2D defaultPosC = AddPoints(pos, PointXY(0.5 * hauteur, 0.5 * hauteur));
 	h->largeur = largeur;
 	h->hauteur = hauteur;
-	h->cercle = (Cercle*) malloc(sizeof(Cercle));
-	MakeCercle(h->cercle, defaultPosC, 0.5 * largeur);
-	h->facticeCercle = (Cercle*) malloc(sizeof(Cercle));
-	MakeCercle(h->facticeCercle, h->position, 0.5 * largeur);
-	h->player = p;
-	h->tourne = 0;
-	h->bonus = none;
-	h->timerBonus = 0;
+	ResetVehicule(h, pos, p);
+//	Point2D defaultPosC = AddPoints(pos, PointXY(0.5 * hauteur, 0.5 * hauteur));
+//	h->cercle = (Cercle*) malloc(sizeof(Cercle));
+//	MakeCercle(h->cercle, defaultPosC, 0.5 * largeur);
+//	h->facticeCercle = (Cercle*) malloc(sizeof(Cercle));
+//	MakeCercle(h->facticeCercle, h->position, 0.5 * largeur);
+
+//	h->bonus = none;
+//	h->timerBonus = 0;
 }
 
 // PARTIE PHYSIQUE
@@ -127,9 +127,18 @@ void ResetVehicule(Vehicule* h, Point2D pos, Player p) {
 	}
 	Vector2D defaultAcc = VectorXY(0, 0);
 	Vector2D defaultVit = VectorXY(0, 0);
+	Point2D defaultPosC = AddPoints(pos, PointXY(0.5 * h->hauteur, 0.5 * h->hauteur));
+	h->cercle = (Cercle*) malloc(sizeof(Cercle));
+	MakeCercle(h->cercle, defaultPosC, 0.5 * h->largeur);
+	h->facticeCercle = (Cercle*) malloc(sizeof(Cercle));
+	MakeCercle(h->facticeCercle, h->position, 0.5 * h->largeur);
 	h->direction = defaultDir;
 	h->acceleration = defaultAcc;
 	h->vitesse = defaultVit;
+	h->bonus = none;
+	h->player = p;
+	h->tourne = 0;
+	h->timerBonus = 0;
 }
 
 /*
@@ -166,12 +175,26 @@ void FreezeVehicule(Vehicule* v) {
 	v->tourne = 0;
 }
 
+
 void CheckBoost(Vehicule* v) {
 	if (v->bonus == boost) {
-		if (SDL_GetTicks() - v->timerBonus > 4000) {
+		if (!IsInBonus(v)) {
 			printf("Dépassé de 4s.\n");
 			v->bonus = none;
 			v->timerBonus = SDL_GetTicks();
+		}
+	}
+}
+
+
+void CheckFreeze(Vehicule* v){
+	if (v->bonus == freeze) {
+		if (!IsInBonus(v)) {
+			printf("D�pass� de 4s.\n");
+			v->bonus = none;
+			v->timerBonus = SDL_GetTicks();
+		} else {
+			FreezeVehicule(v);
 		}
 	}
 }

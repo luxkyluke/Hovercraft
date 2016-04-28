@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "../include/Menu.h"
+#include "Menu.h"
 
 #define WINDOW_WIDTH 1300
 #define WINDOW_HEIGHT 650
