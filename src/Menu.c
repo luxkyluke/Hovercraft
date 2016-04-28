@@ -1,17 +1,17 @@
 #include "../include/Menu.h"
 #define DURATION_TIME 180000
 
-#define PATH_TEXTURE_DEBUT "./images/menu_deb.png"
-#define PATH_TEXTURE_FIN "./images/menu_fin.png"
-#define PATH_TEXTURE_PAUSE "./images/menu_pause.png"
-#define PATH_TEXTURE_DEBUT_BTN_1 "./images/menu_deb_button1.png"
+#define PATH_TEXTURE_DEBUT "./images/menu_deb.jpg"
+#define PATH_TEXTURE_FIN "./images/menu_fin.jpg"
+#define PATH_TEXTURE_PAUSE "./images/menu_pause.jpg"
+#define PATH_TEXTURE_DEBUT_BTN_1 "./images/menu_deb_button1.jpg"
 // #define PATH_TEXTURE_DEBUT_TER_1 "./images/menu_deb_terrain1.png"
 // #define PATH_TEXTURE_DEBUT_TER_2 "./images/menu_deb_terrain2.png"
-#define PATH_TEXTURE_FIN_BTN_1 "./images/menu_fin_button1.png"
-#define PATH_TEXTURE_PAUSE_BTN_1 "./images/menu_pause_button1.png"
-#define PATH_TEXTURE_DEBUT_BTN_2 "./images/menu_deb_button2.png"
-#define PATH_TEXTURE_FIN_BTN_2 "./images/menu_fin_button2.png"
-#define PATH_TEXTURE_PAUSE_BTN_2 "./images/menu_pause_button2.png"
+#define PATH_TEXTURE_FIN_BTN_1 "./images/menu_fin_button1.jpg"
+#define PATH_TEXTURE_PAUSE_BTN_1 "./images/menu_pause_button1.jpg"
+#define PATH_TEXTURE_DEBUT_BTN_2 "./images/menu_deb_button2.jpg"
+#define PATH_TEXTURE_FIN_BTN_2 "./images/menu_fin_button2.jpg"
+#define PATH_TEXTURE_PAUSE_BTN_2 "./images/menu_pause_button2.jpg"
 #define POS_BTN1_TOP 71
 #define POS_BTN1_BOTTOM 96
 #define POS_BTN2_TOP 148
