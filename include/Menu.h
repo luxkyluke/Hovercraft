@@ -30,6 +30,8 @@ typedef	struct {
 	GLuint texture;
 	GLuint texture_btn1;
 	GLuint texture_btn2;
+    // GLuint texture_ter1;
+    // GLuint texture_ter2;
 }Menu;
 
 bool MakeMenu(int width, int height, Menu* menu, TypeMenu type);

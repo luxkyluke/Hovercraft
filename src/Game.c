@@ -4,7 +4,7 @@
 #include "../include/Menu.h"
 
 #define NB_MAX_LEVEL 30
-#define NB_LEVEL 1
+#define NB_LEVEL 2
 
 
 bool MakeGame(Game* game, int duration){
@@ -16,7 +16,7 @@ bool MakeGame(Game* game, int duration){
 
 
 	game->levels = (Level **) malloc(NB_MAX_LEVEL*sizeof(Level*));
-	game->nbLevels = 0;
+	game->nbLevels = 0 ;
 	game->duration = duration;
 
 	int i;
@@ -31,6 +31,7 @@ bool MakeGame(Game* game, int duration){
 }
 
 bool AddLevel(Game* game, char* nameFichTerrain){
+
 	if(!game || !nameFichTerrain)
         return false;
 	if(game->nbLevels == NB_MAX_LEVEL){
@@ -40,7 +41,7 @@ bool AddLevel(Game* game, char* nameFichTerrain){
     int id = game->nbLevels;
 	game->levels[id] = (Level *) malloc(sizeof(Level));
 
-	if(!MakeLevel(game->levels[id], nameFichTerrain, game->duration)){
+	if(!MakeLevel(game->levels[id], nameFichTerrain, game->duration, game->nbLevels)){
 		printf("Probleme makeLevel dans AddLevel\n");
         return false ;
 	}

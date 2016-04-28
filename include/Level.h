@@ -39,7 +39,7 @@ typedef struct {
 	int duration;
 } Level;
 
-bool MakeLevel(Level *l, char* nameFichTerrain, int duration);
+bool MakeLevel(Level* l, char* nameFichTerrain, int duration, int numLevel);
 
 //verifie si il y a eu une colision entre les éléments
 //Ajouter des scores si but etc...
