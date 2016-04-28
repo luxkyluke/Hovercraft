@@ -12,11 +12,13 @@ void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt, Bonus b){
 	checkpt->checked = false;
 	checkpt->interceptedTime = 1;
 	checkpt->type = b;
+	//checkpt->timerReset =0;
 }
 
 bool IsCheckpoint(Checkpoint* checkpt, Cercle* c) {
 	if(CollisionCercleCercle(checkpt->cercle, c)){
 		checkpt->checked = true;
+		checkpt->timerReset = SDL_GetTicks();
 		return true;
 	}
 	return false;
@@ -43,9 +45,15 @@ bool IsTimeToReset(Checkpoint* c){
 }
 
 void CheckResetCheckpoint(Checkpoint* c){
+
+	if(c->checked && IsTimeToReset(c)){
+		c->checked=false;
+		c->timerReset = SDL_GetTicks();
+	}
 }
 
 void DessinCheckpoint(Checkpoint* checkpt){
+	CheckResetCheckpoint(checkpt);
 	if(!checkpt->checked){
 		glPushMatrix();
 			glTranslatef(checkpt->cercle->centre.x, checkpt->cercle->centre.y, 0);
@@ -62,4 +70,5 @@ void DessinCheckpoint(Checkpoint* checkpt){
 
 void ResetCheckpoint(Checkpoint* checkpt){
 	checkpt->checked = false;
+	checkpt->timerReset = 0;
 }
