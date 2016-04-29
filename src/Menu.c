@@ -231,6 +231,7 @@ bool LoopMenu(Menu* menu){
 							ret = true;
 							loop = 0;
 						case pause :
+							loop = 0;
 							//ContinueGame(menu->game);
 							break;
 					}
@@ -290,6 +291,9 @@ void CallMenuDemarrage(Menu* menu) {
 
 }
 
+bool CallMenuPause(Menu* menu) {
+	return LoopMenu(menu);
+}
 
 bool CallMenuFin(Menu* menu) {
 	return LoopMenu(menu);

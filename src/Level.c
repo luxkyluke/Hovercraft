@@ -1,5 +1,5 @@
 #include "Level.h"
-
+#include "../include/Menu.h"
 #define DEFAULT_VP1_POS_X 90.
 #define DEFAULT_VP1_POS_Y 0.
 #define DEFAULT_VP2_POS_Y 0.
@@ -279,10 +279,15 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 	SDL_WM_SetCaption(windowname, NULL);
 	ResetLevel(level);
 
+	Menu* menuPause = (Menu *)malloc(sizeof(Menu));
+	if (!MakeMenu(1300, 650, menuPause, pause))
+		return EXIT_FAILURE;
+
 	// Boucle d'affichage
 	int loop = 1;
 	Uint32 timeStartLevel = SDL_GetTicks();
 	Uint32 duration = SDL_GetTicks() - timeStartLevel;
+	Uint32 timerStartPause = SDL_GetTicks();
 	while (loop &&  duration < level->duration) {
 		// RÃ©cupÃ©ration du temps au dÃ©but de la boucle
 		Uint32 startTime = SDL_GetTicks();
@@ -361,6 +366,11 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 					VP2->tourne = 1;
 				if (e.key.keysym.sym == SDLK_q)
 					VP2->tourne = -1;
+				if (e.key.keysym.sym == SDLK_p) {
+					timerStartPause = SDL_GetTicks();
+					CallMenuPause(menuPause);
+					timeStartLevel += SDL_GetTicks() - timerStartPause;
+				}
 				break;
 
 			case SDL_KEYUP:

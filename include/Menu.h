@@ -37,6 +37,7 @@ typedef	struct {
 bool MakeMenu(int width, int height, Menu* menu, TypeMenu type);
 void DessinMenu(Menu* menu, GLuint text);
 void CallMenuDemarrage(Menu* menu);
+void CallMenuPause(Menu* menu);
 bool CallMenuFin(Menu* menu);
 void FreeMenu(Menu* m);
 bool InitGameMenu(Menu* m, int duration);

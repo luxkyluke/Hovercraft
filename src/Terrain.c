@@ -166,7 +166,7 @@ void FreeTerrain(Terrain* t){
 void DessinTerrain(Terrain* t) {
     glPushMatrix();
         glEnable(GL_TEXTURE_2D);
-        glColor3f(255, 255, 255);
+        glColor3f(1, 1, 1);
         glBindTexture(GL_TEXTURE_2D, t->texture);
 
         glScalef(2, 2, 1.f);
