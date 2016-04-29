@@ -2,7 +2,7 @@
 
 
 float getXTerrain(float x){
-    return x + 100;
+    return x + 100.;
 }
 
 float getYTerrain(float y){

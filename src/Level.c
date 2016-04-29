@@ -32,6 +32,7 @@ bool MakeLevel(Level* l, char* nameFichTerrain, int duration, int numLevel) {
 	Ballon *ballon = (Ballon *) malloc(sizeof(Ballon));
 	Vehicule* vp1 = (Vehicule *) malloc(sizeof(Vehicule));
 	Vehicule *vp2 = (Vehicule *) malloc(sizeof(Vehicule));
+	Point2D posVp1, posVp2;
 	GLuint imageBallon = loadImage(DEFAULT_BALL_TEXTURE_PATH);
 	GLuint textureIdTerrain = loadImage(DEFAULT_TERRAIN_TEXTURE_PATH);
 
@@ -51,12 +52,13 @@ bool MakeLevel(Level* l, char* nameFichTerrain, int duration, int numLevel) {
 		return false;
 	}
 
-	MakeTerrain(textureIdTerrain, fileTerrain, t);
-	MakeVehicule(PointXY(DEFAULT_VP1_POS_X, DEFAULT_VP1_POS_Y),
-				DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player1, vp1);
-
-	MakeVehicule(PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y),
-				DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player2, vp2);
+	MakeTerrain(textureIdTerrain, fileTerrain, t, &posVp1, &posVp2);
+	MakeVehicule(posVp1, DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player1, vp1);
+//	MakeVehicule(PointXY(DEFAULT_VP1_POS_X, DEFAULT_VP1_POS_Y),
+//					DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player1, vp1);
+//	MakeVehicule(PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y),
+//					DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player2, vp2);
+	MakeVehicule(posVp2, DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player2, vp2);
 
 	MakeBallon(imageBallon, PointXY(DEFAULT_BALL_POS_X, DEFAULT_BALL_POS_Y),
 				ballon, DEFAULT_BALL_RADIUS);
@@ -67,11 +69,12 @@ bool MakeLevel(Level* l, char* nameFichTerrain, int duration, int numLevel) {
 	l->vp2 = vp2;
 	l->camera = cam;
 	l->terrain = t;
-	l->scoreP1 = 0;
-	l->scoreP2 = 0;
+
 	l->duration = duration;
 	return true;
 }
+
+
 
 bool CheckTouched(Level* l) {
 	CollisionVehiculeVehicule(l->vp1, l->vp2);
@@ -217,19 +220,21 @@ void UpdateLevel(Level* l) {
 // Reset Vehicule position and ball
 void ResetLevel(Level* l) {
 	// Reset first vehicule.
-	ResetVehicule(l->vp1, PointXY(DEFAULT_VP1_POS_X, DEFAULT_VP1_POS_Y),
-			player1);
+	ResetVehicule(l->vp1);
 	// Reset second vehicule.
-	ResetVehicule(l->vp2, PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y),
-			player2);
+	ResetVehicule(l->vp2);
 
 	ResetTerrain(l->terrain);
-	l->scoreP1 = 0;
-	l->scoreP2 = 0;
 	// Reset ball.
 	ResetBallon(l->ballon);
 	// Reset Camera
 	ResetCamera(l->camera);
+}
+
+void FullResetLevel(Level* l){
+	l->scoreP1 = 0;
+	l->scoreP2 = 0;
+	ResetLevel(l);
 }
 
 void RalentiLevel(Level* level) {
@@ -277,7 +282,7 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 
 
 	SDL_WM_SetCaption(windowname, NULL);
-	ResetLevel(level);
+	FullResetLevel(level);
 
 	Menu* menuPause = (Menu *)malloc(sizeof(Menu));
 	if (!MakeMenu(1300, 650, menuPause, pause))
@@ -321,6 +326,9 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 
 ///////////////////////////
 
+		if (!camera_is_in_work)
+					CheckTouched(level);
+
 		UpdateLevel(level);
 
 		DessinLevel(level, duration);
@@ -329,8 +337,7 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 		glPopMatrix();
 
 
-		if (!camera_is_in_work)
-			CheckTouched(level);
+
 
 		// Echange du front et du back buffer : mise Ã  jour de la fenÃªtre
 		SDL_GL_SwapBuffers();
