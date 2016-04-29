@@ -11,6 +11,7 @@
 #include "Vehicule.h"
 #include "Geometry.h"
 #include <stdlib.h>
+#include "sdl_tools.h"
 #include <SDL/SDL.h>
 
 #define BONUS_DURATION 5000
@@ -19,9 +20,11 @@
 //Dessin de l'hovercraft
 void DessinVehicule(Vehicule* v) {
 	glPushMatrix();
+
 		glTranslatef(v->position.x, v->position.y, 0);
 		glRotatef(v->angle, 0., 0., 1.);
 		glScalef(v->largeur, v->hauteur, 0.);
+
 		if (v->bonus == boost)
 			dessinCarre(1, 1., 0.2, 0.2);
 		else if (v->bonus == freeze)
@@ -38,6 +41,12 @@ void DessinVehicule(Vehicule* v) {
 				dessinCercle(100, 1, 1, 0.2, 1);
 
 		glPopMatrix();
+
+		glBegin(GL_POINTS);
+		glPointSize(50);
+		glColor3f(1, 0, 0);
+		glVertex2d(-0.5, -0.5);
+		glEnd();
 	glPopMatrix();
 
 	glPushMatrix();

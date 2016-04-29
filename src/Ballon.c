@@ -4,7 +4,7 @@
 
 void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon, float ballRadius){
 	if(!ballon) {
-		printf("Impossible de créer le ballon, pointeur non alloué\n"); 
+		printf("Impossible de créer le ballon, pointeur non alloué\n");
 		return;
 	}
     ballon->texture = texture;
