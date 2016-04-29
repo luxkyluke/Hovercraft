@@ -26,10 +26,10 @@ int IsZero(float x) {
     return x > -EPSILON && x < EPSILON;
 }
 
-void dessinCarre(int fill, float r, float v, float b){
+void dessinCarre(int fill, Color3f color){
   if (fill == 1){
     glBegin(GL_QUADS);
-      glColor3f(r,v,b);
+      glColor3f(color.r,color.g, color.b);
       glVertex2f(-0.5,0.5); //point de depart
       glVertex2f(0.5,0.5); //point d’arrive
       glVertex2f(0.5,-0.5);
@@ -38,7 +38,7 @@ void dessinCarre(int fill, float r, float v, float b){
   }
   else{
     glBegin(GL_LINE_LOOP);
-      glColor3f(r,v,b);
+      glColor3f(color.r,color.g, color.b);
       glVertex2f(-0.5,0.5); //point de depart
       glVertex2f(0.5,0.5); //point d’arrive
       glVertex2f(0.5,-0.5);
@@ -47,13 +47,13 @@ void dessinCarre(int fill, float r, float v, float b){
   }
 }
 
-void dessinCercle(int n, float r, float v, float b, int fill){
+void dessinCercle(int n, Color3f color, int fill){
   int i;
   double Pi = 3.14;
   float mycos, mysin;
   if (fill == 0){
     glBegin(GL_LINE_LOOP);
-    glColor3f(r, v, b);
+    glColor3f(color.r,color.g, color.b);
     for (i=0; i<n; i++){
       mycos = cos(i*2*Pi/n)/2;
       mysin = sin(i*2*Pi/n)/2;
@@ -63,7 +63,7 @@ void dessinCercle(int n, float r, float v, float b, int fill){
   }
   else{
     glBegin(GL_POLYGON);
-    glColor3f(r, v, b);
+    glColor3f(color.r,color.g, color.b);
     for (i=0; i<n; i++){
       mycos = cos(i*2*Pi/n)/2;
       mysin = sin(i*2*Pi/n)/2;
