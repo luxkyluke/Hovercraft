@@ -233,6 +233,7 @@ bool LoopMenu(Menu* menu){
 							loop = 0;
 						case pause :
 							loop = 0;
+							ret = true;
 							//ContinueGame(menu->game);
 							break;
 					}

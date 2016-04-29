@@ -55,7 +55,7 @@ bool PlayGame(Game* game, int windowWidth, int windowHeight){
 
     int i;
     for(i=0 ;i<game->nbLevels; ++i){
-    	bool cross;
+    	bool cross = false;
     	bool thisIsTheEnd = PlayLevel(game->levels[i], windowWidth, windowHeight, i, &cross);
         if(cross){
         	return false;

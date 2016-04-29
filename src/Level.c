@@ -376,7 +376,10 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 					VP2->tourne = -1;
 				if (e.key.keysym.sym == SDLK_p) {
 					timerStartPause = SDL_GetTicks();
-					CallMenuPause(menuPause);
+					if(CallMenuPause(menuPause) == false) {
+						*cross = true;
+						loop=0;
+					}
 					timeStartLevel += SDL_GetTicks() - timerStartPause;
 				}
 				break;
