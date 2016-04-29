@@ -29,7 +29,7 @@ char *str_dup(char const *s){
     return pc;
 }
 
-void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
+void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t, Point2D* vp1_pos, Point2D* vp2_pos){
     if(!t) {
         printf("Impossible de creer le terrain, pointeur non alloué\n");
         return;
@@ -64,7 +64,13 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t){
             return;
         }
         for(j=0; j < NB_MAX_COLONNE; j++){
-            if(ligne[j] == 'F' || ligne[j]=='B'){
+        	if(ligne[j] == '1'){
+        		*vp1_pos = PointXY(getXSDL(j), getYSDL(i));
+        	}
+        	else if(ligne[j] == '2'){
+        		*vp2_pos = PointXY(getXSDL(j), getYSDL(i));
+        	}
+        	else if(ligne[j] == 'F' || ligne[j]=='B'){
                 if(t->nbCheckpts >= NB_MAX_CHECKPT){
                     printf("Trop de checkpoints ! 30 Max\n");
                     return;
@@ -119,7 +125,7 @@ bool IsWall(Terrain* t, Point2D pos){
         return false;
     int x = (int) getXTerrain(pos.x);
     int y = (int) getYTerrain(pos.y);
-    //printf("x:%d, y: %d\n",x, y);
+    //printf("x:%df, y: %d\n",x, y);
     if(x>200 || x<0 || y>100 || y<0){
         printf("Erreur de calcul x terrain et y terrain\n");
         return false;

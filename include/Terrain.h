@@ -29,7 +29,7 @@ typedef struct {
 	But* butP2;
 }Terrain;
 
-void MakeTerrain(GLuint text, FILE* fichTerrain, Terrain* t);
+void MakeTerrain(GLuint text, FILE* fichTerrain, Terrain* t, Point2D* vp1_pos, Point2D* vp2_pos);
 void DessinTerrain(Terrain* t);
 bool IsWall(Terrain* t, Point2D pos);
 bool CercleIsInWall(Terrain* t, Cercle* c);

@@ -4,7 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define RESET_DELAY 4000
+#define RESET_DELAY 15000
 
 void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt, Bonus b){
 	checkpt->cercle = (Cercle *) malloc(sizeof(Cercle));

@@ -26,6 +26,7 @@ typedef struct {
     Cercle* facticeCercle;
 	float angle;
 	Point2D position;
+	Point2D defaultPosition;
 	Vector2D direction;
 	Vector2D vitesse;
 	Vector2D acceleration;
@@ -45,7 +46,7 @@ void UpdateRotation(Vehicule* h);
 void UpdateVehicule(Vehicule* h);
 void FreeVehicule(Vehicule *h);
 void UpdateCercle(Vehicule *v);
-void ResetVehicule(Vehicule* v, Point2D pos, Player p);
+void ResetVehicule(Vehicule* v);
 void BoostVehicule(Vehicule* v);
 void FreezeVehicule(Vehicule* v);
 void CheckBoost(Vehicule* v);
