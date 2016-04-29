@@ -124,7 +124,21 @@ void DessinMenu(Menu* menu, GLuint texture) {
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_TEXTURE_2D);
 	glPopMatrix();
+}
 
+void AfficheScore(int score1, int score2) {
+	char scoreP1[2];
+	sprintf(scoreP1, "%d", score1);
+	char scoreP2[2];
+	sprintf(scoreP2, "%d", score2);
+	glPushMatrix();
+	glTranslatef(-10, 0, 0);
+	glColor3d(1, 1, 1);
+	vBitmapOutput(-2, 45, scoreP1, GLUT_BITMAP_HELVETICA_18);
+	glTranslatef(10, 0, 0);
+	glColor3d(1, 1, 1);
+	vBitmapOutput(-2, 45, scoreP2, GLUT_BITMAP_HELVETICA_18);
+	glPopMatrix();
 }
 
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
