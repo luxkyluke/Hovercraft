@@ -22,7 +22,7 @@
 
 
 typedef	struct {
-	Game* game;
+    Game* game;
 	int largeur;
 	int hauteur;
 	TypeMenu type;
@@ -34,12 +34,13 @@ typedef	struct {
 }Menu;
 
 bool MakeMenu(int width, int height, Menu* menu, TypeMenu type);
-void DessinMenu(Menu* menu, GLuint text);
+void DessinMenu(Menu* menu, GLuint text,int scoreP1, int scoreP2);
 void CallMenuDemarrage(Menu* menu);
 bool CallMenuPause(Menu* menu);
-bool CallMenuFin(Menu* menu);
+bool CallMenuFin(Menu* menu, int scoreP1, int scoreP2);
 void FreeMenu(Menu* m);
 bool InitGameMenu(Menu* m, int duration);
+void AfficheScoreMenu(int score1, int score2);
 
 
 #endif

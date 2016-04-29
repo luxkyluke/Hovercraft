@@ -52,8 +52,7 @@ bool MakeMenu(int width, int height, Menu* menu, TypeMenu type) {
 	case debut:
 		/* Initialisation de la SDL */
 		if (-1 == SDL_Init(SDL_INIT_VIDEO)) {
-			fprintf(stderr,
-					"Impossible d'initialiser la SDL. Fin du programme.\n");
+			fprintf(stderr,"Impossible d'initialiser la SDL. Fin du programme.\n");
 			return false;
 		}
 		/* Ouverture d'une fenêtre et création d'un contexte OpenGL */
@@ -104,7 +103,27 @@ bool InitGameMenu(Menu* m, int duration) {
 	return true;
 }
 
-void DessinMenu(Menu* menu, GLuint texture) {
+void AfficheScoreMenu(int score1, int score2) {
+	char scoreP1[2];
+	sprintf(scoreP1, "%d", score1);
+	char scoreP2[2];
+	sprintf(scoreP2, "%d", score2);
+	glPushMatrix();
+	glScalef(1.,1.,0.);
+		glTranslatef(-10, -52, 0);
+		glColor3f(0.98, 0.33, 0.13);
+		vBitmapOutput(-2, 45, scoreP1, GLUT_BITMAP_TIMES_ROMAN_24);
+		glColor3f(1, 1, 1);
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(7,-52, 0);
+		glColor3f(0.24, 0.51, 0.41);
+		vBitmapOutput(-2, 45, scoreP2, GLUT_BITMAP_TIMES_ROMAN_24);
+		glColor3f(1, 1, 1);
+	glPopMatrix();
+}
+
+void DessinMenu(Menu* menu, GLuint texture, int scoreP1, int scoreP2) {
 	glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
 	//glColor3f(255, 255, 255);
@@ -123,21 +142,10 @@ void DessinMenu(Menu* menu, GLuint texture) {
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDisable(GL_TEXTURE_2D);
-	glPopMatrix();
-}
 
-void AfficheScore(int score1, int score2) {
-	char scoreP1[2];
-	sprintf(scoreP1, "%d", score1);
-	char scoreP2[2];
-	sprintf(scoreP2, "%d", score2);
-	glPushMatrix();
-	glTranslatef(-10, 0, 0);
-	glColor3d(1, 1, 1);
-	vBitmapOutput(-2, 45, scoreP1, GLUT_BITMAP_HELVETICA_18);
-	glTranslatef(10, 0, 0);
-	glColor3d(1, 1, 1);
-	vBitmapOutput(-2, 45, scoreP2, GLUT_BITMAP_HELVETICA_18);
+	if(menu->type == fin)
+		AfficheScoreMenu(scoreP1, scoreP2);
+
 	glPopMatrix();
 }
 
@@ -163,7 +171,7 @@ bool IsOnButton1(int x, int y) {
 // 			&& y <= 409);
 // }
 
-bool LoopMenu(Menu* menu){
+bool LoopMenu(Menu* menu, int scoreP1, int scoreP2) {
 
 	GLuint texture = menu->texture;
 
@@ -176,7 +184,7 @@ bool LoopMenu(Menu* menu){
 		/* Récupération du temps au début de la boucle */
 		Uint32 startTime = SDL_GetTicks();
 
-		DessinMenu(menu, texture);
+		DessinMenu(menu, texture, scoreP1, scoreP2);
 
 		/* glBegin(GL_QUADS);
 		 glColor3f(0.,1.,0.);
@@ -298,7 +306,7 @@ void CallMenuDemarrage(Menu* menu) {
 	Mix_VolumeMusic(0);
 
 
-	LoopMenu(menu);
+	LoopMenu(menu,0,0);
 
 	Mix_FreeMusic(musique);
 	Mix_CloseAudio();
@@ -308,11 +316,11 @@ void CallMenuDemarrage(Menu* menu) {
 }
 
 bool CallMenuPause(Menu* menu) {
-	return LoopMenu(menu);
+	return LoopMenu(menu,0,0);
 }
 
-bool CallMenuFin(Menu* menu) {
-	return LoopMenu(menu);
+bool CallMenuFin(Menu* menu, int scoreP1, int scoreP2) {
+	return LoopMenu(menu,scoreP1,scoreP2);
 }
 
 void FreeMenu(Menu* m) {

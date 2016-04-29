@@ -63,7 +63,7 @@ bool PlayGame(Game* game, int windowWidth, int windowHeight){
     	if(thisIsTheEnd){
 			Menu menuFin;
 			MakeMenu(windowWidth, windowHeight, &menuFin, fin);
-			if(!CallMenuFin(&menuFin))
+			if(!CallMenuFin(&menuFin, game->levels[i]->scoreP1, game->levels[i]->scoreP2))
 				return false;
         }
     }
