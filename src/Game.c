@@ -68,7 +68,6 @@ bool PlayGame(Game* game, int windowWidth, int windowHeight){
         }
     }
     return true;
-
 }
 
 void FreeGame(Game* g){
