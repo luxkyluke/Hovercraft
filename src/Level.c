@@ -14,6 +14,8 @@
 #define DEFAULT_BALL_TEXTURE_PATH "images/ballon.png"
 #define NB_TEXTURE 3
 
+const int JOYSTICK_DEAD_ZONE = 8000;
+
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
@@ -169,7 +171,6 @@ void DessinMinimap(Ballon* ballon, Vehicule* vp1, Vehicule* vp2) {
 }
 
 void DessinLevel(Level* l, Uint32 duration) {
-
 	DessinTerrain(l->terrain);
 	DessinVehicule(l->vp1);
 	DessinVehicule(l->vp2);
@@ -261,8 +262,7 @@ void CheckBonus(Level* level) {
 	CheckFreeze(level->vp2);
 }
 
-bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id,
-		bool* cross) {
+bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cross, SDL_Joystick* joystick) {
 
 	if (!level)
 		return false;
@@ -294,6 +294,7 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id,
 		// Placer ici le code de dessin
 		glClearColor(0, 0, 0, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
+
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
@@ -343,6 +344,56 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id,
 				loop = 0;
 				*cross = true;
 				break;
+
+			case SDL_JOYAXISMOTION:
+        		if(e.jaxis.axis == 0) {
+        			//X axis motion
+        			if( e.jaxis.value < -JOYSTICK_DEAD_ZONE ) {
+        			    VP2->tourne = -1;
+        			}
+        			else if( e.jaxis.value > JOYSTICK_DEAD_ZONE ) {
+        			    VP2->tourne =  1;
+        			}
+        			else {
+        			    VP2->tourne = 0;
+        			}
+        		}
+
+        		//Y axis motion
+        		else if( e.jaxis.axis == 1 ) {
+        		    if( e.jaxis.value < -JOYSTICK_DEAD_ZONE ) {
+        		        VP2->avance = 1;
+        		    }
+        		    else {
+        		        VP2->avance = 0;
+        		    }
+        		}
+
+        		if(e.jaxis.axis == 2) {
+        			//X axis motion
+        			if( e.jaxis.value < -JOYSTICK_DEAD_ZONE ) {
+        			    VP1->tourne = -1;
+        			}
+        			else if( e.jaxis.value > JOYSTICK_DEAD_ZONE ) {
+        			    VP1->tourne =  1;
+        			}
+        			else {
+        			    VP1->tourne = 0;
+        			}
+        		}
+
+        		//Y axis motion
+        		else if( e.jaxis.axis == 3) {
+        		    if( e.jaxis.value < -JOYSTICK_DEAD_ZONE ) {
+        		        VP1->avance = 1;
+        		    }
+        		    else {
+        		        VP1->avance = 0;
+        		    }
+        		}
+
+
+        		break;
 
 			// Touche clavier
 			case SDL_KEYDOWN:
@@ -410,6 +461,17 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id,
 					break;
 				}
 				break;
+
+			case SDL_JOYBUTTONDOWN:
+				if(e.jbutton.button == 1 || e.jbutton.button == 2) {
+					timerStartPause = SDL_GetTicks();
+					if (CallMenuPause(menuPause) == false) {
+						*cross = true;
+						loop = 0;
+					}
+					timeStartLevel += SDL_GetTicks() - timerStartPause;
+					break;
+				}
 
 			// resize window
 			case SDL_VIDEORESIZE:

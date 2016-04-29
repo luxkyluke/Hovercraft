@@ -13,11 +13,33 @@ bool MakeGame(Game* game, int duration){
 		return false;
 	}
 
-
-
 	game->levels = (Level **) malloc(NB_MAX_LEVEL*sizeof(Level*));
 	game->nbLevels = 0 ;
 	game->duration = duration;
+
+    SDL_Joystick *joystick; // on crée le joystick
+    joystick = SDL_JoystickOpen(0); // on l'assigne au numéro 0
+    if (joystick != NULL) {
+        game->joystick = joystick;
+        SDL_JoystickEventState(SDL_ENABLE);
+        FILE* fichier = NULL;
+        fichier = fopen("Joystick.txt","w+"); // on crée un fichier Joystick.txt
+
+        if(fichier != NULL){
+            fprintf(fichier,"Il y a %d joysticks.",SDL_NumJoysticks()); // on écrit combien il y a de joysticks
+            for(int i=0;i<SDL_NumJoysticks();i++)
+            fprintf(fichier,"Nom du joystick numero %d : %s",i,SDL_JoystickName(i)); // on écrit les noms des joysticks
+            fprintf(fichier,"Nombre de boutons : %d",SDL_JoystickNumButtons(joystick)); // nombre de boutons
+            fprintf(fichier,"Nombre de chapeaux : %d",SDL_JoystickNumHats(joystick)); // nombre de chapeaux
+            fprintf(fichier,"Nombre de trackballs : %d",SDL_JoystickNumBalls(joystick)); // nombre de trackballs
+            fclose(fichier); // on referme le fichier
+        }
+
+    } else  {
+        game->joystick = NULL;
+        SDL_JoystickEventState(SDL_DISABLE);
+    }
+
 
 	int i;
 	for (i=1; i<NB_LEVEL+1; i++){
@@ -56,7 +78,7 @@ bool PlayGame(Game* game, int windowWidth, int windowHeight){
     int i;
     for(i=0 ;i<game->nbLevels; ++i){
     	bool cross = false;
-    	bool thisIsTheEnd = PlayLevel(game->levels[i], windowWidth, windowHeight, i, &cross);
+    	bool thisIsTheEnd = PlayLevel(game->levels[i], windowWidth, windowHeight, i, &cross, game->joystick);
         if(cross){
         	return false;
         }
@@ -77,7 +99,12 @@ void FreeGame(Game* g){
 		free(g->levels[i]);
 		g->levels[i] = NULL;
 	}
-	free(g->levels);
+
+    SDL_JoystickEventState(SDL_DISABLE);
+    if(g->joystick!=NULL)
+        // SDL_JoystickClose(g->joystick);
+    // probleme, normalement il faut le fermer le kono SDL_JoystickClose(g->joystick);
+    // free(g->joystick);
 	g->levels = NULL;
 	printf("FreeGame OK\n");
 }

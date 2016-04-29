@@ -51,7 +51,7 @@ bool MakeMenu(int width, int height, Menu* menu, TypeMenu type) {
 	switch (type) {
 	case debut:
 		/* Initialisation de la SDL */
-		if (-1 == SDL_Init(SDL_INIT_VIDEO)) {
+		if (-1 == SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK)) {
 			fprintf(stderr,"Impossible d'initialiser la SDL. Fin du programme.\n");
 			return false;
 		}
@@ -119,7 +119,6 @@ void AfficheScoreMenu(int score1, int score2) {
 		glTranslatef(7,-52, 0);
 		glColor3f(0.24, 0.51, 0.41);
 		vBitmapOutput(-2, 45, scoreP2, GLUT_BITMAP_TIMES_ROMAN_24);
-		glColor3f(1, 1, 1);
 	glPopMatrix();
 }
 
@@ -210,6 +209,28 @@ bool LoopMenu(Menu* menu, int scoreP1, int scoreP2) {
 
 			switch (e.type) {
 
+			case SDL_JOYBUTTONDOWN:
+					if(e.jbutton.button == 1) {
+						switch (menu->type){
+							case debut :
+								if(!PlayGame(menu->game, menu->largeur, menu->hauteur))
+									loop = 0;
+								break;
+							case fin :
+								ret = true;
+								loop = 0;
+							case pause :
+								loop = 0;
+								ret = true;
+								//ContinueGame(menu->game);
+								break;
+						}
+					} else if (e.jbutton.button == 2) {
+						ret = false;
+						loop = 0;
+					}
+			        break;
+
 			case SDL_MOUSEMOTION:
 				souris_x = e.button.x;
 				souris_y = e.button.y;
@@ -234,8 +255,9 @@ bool LoopMenu(Menu* menu, int scoreP1, int scoreP2) {
 				/* Touche clavier */
 			case SDL_KEYDOWN:
 				//printf("touche pressée (code = %d)\n", e.key.keysym.sym);
-				if (e.key.keysym.sym == SDLK_ESCAPE)
+				if (e.key.keysym.sym == SDLK_ESCAPE){
 					loop = 0;
+				}
 				/*if (e.key.keysym.sym == SDLK_RETURN) {
 				 PlayGame(menu->game, menu->largeur, menu->hauteur);*/
 

@@ -19,6 +19,7 @@ typedef struct {
 	Level** levels;
 	int nbLevels;
 	int duration; //en seconde
+    SDL_Joystick* joystick;
 }Game;
 
 void setVideoMode(unsigned int windowWidth, unsigned int windowHeight);
