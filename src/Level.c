@@ -20,8 +20,6 @@ static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 //boolean pour préciser quand la camera est en action
 bool camera_is_in_work = false;
 
-
-
 bool MakeLevel(Level* l, char* nameFichTerrain, int duration, int numLevel) {
 	if (l == NULL) {
 		printf("Impossible de crÃ©er le level, pointeur non allouÃ©\n");
@@ -36,7 +34,7 @@ bool MakeLevel(Level* l, char* nameFichTerrain, int duration, int numLevel) {
 	GLuint imageBallon = loadImage(DEFAULT_BALL_TEXTURE_PATH);
 	GLuint textureIdTerrain = loadImage(DEFAULT_TERRAIN_TEXTURE_PATH);
 
-	if(numLevel==1) {
+	if (numLevel == 1) {
 		textureIdTerrain = loadImage(DEFAULT_TERRAIN_TEXTURE2_PATH);
 	}
 
@@ -61,7 +59,7 @@ bool MakeLevel(Level* l, char* nameFichTerrain, int duration, int numLevel) {
 	MakeVehicule(posVp2, DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player2, vp2);
 
 	MakeBallon(imageBallon, PointXY(DEFAULT_BALL_POS_X, DEFAULT_BALL_POS_Y),
-				ballon, DEFAULT_BALL_RADIUS);
+			ballon, DEFAULT_BALL_RADIUS);
 	MakeCamera(cam);
 
 	l->ballon = ballon;
@@ -73,8 +71,6 @@ bool MakeLevel(Level* l, char* nameFichTerrain, int duration, int numLevel) {
 	l->duration = duration;
 	return true;
 }
-
-
 
 bool CheckTouched(Level* l) {
 	CollisionVehiculeVehicule(l->vp1, l->vp2);
@@ -118,12 +114,12 @@ bool CheckTouched(Level* l) {
 			printf("score P2 : %d\n", l->scoreP2);
 		}
 
-	/*Mix_AllocateChannels(1); //Alloue 1 canal
-    Mix_Volume(1, MIX_MAX_VOLUME);
-	Mix_Chunk *goal; // Crée un pointeur pour stocker un .WAV
-    goal = Mix_LoadWAV("./musiques/GOAL.wav"); // Charge un .WAV dans un pointeur
- 	Mix_VolumeChunk(goal, MIX_MAX_VOLUME);
-	Mix_PlayChannel(1, goal, 0);*/
+		/*Mix_AllocateChannels(1); //Alloue 1 canal
+		 Mix_Volume(1, MIX_MAX_VOLUME);
+		 Mix_Chunk *goal; // Crée un pointeur pour stocker un .WAV
+		 goal = Mix_LoadWAV("./musiques/GOAL.wav"); // Charge un .WAV dans un pointeur
+		 Mix_VolumeChunk(goal, MIX_MAX_VOLUME);
+		 Mix_PlayChannel(1, goal, 0);*/
 		l->camera->start = 1;
 	}
 	//Mix_FreeChunk(goal);
@@ -145,30 +141,30 @@ void FreeLevel(Level * l) {
 
 void DessinMinimap(Ballon* ballon, Vehicule* vp1, Vehicule* vp2) {
 	glPushMatrix();
-		glTranslatef(0, -42, 0);
-		glScalef(0.15, 0.15, 1);
-		glPushMatrix();
-			glScalef(190, 100, 1);
-			dessinCarre(0, 1, 0, 0);
-		glPopMatrix();
+	glTranslatef(0, -42, 0);
+	glScalef(0.15, 0.15, 1);
+	glPushMatrix();
+	glScalef(190, 100, 1);
+	dessinCarre(0, 1, 0, 0);
+	glPopMatrix();
 
-		glPushMatrix();
-			glTranslatef(ballon->cercle->centre.x, ballon->cercle->centre.y, 0);
-			glScalef(10, 10, 1);
-			dessinCercle(50, 1, 1, 0, 1);
-		glPopMatrix();
+	glPushMatrix();
+	glTranslatef(ballon->cercle->centre.x, ballon->cercle->centre.y, 0);
+	glScalef(10, 10, 1);
+	dessinCercle(50, 1, 1, 0, 1);
+	glPopMatrix();
 
-		glPushMatrix();
-			glTranslatef(vp1->position.x, vp1->position.y, 0);
-			glScalef(10, 10, 1);
-			dessinCercle(50, 0, 1, 1, 1);
-		glPopMatrix();
+	glPushMatrix();
+	glTranslatef(vp1->position.x, vp1->position.y, 0);
+	glScalef(10, 10, 1);
+	dessinCercle(50, 0, 1, 1, 1);
+	glPopMatrix();
 
-		glPushMatrix();
-			glTranslatef(vp2->position.x, vp2->position.y, 0);
-			glScalef(10, 10, 1);
-			dessinCercle(50, 1, 0, 1, 1);
-			glPopMatrix();
+	glPushMatrix();
+	glTranslatef(vp2->position.x, vp2->position.y, 0);
+	glScalef(10, 10, 1);
+	dessinCercle(50, 1, 0, 1, 1);
+	glPopMatrix();
 	glPopMatrix();
 }
 
@@ -181,14 +177,12 @@ void DessinLevel(Level* l, Uint32 duration) {
 
 	DessinMinimap(l->ballon, l->vp1, l->vp2);
 
-
-
-	int min = (int) (l->duration - duration)/60000;
-	int nbSec = (int)(l->duration - duration)/1000;
-	int sec = (int) nbSec - (min*60) ;
+	int min = (int) (l->duration - duration) / 60000;
+	int nbSec = (int) (l->duration - duration) / 1000;
+	int sec = (int) nbSec - (min * 60);
 
 	char time[10];
-	sprintf(time, "%d : %d", min, sec+1);
+	sprintf(time, "%d : %d", min, sec + 1);
 
 	char scoreP1[2];
 	sprintf(scoreP1, "%d", l->scoreP1);
@@ -196,19 +190,18 @@ void DessinLevel(Level* l, Uint32 duration) {
 	sprintf(scoreP2, "%d", l->scoreP2);
 
 	glPushMatrix();
-		glTranslatef(-2,0,0);
-		glColor3d(1,1,1);
-		vBitmapOutput (-2, 45, time,  GLUT_BITMAP_HELVETICA_18);
-		glPushMatrix();
-			glTranslatef(7,-1,0);
-			vBitmapOutput (6, 45, scoreP1,  GLUT_BITMAP_HELVETICA_18);
-		glPopMatrix();
-		glPushMatrix();
-			glTranslatef(-5,-1,0);
-			vBitmapOutput (-6, 45, scoreP2,  GLUT_BITMAP_HELVETICA_18);
-		glPopMatrix();
+	glTranslatef(-2, 0, 0);
+	glColor3d(1, 1, 1);
+	vBitmapOutput(-2, 45, time, GLUT_BITMAP_HELVETICA_18);
+	glPushMatrix();
+	glTranslatef(7, -1, 0);
+	vBitmapOutput(6, 45, scoreP1, GLUT_BITMAP_HELVETICA_18);
 	glPopMatrix();
-
+	glPushMatrix();
+	glTranslatef(-5, -1, 0);
+	vBitmapOutput(-6, 45, scoreP2, GLUT_BITMAP_HELVETICA_18);
+	glPopMatrix();
+	glPopMatrix();
 
 }
 
@@ -231,7 +224,7 @@ void ResetLevel(Level* l) {
 	ResetCamera(l->camera);
 }
 
-void FullResetLevel(Level* l){
+void FullResetLevel(Level* l) {
 	l->scoreP1 = 0;
 	l->scoreP2 = 0;
 	ResetLevel(l);
@@ -251,7 +244,8 @@ void UpdateCameraLevel(Level* level) {
 //  }
 	if (level->camera->zoomLevel < 4 && level->camera->start == 1) {
 		camera_is_in_work = true;
-		LookAt(level->camera, level->ballon->cercle->centre,level->camera->zoomLevel);
+		LookAt(level->camera, level->ballon->cercle->centre,
+				level->camera->zoomLevel);
 		level->camera->zoomLevel += 0.01;
 		RalentiLevel(level);
 	} else if (level->camera->zoomLevel >= 4) {
@@ -267,7 +261,8 @@ void CheckBonus(Level* level) {
 	CheckFreeze(level->vp2);
 }
 
-bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cross) {
+bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id,
+		bool* cross) {
 
 	if (!level)
 		return false;
@@ -280,11 +275,10 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 	char windowname[30];
 	sprintf(windowname, "HoverLigue Niveau %d !", id + 1);
 
-
 	SDL_WM_SetCaption(windowname, NULL);
 	FullResetLevel(level);
 
-	Menu* menuPause = (Menu *)malloc(sizeof(Menu));
+	Menu* menuPause = (Menu *) malloc(sizeof(Menu));
 	if (!MakeMenu(1300, 650, menuPause, pause))
 		return EXIT_FAILURE;
 
@@ -293,7 +287,7 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 	Uint32 timeStartLevel = SDL_GetTicks();
 	Uint32 duration = SDL_GetTicks() - timeStartLevel;
 	Uint32 timerStartPause = SDL_GetTicks();
-	while (loop &&  duration < level->duration) {
+	while (loop && duration < level->duration) {
 		// RÃ©cupÃ©ration du temps au dÃ©but de la boucle
 		Uint32 startTime = SDL_GetTicks();
 
@@ -306,10 +300,8 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 
 		//Camera//
 		glPushMatrix();
-			glLoadIdentity();
-			UpdateCameraLevel(level);
-
-
+		glLoadIdentity();
+		UpdateCameraLevel(level);
 
 //ZONE DE TEST//////////
 //    glBegin(GL_LINES);
@@ -336,36 +328,32 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 		CheckBonus(level);
 		glPopMatrix();
 
-
-
-
 		// Echange du front et du back buffer : mise Ã  jour de la fenÃªtre
 		SDL_GL_SwapBuffers();
 
 		// Boucle traitant les evenements
 		SDL_Event e;
 		while (SDL_PollEvent(&e)) {
-			// L'utilisateur ferme la fenÃªtre :
-			if (e.type == SDL_QUIT) {
-				loop = 0;
-				*cross = true;
-				break;
-			}
+			// L'utilisateur ferme la fenÃªtre
 
 			// Quelques exemples de traitement d'evenements :
 			switch (e.type) {
+
+			case SDL_QUIT :
+				loop = 0;
+				*cross = true;
+				break;
 
 			// Touche clavier
 			case SDL_KEYDOWN:
 
 				//printf("touche pressÃ©e (code = %d)\n", e.key.keysym.sym);
 				//printf("touche pressÃ©e (code = %d)\n", e.key.keysym.unicode);
-				if (e.key.keysym.sym == SDLK_z){
+				if (e.key.keysym.sym == SDLK_z) {
 					VP2->avance = 1;
 				}
 				if (e.key.keysym.sym == SDLK_UP)
 					VP1->avance = 1;
-
 				if (e.key.keysym.sym == SDLK_RIGHT)
 					VP1->tourne = 1;
 				if (e.key.keysym.sym == SDLK_LEFT)
@@ -387,7 +375,6 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 					VP2->avance = 0;
 				if (e.key.keysym.sym == SDLK_UP)
 					VP1->avance = 0;
-
 				if (e.key.keysym.sym == SDLK_RIGHT)
 					VP1->tourne = 0;
 				if (e.key.keysym.sym == SDLK_LEFT)
@@ -397,12 +384,14 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 				if (e.key.keysym.sym == SDLK_d)
 					VP2->tourne = 0;
 				if (e.key.keysym.sym == SDLK_ESCAPE) {
-					loop = 0;
+					timerStartPause = SDL_GetTicks();
+					CallMenuPause(menuPause);
+					timeStartLevel += SDL_GetTicks() - timerStartPause;
 					break;
 				}
 				break;
 
-				// resize window
+			// resize window
 			case SDL_VIDEORESIZE:
 				windowWidth = e.resize.w;
 				windowHeight = e.resize.h;
