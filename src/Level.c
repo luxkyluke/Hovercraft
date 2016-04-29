@@ -267,7 +267,7 @@ void CheckBonus(Level* level) {
 	CheckFreeze(level->vp2);
 }
 
-bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
+bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cross) {
 
 	if (!level)
 		return false;
@@ -327,7 +327,7 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 ///////////////////////////
 
 		if (!camera_is_in_work)
-					CheckTouched(level);
+			CheckTouched(level);
 
 		UpdateLevel(level);
 
@@ -348,6 +348,7 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id) {
 			// L'utilisateur ferme la fenÃªtre :
 			if (e.type == SDL_QUIT) {
 				loop = 0;
+				*cross = true;
 				break;
 			}
 
