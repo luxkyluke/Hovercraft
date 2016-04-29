@@ -49,21 +49,25 @@ bool AddLevel(Game* game, char* nameFichTerrain){
 	return true;
 }
 
-void PlayGame(Game* game, int windowWidth, int windowHeight){
-
+bool PlayGame(Game* game, int windowWidth, int windowHeight){
     if(!game)
-		return;
+		return false;
 
     int i;
-
     for(i=0 ;i<game->nbLevels; ++i){
-        if(PlayLevel(game->levels[i], windowWidth, windowHeight, i)){
+    	bool cross;
+    	bool thisIsTheEnd = PlayLevel(game->levels[i], windowWidth, windowHeight, i, &cross);
+        if(cross){
+        	return false;
+        }
+    	if(thisIsTheEnd){
 			Menu menuFin;
 			MakeMenu(windowWidth, windowHeight, &menuFin, fin);
 			if(!CallMenuFin(&menuFin))
-				break;
+				return false;
         }
     }
+    return true;
 
 }
 

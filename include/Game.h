@@ -24,7 +24,7 @@ typedef struct {
 void setVideoMode(unsigned int windowWidth, unsigned int windowHeight);
 bool MakeGame(Game* game, int duration);
 bool AddLevel(Game* game, char* nameFichTerrain);
-void PlayGame(Game* game, int windowWidth, int windowHeight);
+bool PlayGame(Game* game, int windowWidth, int windowHeight);
 void FreeGame(Game* g);
 
 #endif

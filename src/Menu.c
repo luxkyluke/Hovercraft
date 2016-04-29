@@ -225,7 +225,8 @@ bool LoopMenu(Menu* menu){
 				if (IsOnButton1(souris_x, souris_y) && menu->game != NULL) {
 					switch (menu->type){
 						case debut :
-							PlayGame(menu->game, menu->largeur, menu->hauteur);
+							if(!PlayGame(menu->game, menu->largeur, menu->hauteur))
+								loop = 0;
 							break;
 						case fin :
 							ret = true;
