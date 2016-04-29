@@ -58,12 +58,14 @@ void DessinCheckpoint(Checkpoint* checkpt){
 		glPushMatrix();
 			glTranslatef(checkpt->cercle->centre.x, checkpt->cercle->centre.y, 0);
 			glScalef(checkpt->cercle->radius, checkpt->cercle->radius, 1);
+			Color3f color, colorBoost, colorFreeze;
+			colorBoost = ColorRGB(1., 0.23, 0.21);
+			colorFreeze = ColorRGB(0.01, 0.66, 0.95);
 			if(checkpt->type == freeze)
-				dessinCercle(100, 0., 0., 1., 1);
+				color = colorFreeze;
 			else if(checkpt->type == boost)
-				dessinCercle(100, 1., 0.2, 0.2, 1);
-			else
-				dessinCercle(100, 0.2, 1., 0.5, 1);
+				color = colorBoost;
+			dessinCercle(100, color, 1);
 		glPopMatrix();
 	}
 }

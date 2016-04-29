@@ -24,22 +24,27 @@ void DessinVehicule(Vehicule* v) {
 		glTranslatef(v->position.x, v->position.y, 0);
 		glRotatef(v->angle, 0., 0., 1.);
 		glScalef(v->largeur, v->hauteur, 0.);
-
+		Color3f color, colorBoost, colorFreeze;
+		colorBoost = ColorRGB(1., 0.23, 0.21);
+		colorFreeze = ColorRGB(0.01, 0.66, 0.95);
 		if (v->bonus == boost)
-			dessinCarre(1, 1., 0.2, 0.2);
+			color = colorBoost;
 		else if (v->bonus == freeze)
-			dessinCarre(1, 0.2, 0.2, 1.);
+			color = colorFreeze;
+		else if(v->player == player1)
+			color=ColorRGB(0.92, 0.58, 0.25);
 		else
-			dessinCarre(1, 1., 1., 0.2);
+			color=ColorRGB(0.24, 0.41, 0.71);
+
+
+		dessinCarre(1, color);
 		glPushMatrix();
 			glTranslatef(0., 0.5, 0.);
 			if (v->bonus == boost)
-				dessinCercle(100, 1., 0.2, 0.2, 1);
+				color = colorBoost;
 			else if (v->bonus == freeze)
-				dessinCercle(100, 0.2, 0.2, 1., 1);
-			else
-				dessinCercle(100, 1, 1, 0.2, 1);
-
+				color = colorFreeze;
+			dessinCercle(100, color, 1);
 		glPopMatrix();
 
 		glBegin(GL_POINTS);

@@ -1,5 +1,6 @@
 #include "But.h"
 #include "Geometry.h"
+#include "Color3f.h"
 #include <stdio.h>
 
 
@@ -64,7 +65,7 @@ void DessinBut(But* b, int largeur){
     	}
     	glTranslatef(x_centre, translate_y, 0);
         glScalef(largeur, hauteur, 1);
-        dessinCarre(1, 255, 0, 0);
+        dessinCarre(1, ColorRGB(255, 0, 0));
         glBegin(GL_QUADS);
 			glTexCoord2f(1,0); glVertex2f(top_x*0.5 , top_y*0.5);
 			glTexCoord2f(1,1); glVertex2f(bottom_x*0.5 , bottom_y*0.5);

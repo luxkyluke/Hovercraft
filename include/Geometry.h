@@ -25,9 +25,9 @@ Point2D PointPlusVector(Point2D O, Vector2D v);
 int IsZero(float x);
 
 //l'entier fill prend les valeurs 0 (contours) ou 1 (polygone rempli)
-void dessinCarre(int fill, float r, float v, float b);
+void dessinCarre(int fill, Color3f color);
 
-void dessinCercle(int n, float r, float v, float b, int fill);
+void dessinCercle(int n, Color3f color, int fill);
 void MakeCercle(Cercle* c, Point2D position, float radius);
 
 #endif
