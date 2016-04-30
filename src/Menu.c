@@ -111,14 +111,14 @@ void AfficheScoreMenu(int score1, int score2) {
 	//glScalef(0.,2.,0.);
 	glPushMatrix();
 		glPushMatrix();
-			glTranslatef(-10, -52, 0);
+			glTranslatef(-10, -52.5, 0);
 			//glColor3f(0.98, 0.33, 0.13);
 			glColor3f(1, 1, 1);
 			vBitmapOutput(-2, 45, scoreP1, GLUT_BITMAP_TIMES_ROMAN_24);
 			glColor3f(1, 1, 1);
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(7,-52, 0);
+			glTranslatef(9,-52.5, 0);
 			//glColor3f(0.24, 0.41, 0.71);
 			glColor3f(1, 1., 1.);
 			vBitmapOutput(-2, 45, scoreP2, GLUT_BITMAP_TIMES_ROMAN_24);//GLUT_BITMAP_TIMES_ROMAN_24
