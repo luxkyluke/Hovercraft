@@ -1,5 +1,5 @@
 #include "../include/Menu.h"
-#define DURATION_TIME 180
+#define DURATION_TIME 180000
 
 #define PATH_TEXTURE_DEBUT "./images/menu_deb.png"
 #define PATH_TEXTURE_FIN "./images/menu_fin.png"
