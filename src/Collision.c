@@ -114,9 +114,16 @@ void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
             vehicule->acceleration.y > 0.01 ||
             vehicule->acceleration.y < -0.01){
             ballon->cercleFactice->radius = ballon->cercle->radius * 2;
-            printf("%f\n", ballon->cercleFactice->radius);
+            //printf("%f\n", ballon->cercleFactice->radius);
         }
-        printf("%f     %f\n", vehicule->acceleration.x, vehicule->acceleration.y);
+//        if(ballon->acceleration.x > 0.01 ||
+//		   ballon->acceleration.x < -0.01 ||
+//		   ballon->acceleration.y > 0.01 ||
+//		   ballon->acceleration.y < -0.01){
+//		   ballon->cercleFactice->radius = ballon->cercle->radius * 2;
+//		   printf("%f\n", ballon->cercleFactice->radius);
+//	   }
+        //printf("%f     %f\n", vehicule->acceleration.x, vehicule->acceleration.y);
         ballon->direction = Vector(vehicule->cercle->centre, ballon->cercle->centre);
         ballon->acceleration = MultVector(ballon-> direction, 0.01);
     }

@@ -11,12 +11,11 @@ float getYTerrain(float y){
 }
 
 float getXSDL(int x){
-    return x - 100.;
+    return (float) x - 100;
 }
 
 float getYSDL(int y){
-    float ret = 50. - y ;
-    //printf("RET !! %3.f\n", ret);
+    float ret = (float) 50 - y ;
     return ret;
 }
 

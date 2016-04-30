@@ -4,15 +4,14 @@
 #include <time.h>
 #include <stdlib.h>
 
-#define RESET_DELAY 15000
+#define RESET_DELAY 20000
 
 void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt, Bonus b){
 	checkpt->cercle = (Cercle *) malloc(sizeof(Cercle));
 	MakeCercle(checkpt->cercle, pos, r);
 	checkpt->checked = false;
-	checkpt->interceptedTime = 1;
 	checkpt->type = b;
-	//checkpt->timerReset =0;
+	checkpt->timerReset =0;
 }
 
 bool IsCheckpoint(Checkpoint* checkpt, Cercle* c) {
@@ -45,7 +44,6 @@ bool IsTimeToReset(Checkpoint* c){
 }
 
 void CheckResetCheckpoint(Checkpoint* c){
-
 	if(c->checked && IsTimeToReset(c)){
 		c->checked=false;
 		c->timerReset = SDL_GetTicks();

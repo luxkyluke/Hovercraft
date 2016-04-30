@@ -36,9 +36,5 @@ void UpdateBallon(Ballon* b);
 void DessinBallon(Ballon* ball);
 void ResetBallon(Ballon* b);
 void FreeBallon(Ballon* v);
-float getXTerrain(float x);
-float getYTerrain(float y);
-float getXSDL(int x);
-float getYSDL(int y);
 
 #endif
