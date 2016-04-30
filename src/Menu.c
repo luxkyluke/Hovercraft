@@ -120,6 +120,7 @@ void AfficheScoreMenu(int score1, int score2) {
 		glColor3f(0.24, 0.51, 0.41);
 		vBitmapOutput(-2, 45, scoreP2, GLUT_BITMAP_TIMES_ROMAN_24);
 	glPopMatrix();
+	glColor3f(1, 1, 1);
 }
 
 void DessinMenu(Menu* menu, GLuint texture, int scoreP1, int scoreP2) {
