@@ -8,7 +8,7 @@
 #define DEFAULT_VEHICUL_H 5.
 #define DEFAULT_BALL_POS_X 0.
 #define DEFAULT_BALL_POS_Y 0.
-#define DEFAULT_BALL_RADIUS 2.
+#define DEFAULT_BALL_RADIUS 4.
 #define DEFAULT_TERRAIN_TEXTURE_PATH "images/terrain1.png"
 #define DEFAULT_TERRAIN_TEXTURE2_PATH "images/terrain2.png"
 #define DEFAULT_BALL_TEXTURE_PATH "images/ballon.png"
@@ -130,6 +130,7 @@ bool CheckTouched(Level* l) {
 
 void FreeLevel(Level * l) {
 	FreeTerrain(l->terrain);
+	FreeBallon(l->ballon);
 	free(l->terrain);
 	l->terrain = NULL;
 	free(l->vp2);

@@ -13,6 +13,8 @@ void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon, float ballRadius){
     ballon-> acceleration = VectorXY(0,0.);
     ballon->cercle = (Cercle*) malloc(sizeof(Cercle));
     MakeCercle(ballon->cercle, pos, ballRadius);
+    ballon->cercleFactice = (Cercle*) malloc(sizeof(Cercle));
+    MakeCercle(ballon->cercleFactice, pos, ballRadius);
 }
 
 
@@ -68,6 +70,13 @@ void DessinBallon(Ballon* ball) {
 
 void ResetBallon(Ballon* b){
 	 b->cercle->centre = PointXY(0,0);
+	 b->cercleFactice->centre = PointXY(0,0);
 	 b->vitesse = VectorXY(0,0);
 }
 
+void FreeBallon(Ballon* v) {
+	free(v->cercle);
+	v->cercle = NULL;
+	free(v->cercleFactice);
+	v->cercleFactice = NULL;
+}

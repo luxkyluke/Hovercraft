@@ -25,6 +25,7 @@ typedef struct {
     Vector2D vitesse;
     Vector2D acceleration;
     Cercle* cercle;
+    Cercle* cercleFactice;
 }Ballon;
 
 
@@ -34,6 +35,7 @@ void UpdateVitesseBall(Ballon* b);
 void UpdateBallon(Ballon* b);
 void DessinBallon(Ballon* ball);
 void ResetBallon(Ballon* b);
+void FreeBallon(Ballon* v);
 float getXTerrain(float x);
 float getYTerrain(float y);
 float getXSDL(int x);
