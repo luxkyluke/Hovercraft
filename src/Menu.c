@@ -1,5 +1,5 @@
 #include "../include/Menu.h"
-#define DURATION_TIME 180000
+#define DURATION_TIME 180
 
 #define PATH_TEXTURE_DEBUT "./images/menu_deb.png"
 #define PATH_TEXTURE_FIN "./images/menu_fin.png"
@@ -108,18 +108,23 @@ void AfficheScoreMenu(int score1, int score2) {
 	sprintf(scoreP1, "%d", score1);
 	char scoreP2[2];
 	sprintf(scoreP2, "%d", score2);
+	//glScalef(0.,2.,0.);
 	glPushMatrix();
-	glScalef(1.,1.,0.);
-		glTranslatef(-10, -52, 0);
-		glColor3f(0.98, 0.33, 0.13);
-		vBitmapOutput(-2, 45, scoreP1, GLUT_BITMAP_TIMES_ROMAN_24);
-		glColor3f(1, 1, 1);
+		glPushMatrix();
+			glTranslatef(-10, -52, 0);
+			//glColor3f(0.98, 0.33, 0.13);
+			glColor3f(1, 1, 1);
+			vBitmapOutput(-2, 45, scoreP1, GLUT_BITMAP_TIMES_ROMAN_24);
+			glColor3f(1, 1, 1);
+		glPopMatrix();
+		glPushMatrix();
+			glTranslatef(7,-52, 0);
+			//glColor3f(0.24, 0.41, 0.71);
+			glColor3f(1, 1., 1.);
+			vBitmapOutput(-2, 45, scoreP2, GLUT_BITMAP_TIMES_ROMAN_24);//GLUT_BITMAP_TIMES_ROMAN_24
+		glPopMatrix();
 	glPopMatrix();
-	glPushMatrix();
-		glTranslatef(7,-52, 0);
-		glColor3f(0.24, 0.51, 0.41);
-		vBitmapOutput(-2, 45, scoreP2, GLUT_BITMAP_TIMES_ROMAN_24);
-	glPopMatrix();
+	glColor3f(1, 1, 1);
 }
 
 void DessinMenu(Menu* menu, GLuint texture, int scoreP1, int scoreP2) {
@@ -266,7 +271,7 @@ bool LoopMenu(Menu* menu, int scoreP1, int scoreP2) {
 			case SDL_MOUSEBUTTONDOWN:
 				//printf("souris-x en %d     souris_y en %d\n", souris_x, souris_y);
 				// if ((IsOnButton1(souris_x, souris_y) || IsOnTerrain1(souris_x,souris_y) || IsOnTerrain2(souris_x,souris_y)) && menu->game != NULL) {
-				if (IsOnButton1(souris_x, souris_y) && menu->game != NULL) {
+				if (IsOnButton1(souris_x, souris_y) ){
 					switch (menu->type){
 						case debut :
 							if(!PlayGame(menu->game, menu->largeur, menu->hauteur))
@@ -275,10 +280,10 @@ bool LoopMenu(Menu* menu, int scoreP1, int scoreP2) {
 						case fin :
 							ret = true;
 							loop = 0;
+							break;
 						case pause :
 							loop = 0;
 							ret = true;
-							//ContinueGame(menu->game);
 							break;
 					}
 				}

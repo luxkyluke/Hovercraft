@@ -21,7 +21,6 @@
 typedef	struct {
 	Cercle* cercle;
 	bool checked;
-    int interceptedTime;
     Bonus type;
     int timerReset;
 }Checkpoint;

@@ -323,11 +323,13 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 		if (!camera_is_in_work)
 			CheckTouched(level);
 
+		CheckBonus(level);
+
 		UpdateLevel(level);
 
 		DessinLevel(level, duration);
 
-		CheckBonus(level);
+
 		glPopMatrix();
 
 		// Echange du front et du back buffer : mise Ã  jour de la fenÃªtre
