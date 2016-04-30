@@ -1,5 +1,5 @@
 CC = gcc
-CCFLAGS = -Wall -std=c11 -g -O2
+CCFLAGS = -Wall -std=c11 -g -O2 
 LDFLAGS  = -lm
 APP_BIN = Hovercraft
 SRC_PATH = src
@@ -32,7 +32,7 @@ else
     UNAME_S := $(shell uname -s)
     ifeq ($(UNAME_S),Linux)
 				LDFLAGS += -lGL -lGLU
-				LDFLAGS += -lSDL -lSDL_image -lfreeglut
+				LDFLAGS += -lSDL -lSDL_image -lglut -lSDL_mixer
         CCFLAGS += -D LINUX
     endif
     ifeq ($(UNAME_S),Darwin)

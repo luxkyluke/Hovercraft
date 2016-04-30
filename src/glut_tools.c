@@ -1,30 +1,26 @@
 #include "glut_tools.h"
-
-
-
-
-
+#include <string.h>
 
 void initGlut(int argc, char** argv) {
 	glutInit(&argc, argv);
 }
 
 void vBitmapOutput(int x, int y, char *string, void *font) {
-	int len, i; // len donne la longueur de la chaîne de caractères
+	int len, i; // len donne la longueur de la chaï¿½ne de caractï¿½res
 
-	glRasterPos2f(x, y); // Positionne le premier caractère de la chaîne
-	len = (int) strlen(string); // Calcule la longueur de la chaîne
+	glRasterPos2f(x, y); // Positionne le premier caractï¿½re de la chaï¿½ne
+	len = (int) strlen(string); // Calcule la longueur de la chaï¿½ne
 	for (i = 0; i < len; i++)
-		glutBitmapCharacter(font, string[i]); // Affiche chaque caractère de la chaîne
+		glutBitmapCharacter(font, string[i]); // Affiche chaque caractï¿½re de la chaï¿½ne
 }
 
 void vStrokeOutput(GLfloat x, GLfloat y, char *string, void *font) {
 	char *p;
 
-	glPushMatrix();	// glPushMatrix et glPopMatrix sont utilisées pour sauvegarder
-	// et restaurer les systèmes de coordonnées non translatés
-	glTranslatef(x, y, 0); // Positionne le premier caractère de la chaîne
+	glPushMatrix();	// glPushMatrix et glPopMatrix sont utilisï¿½es pour sauvegarder
+	// et restaurer les systï¿½mes de coordonnï¿½es non translatï¿½s
+	glTranslatef(x, y, 0); // Positionne le premier caractï¿½re de la chaï¿½ne
 	for (p = string; *p; p++)
-		glutStrokeCharacter(font, *p); // Affiche chaque caractère de la chaîne
+		glutStrokeCharacter(font, *p); // Affiche chaque caractï¿½re de la chaï¿½ne
 	glPopMatrix();
 }

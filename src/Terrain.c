@@ -157,7 +157,7 @@ bool CercleIsInWall(Terrain* t, Cercle* c){
 
 void FreeTerrain(Terrain* t){
     int i;
-    for(i=0; i<NB_MAX_LIGNE; i++){
+    for(i=0; i<NB_MAX_LIGNE-2; i++){
         free(t->terrain[i]);
         t->terrain[i] = NULL;
     }

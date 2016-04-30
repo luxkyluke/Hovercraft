@@ -100,8 +100,8 @@ void FreeGame(Game* g){
 		g->levels[i] = NULL;
 	}
 
-    SDL_JoystickEventState(SDL_DISABLE);
-    if(g->joystick!=NULL)
+//    SDL_JoystickEventState(SDL_DISABLE);
+//    if(g->joystick!=NULL)
         // SDL_JoystickClose(g->joystick);
     // probleme, normalement il faut le fermer le kono SDL_JoystickClose(g->joystick);
     // free(g->joystick);
