@@ -1,1 +1,1 @@
-Il y a 1 joysticks.Nom du joystick numero 0 : Wireless ControllerNombre de boutons : 14Nombre de chapeaux : 1Nombre de trackballs : 0
+Il y a 1 joysticks.Nom du joystick numero 0 : Sony Computer Entertainment Wireless ControllerNombre de boutons : 14Nombre de chapeaux : 1Nombre de trackballs : 0
