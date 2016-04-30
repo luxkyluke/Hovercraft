@@ -93,19 +93,17 @@ void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
                  tmpVitesse =vehicule1->vitesse;
 
         vehicule1->acceleration = vehicule2->acceleration;
-//        vehicule1->direction = vehicule2->direction;
         vehicule1->vitesse= vehicule2->vitesse;
+        //vehicule1->direction.x = vehicule2->direction.x;
+        //vehicule1->direction.y = vehicule2->direction.y;
+//        vehicule1->direction = vehicule2->direction;
 
-        vehicule1->direction.x *= vehicule2->direction.x;
-        vehicule1->direction.y *= vehicule2->direction.y;
-
-//        vehicule2->direction = tmpDirection;
         vehicule2->acceleration = tmpAcceleration;
-
-        vehicule2->direction.x *= tmpDirection.x;
-        vehicule2->direction.y *= tmpDirection.y;
-
         vehicule2->vitesse= tmpVitesse;
+        //vehicule2->direction.x = tmpDirection.x;
+        //vehicule2->direction.y = tmpDirection.y;
+//        vehicule2->direction = tmpDirection;
+
     }
 }
 
