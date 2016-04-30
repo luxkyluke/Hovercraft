@@ -25,7 +25,7 @@ typedef struct {
     Vector2D vitesse;
     Vector2D acceleration;
     Cercle* cercle;
-    Cercle* cercleFactice;
+    //Cercle* cercleFactice;
 }Ballon;
 
 

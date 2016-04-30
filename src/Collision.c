@@ -30,8 +30,16 @@ bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 
 bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
     if(Point2DIsEgual(ballon->cercle->centre, vehicule->position)
-            || CollisionCercleCercle(vehicule->cercle, ballon->cercle)
-                || CollisionCercleCercle(vehicule->facticeCercle, ballon->cercle)) {
+            || CollisionCercleCercle(vehicule->cercle, ballon->cercle/*Factice*/)
+                || CollisionCercleCercle(vehicule->facticeCercle, ballon->cercle/*Factice*/)) {
+        /*if(vehicule->acceleration.x > 0.01 
+            || vehicule->acceleration.x < -0.01 
+                || vehicule->acceleration.y > 0.01 
+                    || vehicule->acceleration.y < -0.01){
+            ballon->cercleFactice->radius = ballon->cercle->radius * 1.2;         
+            return true;
+        }
+        ballon->cercleFactice->radius = ballon->cercle->radius;*/
         return true;
     }
     return false;
@@ -109,16 +117,17 @@ void CollisionVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2){
 
 void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
     if(TouchedVehiculeBallon(ballon, vehicule) == true){
-        if(vehicule->acceleration.x > 0.01 ||
-            vehicule->acceleration.x < -0.01 ||
-            vehicule->acceleration.y > 0.01 ||
-            vehicule->acceleration.y < -0.01){
-            ballon->cercleFactice->radius = ballon->cercle->radius * 2;
-            printf("%f\n", ballon->cercleFactice->radius);
+        if(vehicule->acceleration.x < 0.01 
+            || vehicule->acceleration.x > -0.01 
+                || vehicule->acceleration.y < 0.01 
+                    || vehicule->acceleration.y > -0.01){
+            ballon->direction = Vector(vehicule->cercle->centre, ballon->cercle->centre);
+            ballon->acceleration = MultVector(ballon-> direction, 0.01);
         }
-        printf("%f     %f\n", vehicule->acceleration.x, vehicule->acceleration.y);
-        ballon->direction = Vector(vehicule->cercle->centre, ballon->cercle->centre);
-        ballon->acceleration = MultVector(ballon-> direction, 0.01);
+        else{
+            ballon->direction = Vector(vehicule->cercle->centre, ballon->cercle->centre);
+            ballon->acceleration = MultVector(ballon-> direction, 0.1);
+        }
     }
     else
         ballon-> acceleration = VectorXY(0,0.);
