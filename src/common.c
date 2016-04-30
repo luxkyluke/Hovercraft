@@ -1,12 +1,12 @@
 #include "common.h"
 
 
-float getXTerrain(float x){
-    return x + 100.;
+int getXTerrain(float x){
+    return (int)x + 100;
 }
 
-float getYTerrain(float y){
-    float ret = abs(y - 50);
+int getYTerrain(float y){
+    int ret = abs((int)y - 50);
     return ret;
 }
 
@@ -19,4 +19,7 @@ float getYSDL(int y){
     return ret;
 }
 
+bool EstDansSDL(Point2D pos){
+	return (pos.x<100 && pos.x>-100 && pos.y>-50 && pos.y<50);
+}
 

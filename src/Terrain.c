@@ -114,41 +114,58 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t, Point2D* vp1_pos,
  }
 
 bool EstDansTerrain(Terrain* t, Point2D pos){
-	if(pos.x>t->largeur || pos.y>t->hauteur || pos.x<-(t->largeur) || pos.y<-(t->hauteur))
+	if(pos.x<t->largeur || pos.y<t->hauteur || pos.x>=0 || pos.y>=0)
 		return false;
 	return true;
 }
 
+void getPosDansTerrain(Terrain* t, int *x, int *y){
 
-bool IsWall(Terrain* t, Point2D pos){
-    if(!EstDansTerrain(t, pos))
-        return false;
-    int x = (int) getXTerrain(pos.x);
-    int y = (int) getYTerrain(pos.y);
+	if(*x > t->largeur)
+		*x = t->largeur-2;
+	else if(*x < 0)
+		*x = 0;
+	if(*y > t->hauteur)
+		*y = t->hauteur-1;
+	else if(*y < 0)
+		*y = 0;
+}
+
+bool IsWall(Terrain* t, Point2D pos, int* status){
+    int x = getXTerrain(pos.x);
+    int y = getYTerrain(pos.y);
     //printf("x:%df, y: %d\n",x, y);
-    if(x>200 || x<0 || y>100 || y<0){
-        printf("Erreur de calcul x terrain et y terrain\n");
-        return false;
+    if(!EstDansTerrain(t, PointXY(x, y))){
+    	getPosDansTerrain(t, &x, &y);
     }
-    if( t->terrain[y][x] == '-' || t->terrain[y][x] == '|'){
-        //printf("posx:%3.f, posy: %3.f\n",pos.x, pos.y);
-        t->pointCollision = pos;
-        return true;
-    }
-    return false;
+
+    *status = 0;
+    if(t->terrain[y][x] == '|')
+        *status += 1;
+
+    if(t->terrain[y][x] == '-')
+    	*status += 2;
+
+    return (*status != 0);
 }
 
 
 
 
-bool CercleIsInWall(Terrain* t, Cercle* c){
+bool CercleIsInWall(Terrain* t, Cercle* c, int* status){
     float xmax = c->centre.x + c->radius;
     float xmin = c->centre.x - c->radius;
     float ymax = c->centre.y + c->radius;
     float ymin = c->centre.y - c->radius;
+    Point2D top_right = PointXY(xmax, ymax);
+    Point2D bottom_right= PointXY(xmax, ymin);
+    Point2D top_left = PointXY(xmin, ymax);
+    Point2D bottom_left = PointXY(xmin, ymin);
 
-    if(IsWall(t, c->centre) || IsWall(t, PointXY(xmax, ymax)) || IsWall(t, PointXY(xmax, ymin))
-        || IsWall(t, PointXY(xmin, ymax)) || IsWall(t, PointXY(xmin, ymin))){
+
+
+    if(IsWall (t, c->centre, status) || IsWall(t, top_right, status) || IsWall(t, bottom_right, status)
+        || IsWall(t, top_left, status) || IsWall(t, bottom_left, status)){
             //printf("x=%3.f, y=%3.f\n", c->centre.x, c->centre.y);
             return  true;
     }

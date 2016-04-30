@@ -1,4 +1,5 @@
 #include "../include/Menu.h"
+
 #define DURATION_TIME 180000
 
 #define PATH_TEXTURE_DEBUT "./images/menu_deb.png"
@@ -32,7 +33,7 @@ void reshape(unsigned int windowWidth, unsigned int windowHeight) {
 
 void setVideoMode(unsigned int windowWidth, unsigned int windowHeight) {
 	if (NULL == SDL_SetVideoMode(windowWidth, windowHeight, BIT_PER_PIXEL,
-	SDL_OPENGL | SDL_GL_DOUBLEBUFFER | SDL_RESIZABLE)) {
+	SDL_OPENGL | SDL_GL_DOUBLEBUFFER | 1)) {
 		fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
 		exit(EXIT_FAILURE);
 	}

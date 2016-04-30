@@ -37,8 +37,11 @@ bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
     return false;
 }
 
-bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain){
-    if(CercleIsInWall(terrain, ballon->cercle)){
+bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain, int* status){
+//	if(!EstDansSDL(ballon->cercle->centre))
+//		ResetBallon(ballon);
+//		return false;
+    if(CercleIsInWall(terrain, ballon->cercle, status)){
         //printf("Ballon cest un mur BOLOSSE\n");
         return true;
     }
@@ -53,9 +56,12 @@ bool TouchedVehiculeCheckpooint(Vehicule* v, Checkpoint* checkpt){
     return(!checkpt->checked && IsCheckpoint(checkpt, v->cercle));
 }
 
-bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
-    if(CercleIsInWall(terrain, vehicule->cercle) ||
-        CercleIsInWall(terrain, vehicule->facticeCercle)){
+bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain, int* status){
+//	if(!EstDansSDL(vehicule->cercle->centre) || !EstDansSDL(vehicule->facticeCercle->centre))
+//			ResetVehicule(vehicule);
+//			return false;
+    if(CercleIsInWall(terrain, vehicule->cercle, status) ||
+        CercleIsInWall(terrain, vehicule->facticeCercle, status)){
         //printf("xT = %3.f, yT = %3.f\n", vehicule->cercle->centre.x, vehicule->cercle->centre.y);
         //printf("xptCol =%f     yptCol=%f\n", terrain->pointCollision.x,  terrain->pointCollision.y);
         //printf("Vehicule player %d dans le mur pos x %3.f, y %3.f\n",
@@ -133,17 +139,18 @@ void CollisionVehiculeBallon(Ballon* ballon, Vehicule* vehicule){
 }
 
 void CollisionBallonTerrain(Ballon *ballon, Terrain * terrain){
-    if(TouchedBallonTerrain(ballon, terrain) == true){
-        if(StatusCollisionTerrain(terrain) == 1){
+	int status;
+    if(TouchedBallonTerrain(ballon, terrain, &status) == true){
+        if(status == 1){
             ballon->vitesse.x *= -1;
             return;
         }
-        if(StatusCollisionTerrain(terrain) == 2){
+        if(status == 2){
             ballon->vitesse.y *= -1;
             return;
         }
 
-        if(StatusCollisionTerrain(terrain) == 3){
+        if(status == 3){
             ballon->vitesse.y *= -1;
             ballon->vitesse.x *= -1;
             return;
@@ -179,18 +186,18 @@ bool CollissionVehiculeCheckpoints(Vehicule* v, Terrain* terrain, Bonus* b){
 }
 
 void CollisionVehiculeTerrain(Vehicule* vehicule, Terrain* terrain){
-
-    if (TouchedVehiculeTerrain(vehicule, terrain) == true) {
-        if (StatusCollisionTerrain(terrain) == 1) {
+	int status;
+    if (TouchedVehiculeTerrain(vehicule, terrain, &status) == true) {
+        if (status == 1) {
             vehicule->vitesse.x *= -1;
             return;
         }
-        if (StatusCollisionTerrain(terrain) == 2) {
+        if (status == 2) {
             vehicule->vitesse.y *= -1;
             return;
         }
 
-        if (StatusCollisionTerrain(terrain) == 3) {
+        if (status == 3) {
             vehicule->vitesse.y *= -1;
             vehicule->vitesse.x *= -1;
             return;
@@ -217,16 +224,16 @@ bool CollisionCercleCercle(Cercle* c1, Cercle* c2) {
 }
 
 
-int StatusCollisionTerrain(Terrain* t){
-    int retour = 0;
-    /*if(t->pointCollision.x > 99  || t->pointCollision.x < -99
-            || t->pointCollision.x > 94  || t->pointCollision.x < -94) //collision verticale
-        retour += 1;
-    if(t->pointCollision.y > 49 || t->pointCollision.y < -49) //collision horizontale
-        retour +=2;*/
-    if(getCaraTerrain(t, t->pointCollision) == '|')
-        retour += 1;
-    if(getCaraTerrain(t, t->pointCollision) == '-')
-        retour +=2;
-    return retour;
-}
+//int StatusCollisionTerrain(Terrain* t){
+//    int retour = 0;
+//    /*if(t->pointCollision.x > 99  || t->pointCollision.x < -99
+//            || t->pointCollision.x > 94  || t->pointCollision.x < -94) //collision verticale
+//        retour += 1;
+//    if(t->pointCollision.y > 49 || t->pointCollision.y < -49) //collision horizontale
+//        retour +=2;*/
+//    if(getCaraTerrain(t, t->pointCollision) == '|')
+//        retour += 1;
+//    if(getCaraTerrain(t, t->pointCollision) == '-')
+//        retour +=2;
+//    return retour;
+//}

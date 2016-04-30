@@ -8,13 +8,14 @@
 #include "Point2D.h"
 #include "bool.h"
 
-float getXTerrain(float x);
+int getXTerrain(float x);
 
-float getYTerrain(float y);
+int getYTerrain(float y);
 
 float getXSDL(int x);
 
 float getYSDL(int y);
 
+bool EstDansSDL(Point2D pos);
 
 #endif

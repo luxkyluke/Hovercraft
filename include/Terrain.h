@@ -31,8 +31,8 @@ typedef struct {
 
 void MakeTerrain(GLuint text, FILE* fichTerrain, Terrain* t, Point2D* vp1_pos, Point2D* vp2_pos);
 void DessinTerrain(Terrain* t);
-bool IsWall(Terrain* t, Point2D pos);
-bool CercleIsInWall(Terrain* t, Cercle* c);
+bool IsWall(Terrain* t, Point2D pos, int* status);
+bool CercleIsInWall(Terrain* t, Cercle* c, int* status);
 void FreeTerrain(Terrain* t);
 char getCaraTerrain(Terrain *t, Point2D pos);
 void ResetTerrain(Terrain* t);
