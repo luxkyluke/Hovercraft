@@ -105,6 +105,8 @@ void UpdateVitesse(Vehicule* h) {
 void UpdatePosition(Vehicule* h) {
 	h->position.x += h->vitesse.x;
 	h->position.y += h->vitesse.y;
+//	if(h->player == player1)
+//		printf("x %d, y %d\n", (int)h->position.x, (int)h->position.y);
 	return;
 }
 
@@ -153,7 +155,7 @@ void ResetVehicule(Vehicule* h) {
 	h->vitesse = defaultVit;
 	h->bonus = none;
 	h->tourne = 0;
-	h->timerBonus = 0;
+	h->timerBonus = 0;//SDL_GetTicks();
 }
 
 /*
@@ -185,7 +187,7 @@ void BoostVehicule(Vehicule* v) {
 }
 
 void FreezeVehicule(Vehicule* v) {
-	v->avance=0;
+	v->avance = 0;
 	v->acceleration = VectorXY(0, 0);
 	v->tourne = 0;
 }
@@ -205,7 +207,7 @@ void CheckBoost(Vehicule* v) {
 void CheckFreeze(Vehicule* v){
 	if (v->bonus == freeze) {
 		if (!IsInBonus(v)) {
-			printf("Dépassé de 4s.\n");
+			printf("Dï¿½passï¿½ de 4s.\n");
 			v->bonus = none;
 			v->timerBonus = SDL_GetTicks();
 		} else {
@@ -215,5 +217,5 @@ void CheckFreeze(Vehicule* v){
 }
 
 bool IsInBonus(Vehicule* v){
-	return SDL_GetTicks() - v->timerBonus <= BONUS_DURATION;
+	return v->bonus != none && SDL_GetTicks() - v->timerBonus <= BONUS_DURATION;
 }

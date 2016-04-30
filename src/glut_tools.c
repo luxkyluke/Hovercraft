@@ -7,7 +7,6 @@ void initGlut(int argc, char** argv) {
 
 void vBitmapOutput(int x, int y, char *string, void *font) {
 	int len, i; // len donne la longueur de la cha�ne de caract�res
-
 	glRasterPos2f(x, y); // Positionne le premier caract�re de la cha�ne
 	len = (int) strlen(string); // Calcule la longueur de la cha�ne
 	for (i = 0; i < len; i++)

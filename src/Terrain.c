@@ -7,7 +7,7 @@
 
 
 
-#define NB_MAX_LIGNE 102
+#define NB_MAX_LIGNE 100
 #define NB_MAX_COLONNE 202
 #define NB_MAX_CHECKPT 30
 #define DEFAULT_RAYON_CHECKPT 5.
@@ -65,10 +65,10 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t, Point2D* vp1_pos,
         }
         for(j=0; j < NB_MAX_COLONNE; j++){
         	if(ligne[j] == '1'){
-        		*vp1_pos = PointXY(getXSDL(j), getYSDL(i));
+        		*vp1_pos = PointXY(getXSDL(j), getYSDL(i+1));
         	}
         	else if(ligne[j] == '2'){
-        		*vp2_pos = PointXY(getXSDL(j), getYSDL(i));
+        		*vp2_pos = PointXY(getXSDL(j), getYSDL(i+1));
         	}
         	else if(ligne[j] == 'F' || ligne[j]=='B'){
                 if(t->nbCheckpts >= NB_MAX_CHECKPT){
@@ -81,7 +81,7 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t, Point2D* vp1_pos,
                 else
                 	b=boost;
                 Checkpoint chp;
-                MakeCheckpoint(PointXY(getXSDL(j), getYSDL(i)), DEFAULT_RAYON_CHECKPT, &chp, b);
+                MakeCheckpoint(PointXY(getXSDL(j), getYSDL(i+1)), DEFAULT_RAYON_CHECKPT, &chp, b);
                 t->checkpts[t->nbCheckpts] = CopyCheckpt(&chp);
                 t->nbCheckpts++;
             }
@@ -157,7 +157,7 @@ bool CercleIsInWall(Terrain* t, Cercle* c){
 
 void FreeTerrain(Terrain* t){
     int i;
-    for(i=0; i<NB_MAX_LIGNE-2; i++){
+    for(i=0; i<NB_MAX_LIGNE; i++){
         free(t->terrain[i]);
         t->terrain[i] = NULL;
     }
