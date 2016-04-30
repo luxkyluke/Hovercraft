@@ -25,11 +25,10 @@ void UpdateVitesseBall(Ballon* h){
 }
 
 void UpdatePositionBall(Ballon* h){
-	/*if(!EstDansTerrain(PointXY(h->cercle->centre.x += h-> vitesse.x, h->cercle->centre.y += h-> vitesse.y))){
-		h->cercle->centre.x -= h-> vitesse.x;
-		h->cercle->centre.y -= h-> vitesse.y;
+	if(!EstDansSDL(PointXY(h->cercle->centre.x, h->cercle->centre.y))){
+		ResetBallon(h);
 		return;
-	}*/
+	}
 	h->cercle->centre.x += h-> vitesse.x;
 	h->cercle->centre.y += h-> vitesse.y;
 	return;

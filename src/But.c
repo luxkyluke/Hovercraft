@@ -20,7 +20,7 @@ bool BallIsInGoal(But* but, Ballon* ball) {
     float topy = getYSDL(but->top.y);
     float bottomy = getYSDL(but->bottom.y);
 
-    printf("ball y %3.f / bas y %3.f / haut y %3.f\n", ball->cercle->centre.y, bottomy, topy);
+//    printf("ball y %3.f / bas y %3.f / haut y %3.f\n", ball->cercle->centre.y, bottomy, topy);
 
 
     if(!(ball->cercle->centre.y > bottomy && ball->cercle->centre.y < topy))
