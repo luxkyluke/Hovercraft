@@ -65,10 +65,10 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t, Point2D* vp1_pos,
         }
         for(j=0; j < NB_MAX_COLONNE; j++){
         	if(ligne[j] == '1'){
-        		*vp1_pos = PointXY(getXSDL(j), getYSDL(i+1));
+        		*vp1_pos = PointXY(getXSDL(j), getYSDL(i+2));
         	}
         	else if(ligne[j] == '2'){
-        		*vp2_pos = PointXY(getXSDL(j), getYSDL(i+1));
+        		*vp2_pos = PointXY(getXSDL(j), getYSDL(i-2));
         	}
         	else if(ligne[j] == 'F' || ligne[j]=='B'){
                 if(t->nbCheckpts >= NB_MAX_CHECKPT){
