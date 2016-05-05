@@ -51,21 +51,30 @@ void CheckResetCheckpoint(Checkpoint* c){
 }
 
 void DessinCheckpoint(Checkpoint* checkpt){
+	glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 	CheckResetCheckpoint(checkpt);
+	Color4f colorBoost, colorFreeze;
 	if(!checkpt->checked){
-		glPushMatrix();
-			glTranslatef(checkpt->cercle->centre.x, checkpt->cercle->centre.y, 0);
-			glScalef(checkpt->cercle->radius, checkpt->cercle->radius, 1);
-			Color3f color, colorBoost, colorFreeze;
-			colorBoost = ColorRGB(1., 0.23, 0.21);
-			colorFreeze = ColorRGB(0.01, 0.66, 0.95);
-			if(checkpt->type == freeze)
-				color = colorFreeze;
-			else if(checkpt->type == boost)
-				color = colorBoost;
-			dessinCercle(100, color, 1);
-		glPopMatrix();
+		colorBoost = ColorRGBA(1., 0.23, 0.21,1);
+		colorFreeze = ColorRGBA(0.01, 0.66, 0.95,1);
+	} else {
+		colorBoost = ColorRGBA(1., 0.23, 0.21,0.2);
+		colorFreeze = ColorRGBA(0.01, 0.66, 0.95,0.2);
 	}
+
+	glPushMatrix();
+		glTranslatef(checkpt->cercle->centre.x, checkpt->cercle->centre.y, 0);
+		glScalef(checkpt->cercle->radius, checkpt->cercle->radius, 1);
+		Color4f color = ColorRGBA(1,1,1,0);
+		if(checkpt->type == freeze)
+			color = colorFreeze;
+		else if(checkpt->type == boost)
+			color = colorBoost;
+		dessinCercle(100, color, 1);
+	glPopMatrix();
+
+	glDisable(GL_BLEND);
 }
 
 void ResetCheckpoint(Checkpoint* checkpt){

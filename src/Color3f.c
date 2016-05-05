@@ -1,40 +1,41 @@
 #include "Color3f.h"
 
-Color3f ColorRGB(float r, float g, float b) {
-    Color3f c;
+Color4f ColorRGBA(float r, float g, float b, float alpha) {
+    Color4f c;
     c.r = r;
     c.g = g;
     c.b = b;
+    c.alpha = alpha;
     return c;
 }
 
-Color3f ColorGrey(float grey) {
-    return ColorRGB(grey, grey, grey);
+Color4f ColorGrey(float grey) {
+    return ColorRGBA(grey, grey, grey,1);
 }
 
-Color3f AddColors(Color3f lhs, Color3f rhs) {
-    return ColorRGB(lhs.r + rhs.r, lhs.g + rhs.g, lhs.b + rhs.b);
+Color4f AddColors(Color4f lhs, Color4f rhs) {
+    return ColorRGBA(lhs.r + rhs.r, lhs.g + rhs.g, lhs.b + rhs.b,1);
 }
 
-Color3f SubColors(Color3f lhs, Color3f rhs) {
-    return ColorRGB(lhs.r - rhs.r, lhs.g - rhs.g, lhs.b - rhs.b);
+Color4f SubColors(Color4f lhs, Color4f rhs) {
+    return ColorRGBA(lhs.r - rhs.r, lhs.g - rhs.g, lhs.b - rhs.b,1);
 }
 
-Color3f MultColors(Color3f lhs, Color3f rhs) {
-    return ColorRGB(lhs.r * rhs.r, lhs.g * rhs.g, lhs.b * rhs.b);
+Color4f MultColors(Color4f lhs, Color4f rhs) {
+    return ColorRGBA(lhs.r * rhs.r, lhs.g * rhs.g, lhs.b * rhs.b,1);
 }
 
-Color3f DivColors(Color3f lhs, Color3f rhs) {
-    return ColorRGB(lhs.r / rhs.r, lhs.g / rhs.g, lhs.b / rhs.b);
+Color4f DivColors(Color4f lhs, Color4f rhs) {
+    return ColorRGBA(lhs.r / rhs.r, lhs.g / rhs.g, lhs.b / rhs.b,1);
 }
 
-Color3f MultColor(Color3f c, float a) {
-    return ColorRGB(c.r * a, c.g * a, c.b * a);
+Color4f MultColor(Color4f c, float a) {
+    return ColorRGBA(c.r * a, c.g * a, c.b * a,1);
 }
 
-Color3f DivColor(Color3f c, float a) {
-    return ColorRGB(c.r / a, c.g / a, c.b / a);
+Color4f DivColor(Color4f c, float a) {
+    return ColorRGBA(c.r / a, c.g / a, c.b / a,1);
 }
 
-Color3f BLACK = { 0, 0, 0 }, WHITE = { 1, 1, 1 }, RED = { 1, 0, 0 }, GREEN = {
+Color4f BLACK = { 0, 0, 0 }, WHITE = { 1, 1, 1 }, RED = { 1, 0, 0 }, GREEN = {
         0, 1, 0 }, BLUE = { 0, 0, 1 };

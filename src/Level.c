@@ -148,25 +148,25 @@ void DessinMinimap(Ballon* ballon, Vehicule* vp1, Vehicule* vp2) {
 	glScalef(0.15, 0.15, 1);
 	glPushMatrix();
 	glScalef(190, 100, 1);
-	dessinCarre(0, ColorRGB(1., 0., 0.));
+	dessinCarre(0, ColorRGBA(1., 0., 0., 1.));
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslatef(ballon->cercle->centre.x, ballon->cercle->centre.y, 0);
 	glScalef(10, 10, 1);
-	dessinCercle(50, ColorRGB(1., 1., 0.), 1);
+	dessinCercle(50, ColorRGBA(1., 1., 0., 1.), 1);
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslatef(vp1->position.x, vp1->position.y, 0);
 	glScalef(10, 10, 1);
-	dessinCercle(50, ColorRGB(0., 1., 1.), 1);
+	dessinCercle(50, ColorRGBA(0., 1., 1., 1.), 1);
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslatef(vp2->position.x, vp2->position.y, 0);
 	glScalef(10, 10, 1);
-	dessinCercle(50, ColorRGB(1., 0., 1.), 1);
+	dessinCercle(50, ColorRGBA(1., 0., 1., 1.), 1);
 	glPopMatrix();
 	glPopMatrix();
 }
@@ -293,7 +293,7 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 		Uint32 startTime = SDL_GetTicks();
 
 		// Placer ici le code de dessin
-		glClearColor(0, 0, 0, 0);
+		glClearColor(0, 0, 0, 1);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 
