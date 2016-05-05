@@ -13,12 +13,12 @@
 #define PATH_TEXTURE_DEBUT_BTN_2 "./images/menu_deb_button2.png"
 #define PATH_TEXTURE_FIN_BTN_2 "./images/menu_fin_button2.png"
 #define PATH_TEXTURE_PAUSE_BTN_2 "./images/menu_pause_button2.png"
-#define POS_BTN1_TOP 71
-#define POS_BTN1_BOTTOM 96
-#define POS_BTN2_TOP 148
-#define POS_BTN2_BOTTOM 175
-#define POS_BTN_RIGHT 815
-#define POS_BTN_LEFT 455
+#define POS_BTN1_TOP 100
+#define POS_BTN1_BOTTOM 140
+#define POS_BTN2_TOP 190
+#define POS_BTN2_BOTTOM 230
+#define POS_BTN_RIGHT 930
+#define POS_BTN_LEFT 565
 
 /* Nombre de bits par pixel de la fen�tre */
 static const unsigned int BIT_PER_PIXEL = 32;
