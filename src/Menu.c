@@ -1,6 +1,6 @@
 #include "../include/Menu.h"
 
-#define DURATION_TIME 180000
+#define DURATION_TIME 30000
 
 #define PATH_TEXTURE_DEBUT "./images/menu_deb.png"
 #define PATH_TEXTURE_FIN "./images/menu_fin.png"
@@ -112,17 +112,17 @@ void AfficheScoreMenu(int score1, int score2) {
 	//glScalef(0.,2.,0.);
 	glPushMatrix();
 		glPushMatrix();
-			glTranslatef(-10, -52.5, 0);
+//			glTranslatef(-12, -45, 0);
 			//glColor3f(0.98, 0.33, 0.13);
 			glColor3f(1, 1, 1);
-			vBitmapOutput(-2, 45, scoreP1, GLUT_BITMAP_TIMES_ROMAN_24);
+			vBitmapOutput(-13, -5, scoreP2, GLUT_BITMAP_TIMES_ROMAN_24);
 			glColor3f(1, 1, 1);
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(9,-52.5, 0);
+//			glTranslatef(12, -45, 0);
 			//glColor3f(0.24, 0.41, 0.71);
 			glColor3f(1, 1., 1.);
-			vBitmapOutput(-2, 45, scoreP2, GLUT_BITMAP_TIMES_ROMAN_24);//GLUT_BITMAP_TIMES_ROMAN_24
+			vBitmapOutput(12, -5, scoreP1, GLUT_BITMAP_TIMES_ROMAN_24);//GLUT_BITMAP_TIMES_ROMAN_24
 		glPopMatrix();
 	glPopMatrix();
 	glColor3f(1, 1, 1);

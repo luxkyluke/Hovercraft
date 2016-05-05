@@ -475,6 +475,7 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 					timeStartLevel += SDL_GetTicks() - timerStartPause;
 					break;
 				}
+				break;
 
 			// resize window
 			case SDL_VIDEORESIZE:
@@ -497,6 +498,9 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 		}
 		duration = SDL_GetTicks() - timeStartLevel;
 	}
+
+	camera_is_in_work = false;
+
 	return (loop);
 
 }

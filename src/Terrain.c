@@ -50,7 +50,7 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t, Point2D* vp1_pos,
     t->nbCheckpts = 0;
     int hauteurButG = 0;
     int hauteurButD = 0;
-    float butG_pos_y= -1., butD_pos_y=-1.;
+    int butG_pos_y= -1, butD_pos_y=-1;
     t->butP1 = (But*) malloc(sizeof(But));
     t->butP2 = (But*) malloc(sizeof(But));
     GLuint textureButP1 = loadImage(DEFAULT_BUTP1_TEXTURE_PATH);
@@ -65,10 +65,10 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t, Point2D* vp1_pos,
         }
         for(j=0; j < NB_MAX_COLONNE; j++){
         	if(ligne[j] == '1'){
-        		*vp1_pos = PointXY(getXSDL(j), getYSDL(i+2));
+        		*vp1_pos = PointXY(getXSDL(j), getYSDL(i));
         	}
         	else if(ligne[j] == '2'){
-        		*vp2_pos = PointXY(getXSDL(j), getYSDL(i-2));
+        		*vp2_pos = PointXY(getXSDL(j), getYSDL(i));
         	}
         	else if(ligne[j] == 'F' || ligne[j]=='B'){
                 if(t->nbCheckpts >= NB_MAX_CHECKPT){
@@ -88,14 +88,14 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t, Point2D* vp1_pos,
         }
         t->largeur = j;
         if(ligne[(int)DEFAULT_BUTD_POS_X] == 'x'){
-            if(butG_pos_y < 0)
-                butG_pos_y = i;
-            hauteurButG++;
-        }
-        if(ligne[(int)DEFAULT_BUTG_POS_X] == 'x'){
             if(butD_pos_y < 0)
                 butD_pos_y = i;
             hauteurButD++;
+        }
+        if(ligne[(int)DEFAULT_BUTG_POS_X] == 'x'){
+            if(butG_pos_y < 0)
+                butG_pos_y = i;
+            hauteurButG++;
         }
 
         t->terrain[i] = str_dup(ligne);
@@ -105,12 +105,19 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t, Point2D* vp1_pos,
     t->hauteur=i;
    // printf("%d\n", i);
 
-    MakeBut(PointXY(DEFAULT_BUTG_POS_X,butG_pos_y),
-    		PointXY(DEFAULT_BUTG_POS_X, butG_pos_y+hauteurButG),
-			t->butP2, player2, textureButP2);
-    MakeBut(PointXY(DEFAULT_BUTD_POS_X,butD_pos_y),
-    		PointXY(DEFAULT_BUTD_POS_X, butD_pos_y+hauteurButD),
-			t->butP1, player1, textureButP1);
+    float y_top = getYSDL(butD_pos_y);
+    float y_bottom = getYSDL(butD_pos_y+hauteurButD);
+    float x = getXSDL(DEFAULT_BUTD_POS_X);
+    MakeBut(PointXY(x, y_top),
+    		PointXY(x, y_bottom),
+			t->butP1, player1);
+
+    y_top = getYSDL(butG_pos_y);
+	y_bottom = getYSDL(butG_pos_y+hauteurButG);
+	x = getXSDL(DEFAULT_BUTG_POS_X);
+    MakeBut(PointXY(x, y_top),
+    		PointXY(x, y_bottom),
+			t->butP2, player2);
  }
 
 bool EstDansTerrain(Terrain* t, Point2D pos){
@@ -202,11 +209,6 @@ void DessinTerrain(Terrain* t) {
         glBindTexture(GL_TEXTURE_2D, 0);
         glDisable(GL_TEXTURE_2D);
     glPopMatrix();
-
-    glColor3f(255,255,255);
-	DessinBut(t->butP1, DEFAULT_LARGEUR_BUT);
-    glColor3f(255,255,255);
-	DessinBut(t->butP2, DEFAULT_LARGEUR_BUT);
 
     int i;
     for(i=0; i<t->nbCheckpts; i++){
