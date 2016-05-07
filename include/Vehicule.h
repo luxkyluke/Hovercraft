@@ -34,6 +34,7 @@ typedef struct {
 	Player player;
     Bonus bonus;
     int timerBonus;
+    GLuint texture;
 }Vehicule;
 
 

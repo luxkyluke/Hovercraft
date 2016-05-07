@@ -1,6 +1,6 @@
 #include "../include/Menu.h"
 
-#define DURATION_TIME 180000
+#define DURATION_TIME 30000
 
 #define PATH_TEXTURE_DEBUT "./images/menu_deb.png"
 #define PATH_TEXTURE_FIN "./images/menu_fin.png"
@@ -13,12 +13,12 @@
 #define PATH_TEXTURE_DEBUT_BTN_2 "./images/menu_deb_button2.png"
 #define PATH_TEXTURE_FIN_BTN_2 "./images/menu_fin_button2.png"
 #define PATH_TEXTURE_PAUSE_BTN_2 "./images/menu_pause_button2.png"
-#define POS_BTN1_TOP 71
-#define POS_BTN1_BOTTOM 96
-#define POS_BTN2_TOP 148
-#define POS_BTN2_BOTTOM 175
-#define POS_BTN_RIGHT 815
-#define POS_BTN_LEFT 455
+#define POS_BTN1_TOP 100
+#define POS_BTN1_BOTTOM 140
+#define POS_BTN2_TOP 190
+#define POS_BTN2_BOTTOM 230
+#define POS_BTN_RIGHT 930
+#define POS_BTN_LEFT 565
 
 /* Nombre de bits par pixel de la fen�tre */
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -112,17 +112,17 @@ void AfficheScoreMenu(int score1, int score2) {
 	//glScalef(0.,2.,0.);
 	glPushMatrix();
 		glPushMatrix();
-			glTranslatef(-10, -52.5, 0);
+//			glTranslatef(-12, -45, 0);
 			//glColor3f(0.98, 0.33, 0.13);
 			glColor3f(1, 1, 1);
-			vBitmapOutput(-2, 45, scoreP1, GLUT_BITMAP_TIMES_ROMAN_24);
+			vBitmapOutput(-13, -5, scoreP2, GLUT_BITMAP_TIMES_ROMAN_24);
 			glColor3f(1, 1, 1);
 		glPopMatrix();
 		glPushMatrix();
-			glTranslatef(9,-52.5, 0);
+//			glTranslatef(12, -45, 0);
 			//glColor3f(0.24, 0.41, 0.71);
 			glColor3f(1, 1., 1.);
-			vBitmapOutput(-2, 45, scoreP2, GLUT_BITMAP_TIMES_ROMAN_24);//GLUT_BITMAP_TIMES_ROMAN_24
+			vBitmapOutput(12, -5, scoreP1, GLUT_BITMAP_TIMES_ROMAN_24);//GLUT_BITMAP_TIMES_ROMAN_24
 		glPopMatrix();
 	glPopMatrix();
 	glColor3f(1, 1, 1);

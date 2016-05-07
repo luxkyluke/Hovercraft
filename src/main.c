@@ -17,8 +17,8 @@
 
 #include "../include/Menu.h"
 
-#define WINDOW_WIDTH 1300
-#define WINDOW_HEIGHT 650
+#define WINDOW_WIDTH 1500
+#define WINDOW_HEIGHT 750
 
 
 
