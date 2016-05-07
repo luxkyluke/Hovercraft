@@ -54,10 +54,6 @@ bool MakeLevel(Level* l, char* nameFichTerrain, int duration, int numLevel) {
 
 	MakeTerrain(textureIdTerrain, fileTerrain, t, &posVp1, &posVp2);
 	MakeVehicule(posVp1, DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player1, vp1);
-//	MakeVehicule(PointXY(DEFAULT_VP1_POS_X, DEFAULT_VP1_POS_Y),
-//					DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player1, vp1);
-//	MakeVehicule(PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y),
-//					DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player2, vp2);
 	MakeVehicule(posVp2, DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player2, vp2);
 
 	MakeBallon(imageBallon, PointXY(DEFAULT_BALL_POS_X, DEFAULT_BALL_POS_Y),
