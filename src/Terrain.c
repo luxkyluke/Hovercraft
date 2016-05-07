@@ -14,8 +14,6 @@
 #define DEFAULT_BUTG_POS_X 189.
 #define DEFAULT_BUTD_POS_X 10.
 #define DEFAULT_LARGEUR_BUT 10
-#define DEFAULT_BUTP2_TEXTURE_PATH "images/butD.png"
-#define DEFAULT_BUTP1_TEXTURE_PATH "images/butG.png"
 
 char *str_dup(char const *s){
     char *pc = NULL;
@@ -53,8 +51,6 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t, Point2D* vp1_pos,
     int butG_pos_y= -1, butD_pos_y=-1;
     t->butP1 = (But*) malloc(sizeof(But));
     t->butP2 = (But*) malloc(sizeof(But));
-    GLuint textureButP1 = loadImage(DEFAULT_BUTP1_TEXTURE_PATH);
-    GLuint textureButP2 = loadImage(DEFAULT_BUTP2_TEXTURE_PATH);
 
     char ligne[NB_MAX_COLONNE];
 
