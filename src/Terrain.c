@@ -6,7 +6,7 @@
 #include "sdl_tools.h"
 
 
-
+//definition de valeurs par defaut
 #define NB_MAX_LIGNE 100
 #define NB_MAX_COLONNE 202
 #define NB_MAX_CHECKPT 30
@@ -15,14 +15,13 @@
 #define DEFAULT_BUTD_POS_X 10.
 #define DEFAULT_LARGEUR_BUT 10
 
+//duplique la string passé en parametre
 char *str_dup(char const *s){
     char *pc = NULL;
-
     if (s != NULL){
         pc = malloc((strlen(s) + 1) * sizeof *pc);
-        if (pc != NULL) {
+        if (pc != NULL)
             strcpy(pc, s);
-        }
     }
     return pc;
 }
@@ -36,7 +35,6 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t, Point2D* vp1_pos,
         printf("Erreur fichier terrain\n");
         return;
     }
-    //char* tablignes[NB_MAX_LIGNE];
     t->terrain = (char **) malloc(NB_MAX_LIGNE*NB_MAX_COLONNE*sizeof(char*));
     int j,i=0;
 
@@ -53,20 +51,20 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t, Point2D* vp1_pos,
     t->butP2 = (But*) malloc(sizeof(But));
 
     char ligne[NB_MAX_COLONNE];
-
-    while(fgets(ligne, NB_MAX_COLONNE, terrainTxt)) {
+    //lecture du fichier txt
+    while(fgets(ligne, NB_MAX_COLONNE, terrainTxt)) {//ligne par ligne
         if(i > NB_MAX_LIGNE){
             printf("Le fichier txtTerrain contient trop de ligne !\n");
             return;
         }
-        for(j=0; j < NB_MAX_COLONNE; j++){
-        	if(ligne[j] == '1'){
+        for(j=0; j < NB_MAX_COLONNE; j++){//pour chaque caractère de la ligne
+        	if(ligne[j] == '1'){//si le caractere vaut 1 alors il definit la position de vp1
         		*vp1_pos = PointXY(getXSDL(j), getYSDL(i));
         	}
-        	else if(ligne[j] == '2'){
+        	else if(ligne[j] == '2'){//si le caractere vaut 1 alors il definit la position de vp2
         		*vp2_pos = PointXY(getXSDL(j), getYSDL(i));
         	}
-        	else if(ligne[j] == 'F' || ligne[j]=='B'){
+        	else if(ligne[j] == 'F' || ligne[j]=='B'){//si le cara est un F ou un B, il definit la position d'un bonus
                 if(t->nbCheckpts >= NB_MAX_CHECKPT){
                     printf("Trop de checkpoints ! 30 Max\n");
                     return;
@@ -77,30 +75,30 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t, Point2D* vp1_pos,
                 else
                 	b=boost;
                 Checkpoint chp;
+                //creation du bonus trouver à la position défini par i et j
                 MakeCheckpoint(PointXY(getXSDL(j), getYSDL(i+1)), DEFAULT_RAYON_CHECKPT, &chp, b);
                 t->checkpts[t->nbCheckpts] = CopyCheckpt(&chp);
                 t->nbCheckpts++;
             }
         }
         t->largeur = j;
-        if(ligne[(int)DEFAULT_BUTD_POS_X] == 'x'){
+        if(ligne[(int)DEFAULT_BUTD_POS_X] == 'x'){//si le cara à la position 10 est un x alors on a trouver le but de droite
             if(butD_pos_y < 0)
                 butD_pos_y = i;
             hauteurButD++;
         }
-        if(ligne[(int)DEFAULT_BUTG_POS_X] == 'x'){
+        if(ligne[(int)DEFAULT_BUTG_POS_X] == 'x'){//si le cara est un x 189 alors on a trouver le but de gauche
             if(butG_pos_y < 0)
                 butG_pos_y = i;
             hauteurButG++;
         }
 
-        t->terrain[i] = str_dup(ligne);
-        //printf("%s\n", ligne);
+        t->terrain[i] = str_dup(ligne);//duplique la ligne de caractere avant de la stocker dans le terrain
         i++;
     }
     t->hauteur=i;
-   // printf("%d\n", i);
 
+    //creation des buts
     float y_top = getYSDL(butD_pos_y);
     float y_bottom = getYSDL(butD_pos_y+hauteurButD);
     float x = getXSDL(DEFAULT_BUTD_POS_X);
@@ -122,8 +120,8 @@ bool EstDansTerrain(Terrain* t, Point2D pos){
 	return true;
 }
 
+//reajuste les x et y passer en parametre pour qu'il ne soit pas en dehors du tableau
 void getPosDansTerrain(Terrain* t, int *x, int *y){
-
 	if(*x >= t->largeur)
 		*x = t->largeur-2;
 	else if(*x < 0)
@@ -138,21 +136,19 @@ bool IsWall(Terrain* t, Point2D pos, int* status){
     int x = getXTerrain(pos.x);
     int y = getYTerrain(pos.y);
     //printf("x:%df, y: %d\n",x, y);
-    if(!EstDansTerrain(t, PointXY(x, y))){
+    if(!EstDansTerrain(t, PointXY(x, y))){//si les coords sont en dehors du terrain, on les replaces dedans
     	getPosDansTerrain(t, &x, &y);
     }
-
+    //calcul du status de la colission
     *status = 0;
-    if(t->terrain[y][x] == '|')
+    if(t->terrain[y][x] == '|') //si collision horizontal
         *status += 1;
 
-    if(t->terrain[y][x] == '-')
+    if(t->terrain[y][x] == '-')	//si collision vertical
     	*status += 2;
 
     return (*status != 0);
 }
-
-
 
 
 bool CercleIsInWall(Terrain* t, Cercle* c, int* status){
@@ -160,16 +156,15 @@ bool CercleIsInWall(Terrain* t, Cercle* c, int* status){
     float xmin = c->centre.x - c->radius;
     float ymax = c->centre.y + c->radius;
     float ymin = c->centre.y - c->radius;
+    //creation de 4 points aux bords du cercle
     Point2D top_right = PointXY(xmax, ymax);
     Point2D bottom_right= PointXY(xmax, ymin);
     Point2D top_left = PointXY(xmin, ymax);
     Point2D bottom_left = PointXY(xmin, ymin);
 
-
-
+    //verfication de collision avec ces 4 points et du centre du cercle
     if(IsWall (t, c->centre, status) || IsWall(t, top_right, status) || IsWall(t, bottom_right, status)
         || IsWall(t, top_left, status) || IsWall(t, bottom_left, status)){
-            //printf("x=%3.f, y=%3.f\n", c->centre.x, c->centre.y);
             return  true;
     }
     return false;
@@ -208,19 +203,13 @@ void DessinTerrain(Terrain* t) {
 
     int i;
     for(i=0; i<t->nbCheckpts; i++){
-        DessinCheckpoint(t->checkpts[i]);
+        DessinCheckpoint(t->checkpts[i]); //desine les checkpoints
     }
-}
-
-char getCaraTerrain(Terrain *t, Point2D pos){
-	int x = (int) getXTerrain(pos.x);
-	int y = (int) getYTerrain(pos.y);
-	return t->terrain[y][x];
 }
 
 void ResetTerrain(Terrain* t){
 	int i;
 	for(i=0; i<t->nbCheckpts; i++){
-		ResetCheckpoint(t->checkpts[i]);
+		ResetCheckpoint(t->checkpts[i]); //reset chaque checkpoints
 	}
 }

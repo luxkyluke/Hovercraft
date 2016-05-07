@@ -9,8 +9,6 @@ Vector2D VectorXY(float x, float y) {
     return v;
 }
 
-
-
 Vector2D AddVectors(Vector2D u, Vector2D v) {
     return VectorXY(u.x + v.x, u.y + v.y);
 }

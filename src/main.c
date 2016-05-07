@@ -23,19 +23,33 @@
 
 
 int main(int argc, char** argv) {
-
+	//initialisation du contexte glut
 	initGlut(argc, argv);
 
 	Menu* menu = (Menu *) malloc(sizeof(Menu));
 
+	Game* game = (Game *) malloc(sizeof(Game));
 
+	//si probleme lors de la création du menu -> exit
 	if (!MakeMenu(WINDOW_WIDTH, WINDOW_HEIGHT, menu, debut))
 		return EXIT_FAILURE;
 
+	//si porblème lors de la création du game -> exit
+	if (!MakeGame(game)) {
+		printf("Erreur MakeGame !!");
+		return EXIT_FAILURE;
+	}
 
-	CallMenuDemarrage(menu);
+	CallMenuDemarrage(menu, game);
 
-	FreeMenu(menu);
+	//liberation du *game
+	FreeGame(game);
+	free(game);
+	game = NULL;
+
+	//libéraiton du *menu
+	free(menu);
+	menu = NULL;
 
 	return EXIT_SUCCESS;
 }

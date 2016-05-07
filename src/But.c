@@ -18,18 +18,14 @@ bool BallIsInGoal(But* but, Ballon* ball) {
 	float topy = but->top.y;
 	float bottomy = but->bottom.y;
 
-//    printf("ball y %3.f / bas y %3.f / haut y %3.f\n", ball->cercle->centre.y, bottomy, topy);
-
 	if (!(ball->cercle->centre.y > bottomy && ball->cercle->centre.y < topy))
 		return false;
 
 	if (x > 0) {
 		if (ball->cercle->centre.x >= x) {
-			//printf("GOAAAAL pour player%d!\n", but->player);
 			return true;
 		}
 	} else if (ball->cercle->centre.x <= x) {
-		//printf("GOAAAAL pour player%d!\n", but->player);
 		return true;
 	}
 	return false;
