@@ -239,11 +239,6 @@ void RalentiLevel(Level* level) {
 }
 
 void UpdateCameraLevel(Level* level) {
-//  if(level->camera->zoomLevel<4 && level->camera->start == 1)
-//    UpdateCamera(level->camera, level->ballon);
-//  else if(level->camera->zoomLevel>=4){
-//        ResetLevel(level);
-//  }
 	if (level->camera->zoomLevel < 4 && level->camera->start == 1) {
 		camera_is_in_work = true;
 		LookAt(level->camera, level->ballon->cercle->centre,

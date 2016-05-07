@@ -6,7 +6,6 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #endif
-/* FIN DU A GARDER */
 
 #include "Vehicule.h"
 #include "Geometry.h"
@@ -19,11 +18,12 @@
 
 #define BONUS_DURATION 5000
 
-
-//Dessin de l'hovercraft
+/**
+ * Dessine un véhicule
+ */
 void DessinVehicule(Vehicule* v) {
-    glPushMatrix();
 
+	glPushMatrix();
     	glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, v->texture);
         glTexEnvf(GL_TEXTURE_2D,GL_TEXTURE_ENV_MODE,GL_MODULATE);
@@ -53,19 +53,20 @@ void DessinVehicule(Vehicule* v) {
         glDisable(GL_BLEND);
         glDepthMask(GL_TRUE);
         glDisable(GL_TEXTURE_2D);
-
-
     glPopMatrix();
 
     glPushMatrix();
-    glBegin(GL_POINTS);
-    glPointSize(18);
-    glColor3f(1, 0, 0);
-    glVertex2d(v->cercle->centre.x, v->cercle->centre.y);
-    glEnd();
+		glBegin(GL_POINTS);
+		glPointSize(18);
+		glColor3f(1, 0, 0);
+		glVertex2d(v->cercle->centre.x, v->cercle->centre.y);
+		glEnd();
     glPopMatrix();
 }
 
+/**
+ * Créer un véhicule
+ */
 void MakeVehicule(Point2D pos, float hauteur, float largeur, Player p, Vehicule *h) {
     if (!h) {
         printf("Impossible de crÃ©er le vÃ©hicule, pointeur non allouÃ©\n");
@@ -82,14 +83,6 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, Player p, Vehicule 
     h->defaultPosition = pos;
     h->player = p;
     ResetVehicule(h);
-    Point2D defaultPosC = AddPoints(pos, PointXY(0.5 * hauteur, 0.5 * hauteur));
-    h->cercle = (Cercle*) malloc(sizeof(Cercle));
-    MakeCercle(h->cercle, defaultPosC, 0.5 * largeur);
-    h->facticeCercle = (Cercle*) malloc(sizeof(Cercle));
-    MakeCercle(h->facticeCercle, h->position, 0.5 * largeur);
-
-//  h->bonus = none;
-//  h->timerBonus = 0;
 }
 
 // PARTIE PHYSIQUE
@@ -150,18 +143,19 @@ void ResetVehicule(Vehicule* h) {
         defaultDir = VectorXY(-1, 0);
     } else {
         h->angle = -90;
-        defaultDir = VectorXY(1, 0);
-    }
-    Vector2D defaultAcc = VectorXY(0, 0);
-    Vector2D defaultVit = VectorXY(0, 0);
-//  Point2D defaultPosC = AddPoints(h->position, PointXY(0.5 * h->hauteur, 0.5 * h->hauteur));
-//  h->cercle = (Cercle*) malloc(sizeof(Cercle));
-//  MakeCercle(h->cercle, defaultPosC, 0.5 * h->largeur);
-//  h->facticeCercle = (Cercle*) malloc(sizeof(Cercle));
-//  MakeCercle(h->facticeCercle, h->position, 0.5 * h->largeur);
-    h->direction = defaultDir;
-    h->acceleration = defaultAcc;
-    h->vitesse = defaultVit;
+		defaultDir = VectorXY(1, 0);
+	}
+	Vector2D defaultAcc = VectorXY(0, 0);
+	Vector2D defaultVit = VectorXY(0, 0);
+	Point2D defaultPosC = AddPoints(h->position,
+			PointXY(0.5 * h->hauteur, 0.5 * h->hauteur));
+	h->cercle = (Cercle*) malloc(sizeof(Cercle));
+	MakeCercle(h->cercle, defaultPosC, 0.5 * h->largeur);
+	h->facticeCercle = (Cercle*) malloc(sizeof(Cercle));
+	MakeCercle(h->facticeCercle, h->position, 0.5 * h->largeur);
+	h->direction = defaultDir;
+	h->acceleration = defaultAcc;
+	h->vitesse = defaultVit;
     h->bonus = none;
     h->tourne = 0;
     h->timerBonus = 0;//SDL_GetTicks();
@@ -205,7 +199,6 @@ void FreezeVehicule(Vehicule* v) {
 void CheckBoost(Vehicule* v) {
     if (v->bonus == boost) {
         if (!IsInBonus(v)) {
-            printf("DÃ©passÃ© de 4s.\n");
             v->bonus = none;
             v->timerBonus = SDL_GetTicks();
         }
@@ -216,7 +209,6 @@ void CheckBoost(Vehicule* v) {
 void CheckFreeze(Vehicule* v){
     if (v->bonus == freeze) {
         if (!IsInBonus(v)) {
-            printf("Dï¿½passï¿½ de 4s.\n");
             v->bonus = none;
             v->timerBonus = SDL_GetTicks();
         } else {
