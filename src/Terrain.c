@@ -14,8 +14,6 @@
 #define DEFAULT_BUTG_POS_X 189.
 #define DEFAULT_BUTD_POS_X 10.
 #define DEFAULT_LARGEUR_BUT 10
-#define DEFAULT_BUTP2_TEXTURE_PATH "images/butD.png"
-#define DEFAULT_BUTP1_TEXTURE_PATH "images/butG.png"
 
 char *str_dup(char const *s){
     char *pc = NULL;
