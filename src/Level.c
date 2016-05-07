@@ -100,16 +100,16 @@ bool CheckTouched(Level* l) {
 			}
 		}
 	}
+	if (camera_is_in_work)
+		return true;
 
 	CollisionBallonTerrain(l->ballon, l->terrain);
 	Player buteur;
 	if (CollisionBallonBut(l->ballon, l->terrain, &buteur)) {
 		if (buteur == player1) {
 			l->scoreP1 += 1;
-			printf("score P1 : %d\n", l->scoreP1);
 		} else {
 			l->scoreP2 += 1;
-			printf("score P2 : %d\n", l->scoreP2);
 		}
 
 		/*Mix_AllocateChannels(1); //Alloue 1 canal
@@ -235,11 +235,6 @@ void RalentiLevel(Level* level) {
 }
 
 void UpdateCameraLevel(Level* level) {
-//  if(level->camera->zoomLevel<4 && level->camera->start == 1)
-//    UpdateCamera(level->camera, level->ballon);
-//  else if(level->camera->zoomLevel>=4){
-//        ResetLevel(level);
-//  }
 	if (level->camera->zoomLevel < 4 && level->camera->start == 1) {
 		camera_is_in_work = true;
 		LookAt(level->camera, level->ballon->cercle->centre,
@@ -260,7 +255,6 @@ void CheckBonus(Level* level) {
 }
 
 bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cross, SDL_Joystick* joystick) {
-
 	if (!level)
 		return false;
 
@@ -297,27 +291,9 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 		glLoadIdentity();
 
 		//Camera//
-		glPushMatrix();
-		glLoadIdentity();
 		UpdateCameraLevel(level);
 
-//ZONE DE TEST//////////
-//    glBegin(GL_LINES);
-//      //glColor3f(0.,1.,0.);
-//        glVertex2f(0,0);
-//        glVertex2f(level->vp1->direction.x, level->vp1->direction.y);
-//    glEnd();
-//
-//    glPushMatrix();
-//        glTranslatef(level->ballon->cercle->centre.x, level->ballon->cercle->centre.y, 0);
-//        glScalef(level->ballon->cercle->radius, level->ballon->cercle->radius, 0.);
-//        dessinCercle(100, 0.8, 0.4, 0.1, 0);
-//    glPopMatrix();
-
-///////////////////////////
-
-		if (!camera_is_in_work)
-			CheckTouched(level);
+		CheckTouched(level);
 
 		CheckBonus(level);
 
@@ -325,8 +301,6 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 
 		DessinLevel(level, duration);
 
-
-		glPopMatrix();
 
 		// Echange du front et du back buffer : mise Ã  jour de la fenÃªtre
 		SDL_GL_SwapBuffers();

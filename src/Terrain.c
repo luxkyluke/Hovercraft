@@ -53,8 +53,6 @@ void MakeTerrain(GLuint texture, FILE* terrainTxt, Terrain* t, Point2D* vp1_pos,
     int butG_pos_y= -1, butD_pos_y=-1;
     t->butP1 = (But*) malloc(sizeof(But));
     t->butP2 = (But*) malloc(sizeof(But));
-    GLuint textureButP1 = loadImage(DEFAULT_BUTP1_TEXTURE_PATH);
-    GLuint textureButP2 = loadImage(DEFAULT_BUTP2_TEXTURE_PATH);
 
     char ligne[NB_MAX_COLONNE];
 
@@ -128,11 +126,11 @@ bool EstDansTerrain(Terrain* t, Point2D pos){
 
 void getPosDansTerrain(Terrain* t, int *x, int *y){
 
-	if(*x > t->largeur)
+	if(*x >= t->largeur)
 		*x = t->largeur-2;
 	else if(*x < 0)
 		*x = 0;
-	if(*y > t->hauteur)
+	if(*y >= t->hauteur)
 		*y = t->hauteur-1;
 	else if(*y < 0)
 		*y = 0;
