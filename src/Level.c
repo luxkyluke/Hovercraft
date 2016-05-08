@@ -54,10 +54,6 @@ bool MakeLevel(Level* l, char* nameFichTerrain, int duration, int numLevel) {
 
 	MakeTerrain(textureIdTerrain, fileTerrain, t, &posVp1, &posVp2);
 	MakeVehicule(posVp1, DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player1, vp1);
-//	MakeVehicule(PointXY(DEFAULT_VP1_POS_X, DEFAULT_VP1_POS_Y),
-//					DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player1, vp1);
-//	MakeVehicule(PointXY(DEFAULT_VP2_POS_X, DEFAULT_VP2_POS_Y),
-//					DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player2, vp2);
 	MakeVehicule(posVp2, DEFAULT_VEHICUL_H, DEFAULT_VEHICUL_W, player2, vp2);
 
 	MakeBallon(imageBallon, PointXY(DEFAULT_BALL_POS_X, DEFAULT_BALL_POS_Y),
@@ -104,16 +100,16 @@ bool CheckTouched(Level* l) {
 			}
 		}
 	}
+	if (camera_is_in_work)
+		return true;
 
 	CollisionBallonTerrain(l->ballon, l->terrain);
 	Player buteur;
 	if (CollisionBallonBut(l->ballon, l->terrain, &buteur)) {
 		if (buteur == player1) {
 			l->scoreP1 += 1;
-			printf("score P1 : %d\n", l->scoreP1);
 		} else {
 			l->scoreP2 += 1;
-			printf("score P2 : %d\n", l->scoreP2);
 		}
 
 		/*Mix_AllocateChannels(1); //Alloue 1 canal
@@ -259,7 +255,6 @@ void CheckBonus(Level* level) {
 }
 
 bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cross, SDL_Joystick* joystick) {
-
 	if (!level)
 		return false;
 
@@ -296,27 +291,9 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 		glLoadIdentity();
 
 		//Camera//
-		glPushMatrix();
-		glLoadIdentity();
 		UpdateCameraLevel(level);
 
-//ZONE DE TEST//////////
-//    glBegin(GL_LINES);
-//      //glColor3f(0.,1.,0.);
-//        glVertex2f(0,0);
-//        glVertex2f(level->vp1->direction.x, level->vp1->direction.y);
-//    glEnd();
-//
-//    glPushMatrix();
-//        glTranslatef(level->ballon->cercle->centre.x, level->ballon->cercle->centre.y, 0);
-//        glScalef(level->ballon->cercle->radius, level->ballon->cercle->radius, 0.);
-//        dessinCercle(100, 0.8, 0.4, 0.1, 0);
-//    glPopMatrix();
-
-///////////////////////////
-
-		if (!camera_is_in_work)
-			CheckTouched(level);
+		CheckTouched(level);
 
 		CheckBonus(level);
 
@@ -324,8 +301,6 @@ bool PlayLevel(Level* level, int windowWidth, int windowHeight, int id, bool* cr
 
 		DessinLevel(level, duration);
 
-
-		glPopMatrix();
 
 		// Echange du front et du back buffer : mise Ã  jour de la fenÃªtre
 		SDL_GL_SwapBuffers();

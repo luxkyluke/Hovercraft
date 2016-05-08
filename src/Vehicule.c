@@ -143,8 +143,8 @@ void ResetVehicule(Vehicule* h) {
         defaultDir = VectorXY(-1, 0);
     } else {
         h->angle = -90;
-		defaultDir = VectorXY(1, 0);
-	}
+        defaultDir = VectorXY(1, 0);
+    }
 	Vector2D defaultAcc = VectorXY(0, 0);
 	Vector2D defaultVit = VectorXY(0, 0);
 	Point2D defaultPosC = AddPoints(h->position,
@@ -155,7 +155,7 @@ void ResetVehicule(Vehicule* h) {
 	MakeCercle(h->facticeCercle, h->position, 0.5 * h->largeur);
 	h->direction = defaultDir;
 	h->acceleration = defaultAcc;
-	h->vitesse = defaultVit;
+    h->vitesse = defaultVit;
     h->bonus = none;
     h->tourne = 0;
     h->timerBonus = 0;//SDL_GetTicks();
