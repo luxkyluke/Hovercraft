@@ -69,8 +69,8 @@ bool TouchedVehiculeVehicule(Vehicule* vehicule1, Vehicule* vehicule2);
 bool TouchedBallonBut(Ballon *ballon, But* but);
 bool TouchedVehiculeCheckPoint(Vehicule* vehicule, Checkpoint* chkP);
 bool TouchedVehiculeBallon(Ballon* ballon, Vehicule* vehicule);
-bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain);
-bool TouchedBallonTerrain(Ballon *ballon, Terrain * terrain);
+bool TouchedVehiculeTerrain(Vehicule* vehicule, Terrain* terrain, int* status);
+bool TouchedBallonTerrain(Ballon* ballon, Terrain* terrain, int* status);
 
 
 #endif

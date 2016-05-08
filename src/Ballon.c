@@ -44,6 +44,10 @@ void DessinBallon(Ballon* ball) {
 	glPushMatrix();
 	    glEnable(GL_TEXTURE_2D);
 	    glBindTexture(GL_TEXTURE_2D, ball->texture);
+	    glTexEnvf(GL_TEXTURE_2D,GL_TEXTURE_ENV_MODE,GL_MODULATE);
+		glDepthMask(GL_FALSE);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 	    glTranslatef(ball->cercle->centre.x, ball->cercle->centre.y, 0);
 	    glScalef(ball->cercle->radius, ball->cercle->radius, 1);
 	    glColor3f(255, 255, 255);
