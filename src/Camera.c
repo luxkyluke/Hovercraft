@@ -16,7 +16,6 @@ void MakeCamera(Camera* c) {
         printf("Impossible de creer la camera, pointeur non alloue\n");
         return;
     }
-
     c->zoomLevel = 1;
     c->direction = PointXY(0,0);
     c->start = 0;

@@ -25,16 +25,52 @@ typedef struct {
     Vector2D vitesse;
     Vector2D acceleration;
     Cercle* cercle;
-    //Cercle* cercleFactice;
 }Ballon;
 
-
+/**
+ * @brief Cree un ballon avec le pointeur de ballon passé en paramètre
+ * @param texture - la texture du ballon
+ * @param pos - la position du checkpoint
+ * @param r - le rayon du cercle du checkpoint
+ * @param checkpt - le pointeur du checkpoint à créer
+ * @param b - le bonus du checkpoint
+ */
 void MakeBallon(GLuint texture, Point2D pos, Ballon* ballon, float ballRadius);
+
+/**
+ * @brief met a jour la position du ballon
+ * @param b - le ballon a met a jour
+ */
 void UpdatePositionBall(Ballon* b);
+
+/**
+ * @brief met a jour la vitesse du ballon
+ * @param b - le ballon a met a jour
+ */
 void UpdateVitesseBall(Ballon* b);
+
+/**
+ * @brief met a jour les valeurs du ballon
+ * @param b - le ballon a met a jour
+ */
 void UpdateBallon(Ballon* b);
+
+/**
+ * @brief Dessine le ballon passé en param
+ * @param ball - le pointeur du ballon à déssiner
+ */
 void DessinBallon(Ballon* ball);
+
+/**
+ * @brief Réinitialise le ballon comme au début
+ * @param b - le pointeur sur le ballon a reset
+ */
 void ResetBallon(Ballon* b);
+
+/**
+ * @brief Libere les pointeur du ballon
+ * @param checkpt - le pointeur du ballon à liberer
+ */
 void FreeBallon(Ballon* v);
 
 #endif

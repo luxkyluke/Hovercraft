@@ -3,19 +3,27 @@
 #include "TypeMenu.h"
 #include "../include/Menu.h"
 
+//nombre maximum de niveau
 #define NB_MAX_LEVEL 30
+
+//nombre de niveau actifs
 #define NB_LEVEL 2
 
+//durée d'un niveau du jeu
+#define DURATION_TIME 180000
 
-bool MakeGame(Game* game, int duration){
+//les fichier des texture de terrains
+#define DEFAULT_TERRAIN_TEXTURE_PATH "images/terrain1.png"
+#define DEFAULT_TERRAIN_TEXTURE2_PATH "images/terrain2.png"
+
+bool MakeGame(Game* game){
 	if(game == NULL) {
 		printf("Impossible de créer le game, pointeur non alloué\n");
 		return false;
 	}
-
 	game->levels = (Level **) malloc(NB_MAX_LEVEL*sizeof(Level*));
 	game->nbLevels = 0 ;
-	game->duration = duration;
+	game->duration = DURATION_TIME;
 
     SDL_Joystick *joystick; // on crée le joystick
     joystick = SDL_JoystickOpen(0); // on l'assigne au numéro 0
@@ -39,21 +47,20 @@ bool MakeGame(Game* game, int duration){
         game->joystick = NULL;
         SDL_JoystickEventState(SDL_DISABLE);
     }
-
-
+    //ajoute des niveaux jusqu'a NB_LEVEL ne nombre de niveaux connus (ici 2)
 	int i;
 	for (i=1; i<NB_LEVEL+1; i++){
-		char levelTxt[10];
+		char levelTxt[10], pathTexture[50];
 		sprintf(levelTxt, "level%d", i);
-		if(!AddLevel(game, levelTxt))
+		sprintf(pathTexture, "images/terrain%d", i);
+		strcat(pathTexture,  ".png");
+		if(!AddLevel(game, levelTxt, pathTexture)) //Ajout du niveau level+i
 			return false;
 	}
 	return true;
-
 }
 
-bool AddLevel(Game* game, char* nameFichTerrain){
-
+bool AddLevel(Game* game, char* nameFichTerrain, char* pathTexture){
 	if(!game || !nameFichTerrain)
         return false;
 	if(game->nbLevels == NB_MAX_LEVEL){
@@ -63,7 +70,7 @@ bool AddLevel(Game* game, char* nameFichTerrain){
     int id = game->nbLevels;
 	game->levels[id] = (Level *) malloc(sizeof(Level));
 
-	if(!MakeLevel(game->levels[id], nameFichTerrain, game->duration, game->nbLevels)){
+	if(!MakeLevel(game->levels[id], nameFichTerrain, game->duration, pathTexture)){
 		printf("Probleme makeLevel dans AddLevel\n");
         return false ;
 	}
@@ -78,7 +85,7 @@ bool PlayGame(Game* game, int windowWidth, int windowHeight){
     int i;
     for(i=0 ;i<game->nbLevels; ++i){
     	bool cross = false;
-    	bool thisIsTheEnd = PlayLevel(game->levels[i], windowWidth, windowHeight, i, &cross, game->joystick);
+    	bool thisIsTheEnd = PlayLevel(game->levels[i], i, &cross, game->joystick);
         if(cross){
         	return false;
         }
@@ -102,9 +109,9 @@ void FreeGame(Game* g){
 
 //    SDL_JoystickEventState(SDL_DISABLE);
 //    if(g->joystick!=NULL)
-        // SDL_JoystickClose(g->joystick);
-    // probleme, normalement il faut le fermer le kono SDL_JoystickClose(g->joystick);
-    // free(g->joystick);
-	g->levels = NULL;
+//         SDL_JoystickClose(g->joystick);
+//     probleme, normalement il faut le fermer le kono SDL_JoystickClose(g->joystick);
+//     free(g->joystick);
+//	g->levels = NULL;
 	printf("FreeGame OK\n");
 }

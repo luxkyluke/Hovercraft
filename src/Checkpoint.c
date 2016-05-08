@@ -4,6 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 
+
 #define RESET_DELAY 20000
 
 void MakeCheckpoint(Point2D pos, float r, Checkpoint* checkpt, Bonus b){
@@ -62,7 +63,6 @@ void DessinCheckpoint(Checkpoint* checkpt){
 		colorBoost = ColorRGBA(1., 0.23, 0.21,0.2);
 		colorFreeze = ColorRGBA(0.01, 0.66, 0.95,0.2);
 	}
-
 	glPushMatrix();
 		glTranslatef(checkpt->cercle->centre.x, checkpt->cercle->centre.y, 0);
 		glScalef(checkpt->cercle->radius, checkpt->cercle->radius, 1);
