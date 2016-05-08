@@ -162,7 +162,7 @@ void DessinMinimap(Level *l) {
 	glPushMatrix();
 	glTranslatef(l->vp2->position.x, l->vp2->position.y, 0);
 	glScalef(10, 10, 1);
-	dessinCercle(50, ColorRGBA(0.1, 0.8, 0.1, 1.), 1);
+	dessinCercle(50, ColorRGBA(0.1, 0.1, 0.8, 1.), 1);
 	glPopMatrix();
 	glPopMatrix();
 }
