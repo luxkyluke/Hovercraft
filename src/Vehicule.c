@@ -88,7 +88,7 @@ void MakeVehicule(Point2D pos, float hauteur, float largeur, Player p, Vehicule 
 // PARTIE PHYSIQUE
 void UpdateAcceleration(Vehicule* h) {
     if (h->avance == 1) {
-        if (h->bonus == boost){
+        if (h->bonus == boost){// si le vehicule est en boost l'accelere davantage
             h->acceleration = MultVector(h->direction, 0.025);
         } else {
             h->acceleration = MultVector(h->direction, 0.015);
@@ -107,8 +107,6 @@ void UpdateVitesse(Vehicule* h) {
 void UpdatePosition(Vehicule* h) {
     h->position.x += h->vitesse.x;
     h->position.y += h->vitesse.y;
-//  if(h->player == player1)
-//      printf("x %d, y %d\n", (int)h->position.x, (int)h->position.y);
     return;
 }
 
@@ -158,36 +156,15 @@ void ResetVehicule(Vehicule* h) {
     h->vitesse = defaultVit;
     h->bonus = none;
     h->tourne = 0;
-    h->timerBonus = 0;//SDL_GetTicks();
+    h->timerBonus = 0;
 }
 
-/*
- bool IsTouchingVehicule(Vehicule *v, Point2D pos){
- Point2D posV = v->position;
- float largeur = v->largeur;
- float hauteur = v->hauteur;
- float xMax = posV.x+largeur/2.;
- float xMin = posV.x-largeur/2.;
- float yMax = posV.y+hauteur/2.;
- float yMin = posV.y-hauteur/2.;
-
- if(pos.x <= xMax && pos.x >= xMin && pos.y <= yMax && pos.y >= yMin){
- printf("TRUE\n");
- return true;
- }
-
- return false;
- }
- */
 void UpdateCercle(Vehicule*v) {
     v->cercle->centre = PointPlusVector(v->position,
             MultVector(Normalize(v->direction), v->largeur / 2.));
     v->facticeCercle->centre = v->position;
 }
 
-void BoostVehicule(Vehicule* v) {
-    v->acceleration = MultVector(v->direction, 0.015);
-}
 
 void FreezeVehicule(Vehicule* v) {
     v->avance = 0;
