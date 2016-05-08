@@ -6,7 +6,6 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #endif
-/* FIN DU A GARDER */
 
 #include "Vehicule.h"
 #include "Geometry.h"
@@ -19,11 +18,12 @@
 
 #define BONUS_DURATION 5000
 
-
-//Dessin de l'hovercraft
+/**
+ * Dessine un vÈhicule
+ */
 void DessinVehicule(Vehicule* v) {
-    glPushMatrix();
 
+	glPushMatrix();
     	glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, v->texture);
         glTexEnvf(GL_TEXTURE_2D,GL_TEXTURE_ENV_MODE,GL_MODULATE);
@@ -53,19 +53,20 @@ void DessinVehicule(Vehicule* v) {
         glDisable(GL_BLEND);
         glDepthMask(GL_TRUE);
         glDisable(GL_TEXTURE_2D);
-
-
     glPopMatrix();
 
     glPushMatrix();
-    glBegin(GL_POINTS);
-    glPointSize(18);
-    glColor3f(1, 0, 0);
-    glVertex2d(v->cercle->centre.x, v->cercle->centre.y);
-    glEnd();
+		glBegin(GL_POINTS);
+		glPointSize(18);
+		glColor3f(1, 0, 0);
+		glVertex2d(v->cercle->centre.x, v->cercle->centre.y);
+		glEnd();
     glPopMatrix();
 }
 
+/**
+ * CrÈer un vÈhicule
+ */
 void MakeVehicule(Point2D pos, float hauteur, float largeur, Player p, Vehicule *h) {
     if (!h) {
         printf("Impossible de cr√©er le v√©hicule, pointeur non allou√©\n");
