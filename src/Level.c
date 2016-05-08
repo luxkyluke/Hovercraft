@@ -144,25 +144,25 @@ void DessinMinimap(Level *l) {
 	glScalef(0.15, 0.15, 1);
 	glPushMatrix();
 	glScalef(190, 100, 1);
-	dessinCarre(0, ColorRGBA(1., 0., 0., 1.));
+	dessinCarre(0, ColorRGBA(0., 0., 0., 1.));
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslatef(l->ballon->cercle->centre.x, l->ballon->cercle->centre.y, 0);
 	glScalef(10, 10, 1);
-	dessinCercle(50, ColorRGBA(1., 1., 0., 1.), 1);
+	dessinCercle(50, ColorRGBA(0., 0., 0., 1.), 1);
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslatef(l->vp1->position.x, l->vp1->position.y, 0);
 	glScalef(10, 10, 1);
-	dessinCercle(50, ColorRGBA(0., 1., 1., 1.), 1);
+	dessinCercle(50, ColorRGBA(0.1, 0.5, 0.8, 1.), 1);
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslatef(l->vp2->position.x, l->vp2->position.y, 0);
 	glScalef(10, 10, 1);
-	dessinCercle(50, ColorRGBA(1., 0., 1., 1.), 1);
+	dessinCercle(50, ColorRGBA(0.9, 0.6, 0.1, 1.), 1);
 	glPopMatrix();
 	glPopMatrix();
 }
