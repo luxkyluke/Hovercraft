@@ -277,7 +277,6 @@ bool PlayLevel(Level* level, int id, bool* cross, SDL_Joystick* joystick) {
 	Menu* menuPause = (Menu *) malloc(sizeof(Menu));
 	if (!MakeMenu(1300, 650, menuPause, pause))
 		return EXIT_FAILURE;
-
 	// Boucle d'affichage
 	int loop = 1;
 	Uint32 timeStartLevel = SDL_GetTicks();
@@ -301,11 +300,12 @@ bool PlayLevel(Level* level, int id, bool* cross, SDL_Joystick* joystick) {
 		CheckBonus(level);
 
 		//mise a jour des position des elements
-		UpdateLevel(level);
+		glPushMatrix();
+			UpdateLevel(level);
 
-		//dessin du niveau
-		DessinLevel(level, duration);
-
+			//dessin du niveau
+			DessinLevel(level, duration);
+		glPopMatrix();
 		// Echange du front et du back buffer : mise Ã  jour de la fenÃªtre
 		SDL_GL_SwapBuffers();
 
@@ -453,8 +453,9 @@ bool PlayLevel(Level* level, int id, bool* cross, SDL_Joystick* joystick) {
 		}
 		duration = SDL_GetTicks() - timeStartLevel;
 	}
-
+	ResetLevel(level);
 	camera_is_in_work = false;
+
 
 	return (loop);
 

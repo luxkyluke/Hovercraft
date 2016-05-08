@@ -48,6 +48,7 @@ void LookAt(Camera* c, Point2D direction, float zoomLevel) {
 
     glScalef(c->zoomLevel,c->zoomLevel,c->zoomLevel);//650 1300
     glTranslatef(-c->direction.x + translateX, -c->direction.y + translateY,0);
+
 }
 
 void ResetCamera(Camera* c){
