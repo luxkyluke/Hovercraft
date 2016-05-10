@@ -10,7 +10,7 @@
 #define NB_LEVEL 2
 
 //durée d'un niveau du jeu
-#define DURATION_TIME 18000
+#define DURATION_TIME 180000
 
 //les fichier des texture de terrains
 #define DEFAULT_TERRAIN_TEXTURE_PATH "images/terrain1.png"
