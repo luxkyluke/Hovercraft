@@ -27,8 +27,8 @@ bool MakeGame(Game* game){
 
     SDL_Joystick *joystick; // on crée le joystick
     joystick = SDL_JoystickOpen(0); // on l'assigne au numéro 0
-    if (joystick != NULL) {
-        game->joystick = joystick;
+    game->joystick = joystick;
+    if (game->joystick != NULL) {
         SDL_JoystickEventState(SDL_ENABLE);
         FILE* fichier = NULL;
         fichier = fopen("Joystick.txt","w+"); // on crée un fichier Joystick.txt
@@ -44,7 +44,6 @@ bool MakeGame(Game* game){
         }
 
     } else  {
-        game->joystick = NULL;
         SDL_JoystickEventState(SDL_DISABLE);
     }
     //ajoute des niveaux jusqu'a NB_LEVEL ne nombre de niveaux connus (ici 2)
@@ -108,8 +107,8 @@ void FreeGame(Game* g){
 	}
 
 //    SDL_JoystickEventState(SDL_DISABLE);
-//    if(g->joystick!=NULL)
-//         SDL_JoystickClose(g->joystick);
+   if(g->joystick!=NULL)
+        SDL_JoystickClose(g->joystick);
 //     probleme, normalement il faut le fermer le kono SDL_JoystickClose(g->joystick);
 //     free(g->joystick);
 //	g->levels = NULL;
